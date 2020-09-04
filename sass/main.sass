@@ -1,0 +1,207 @@
+:root
+  color-scheme: light dark
+  --color-bg: #ffffff
+  --color-fg: #000000
+  @media (prefers-color-scheme: dark)
+    --color-bg: #222222
+    --color-fg: #dddddd
+
+$color-primary: #ffcc00 // todo?
+
+@import 'fonts.sass'
+@import 'syntax.sass'
+
+@mixin subtle
+  color: rgba(128,128,128,0.7)
+
+@mixin highlight
+  background-color: rgba(0,0,0,0.15)
+
+@mixin italic
+  font-style: italic
+
+@mixin monospace
+  font-family: $font-monospace
+
+*
+  font-feature-settings: 'zero' on
+
+html
+  -webkit-text-size-adjust: 100%
+  font-kerning: normal
+
+body
+  font-family: $font-base
+  max-width: 46em
+  background: var(--color-bg)
+  font-weight: 400
+  font-size: 16px
+  color: var(--color-fg)
+  margin: 0 auto
+  padding: 0.75em 1.2em
+
+a
+  text-decoration: none
+  color: $color-primary
+  transition: all 0.05s linear
+  &:hover
+    color: darken($color-primary, 12%)
+
+em
+  +italic
+
+code
+  +monospace
+
+p
+  line-height: 1.5em
+  max-width: 100em
+  white-space: pre-line
+  code
+    padding: 0 0.2em
+  img
+    max-width: 100%
+    height: auto
+
+p, ul, ol
+  font-size: 1.2em
+
+$size-header-base: 3.5em
+
+h1, h2
+  font-family: $font-display
+  font-weight: 300
+  text-transform: uppercase
+
+h1
+  font-size: $size-header-base
+
+h2
+  font-size: $size-header-base * 0.8
+
+h3, h4
+  font-weight: 700
+
+h3
+  font-size: 1.5em
+
+h4
+  font-size: 1.2em
+  margin-bottom: -0.5em
+
+.title
+  margin: 0 auto
+
+.postinfo, .postinfo a
+  +monospace
+  font-size: 0.9em
+  color: var(--color-fg)
+
+.before-after
+  display: block
+  +monospace
+  +italic
+  font-size: 0.9em
+
+ol, ul
+  list-style-position: outside
+  padding-left: 0
+
+ol
+  list-style-type: decimal
+  p
+    margin: 0 auto
+
+ul
+  list-style-type: square
+
+hr
+  border: 0
+  border-top: 2px dashed var(--color-fg)
+  margin-top: 2em
+
+blockquote
+  border-left: solid 4px var(--color-fg)
+  +italic
+  margin: 0 auto
+  margin-left: -1.2em
+  padding-left: 0.9em
+  p
+    +monospace
+
+pre
+  +highlight
+  display: block
+  white-space: pre
+  padding: 0.5em
+  border-radius: 0.4em
+  overflow: hidden
+  overflow-x: scroll
+  code
+    overflow: hidden
+    overflow-x: scroll
+
+table
+  border-collapse: collapse
+  margin: 0 auto
+  border: 2px solid var(--color-fg)
+  thead
+    +highlight
+    border-bottom: 2px solid var(--color-fg)
+  tr
+    display: table-row
+    transition: all 0.05s linear
+  tr.odd, tr.even
+    &:hover
+      +highlight
+  td, th
+    margin: 0 auto
+    padding: 0.3em 0.5em
+
+caption
+  +monospace
+  font-size: 0.8em
+
+.footnotes
+  margin: 3em 0 2em 0
+  ol
+    list-style-type: none
+    counter-reset: fn-counter
+  ol li
+    counter-increment: fn-counter
+    position: relative
+  ol li::before
+    font-size: 0.9em
+    content: counter(fn-counter)
+    position: absolute
+    left: -1.1em
+  a, ol, li, p
+    +monospace
+  ol, p
+    font-size: 0.9em
+    > li:hover
+      transition: all 0.05s linear
+      +highlight
+
+a.footnote-back
+  float: right
+  padding: 0
+
+a.footnote-ref
+  font-size: 0.9em
+
+sup, sub
+  vertical-align: baseline
+  position: relative
+  top: -0.4em
+
+sub
+  top: 0.4em
+
+footer
+  p
+    +subtle
+    margin: 0 auto
+    text-align: right
+    +monospace
+    font-size: 0.8em

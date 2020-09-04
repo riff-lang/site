@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="$lang$" xml:lang="$lang$"$if(dir)$ dir="$dir$"$endif$>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="generator" content="pandoc" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+$for(author-meta)$
+        <meta name="author" content="$author-meta$" />
+$endfor$
+$if(date-meta)$
+        <meta name="dcterms.date" content="$date-meta$" />
+$endif$
+$if(keywords)$
+        <meta name="keywords" content="$for(keywords)$$keywords$$sep$, $endfor$" />
+$endif$
+        <title>$if(title-prefix)$$title-prefix$ – $endif$$pagetitle$</title>
+$for(css)$
+        <link rel="stylesheet" href="$css$" />
+$endfor$
+$if(math)$
+    $math$
+$endif$
+$for(header-includes)$
+    $header-includes$
+$endfor$
+    </head>
+    <body>
+$if(title)$
+        <h1 class="title">$title$</h1>
+    $if(subtitle)$
+        <p class="subtitle">$subtitle$</p>
+    $endif$
+    $for(author)$
+        <span class="postinfo"><a href="https://darryl.cx">$author$</a></span>
+        <br>
+    $endfor$
+    $if(date)$
+        <span class="postinfo">$date$</span>
+    $endif$
+$endif$
+$for(before)$
+    <p class=before-after>$before$</p>
+$endfor$
+$if(toc)$
+        <nav id="$idprefix$TOC" role="doc-toc">
+    $table-of-contents$
+        </nav>
+$endif$
+        <article>
+$body$
+        </article>
+$for(after)$
+    <p class=before-after>$after$</p>
+$endfor$
+        <footer>
+            <p>© 2020 Darryl Abbate</p>
+        </footer>
+    </body>
+</html>
