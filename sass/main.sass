@@ -2,11 +2,13 @@
   color-scheme: light dark
   --color-bg: #ffffff
   --color-fg: #000000
+  --color-pr: #000000
   @media (prefers-color-scheme: dark)
     --color-bg: #222222
     --color-fg: #dddddd
+    --color-pr: #ffcc00
 
-$color-primary: #ffcc00 // todo?
+$color-primary: #ffcc00
 
 @import 'fonts.sass'
 @import 'syntax.sass'
@@ -29,6 +31,26 @@ $color-primary: #ffcc00 // todo?
 html
   -webkit-text-size-adjust: 100%
   font-kerning: normal
+
+header
+  margin: 1em 0
+  justify-content: space-between
+  +monospace
+  display: flex
+  flex-wrap: nowrap
+  align-items: center
+  nav
+    ul
+      margin: 0 auto
+      list-style: none
+      li
+        display: inline-block
+
+.logo
+  margin: 0 auto
+  fill: var(--color-pr)
+  width: auto
+  height: 50px
 
 body
   font-family: $font-base
@@ -65,6 +87,9 @@ p
 
 p, ul, ol
   font-size: 1.2em
+
+ul li p
+  font-size: 1em
 
 $size-header-base: 3.5em
 

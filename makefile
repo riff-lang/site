@@ -17,6 +17,7 @@ HFLAGS     = --standalone
 HFLAGS    += --template=$(DATA_DIR)/html.pdc
 HFLAGS    += --from $(INPUT_FMT)
 HFLAGS    += --to $(HTML_FMT)
+HFLAGS    += --title-prefix="Riff"
 HFLAGS    += --css=../style.css
 HFLAGS    += --mathjax
 

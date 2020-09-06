@@ -24,6 +24,9 @@ $for(header-includes)$
     $header-includes$
 $endfor$
     </head>
+    <header>
+        ${ header() }
+    </header>
     <body>
 $if(title)$
         <h1 class="title">$title$</h1>

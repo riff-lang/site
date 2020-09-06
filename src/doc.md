@@ -1,5 +1,6 @@
 ---
-title:  Riff User Guide
+title:  User Guide
+before: Last updated 2020/09/05
 ...
 
 ## Overview
@@ -26,14 +27,16 @@ to the user's program.
 
 ### Options
 
-- **`-f`** *`program-file`*
-    Interpret the Riff program contained in the file specified with
-    the relative pathname *program-file*.
-- **`-l`**
-    Produce a listing of the compiled bytecode and associated
-    mnemonics. See section below.
-- **`-v`**
-    Print version information and exit.
+- **`-f`** *`program-file`*<br>
+Interpret the Riff program contained in the file specified with the
+relative pathname *program-file*.
+
+- **`-l`**<br>
+Produce a listing of the compiled bytecode and associated mnemonics.
+See section below.
+
+- **`-v`**<br>
+Print version information and exit.
 
 ## Language
 
@@ -112,6 +115,71 @@ for         while
 ### Statements
 
 ### Expressions
+
+| Operator(s)       | Description | Associativity | Precedence |
+| ---               | ---         | ---           | ---        |
+| `=`               | Assignment | Right | 1 |
+| `?:`              | Ternary conditional | Right | 2          |
+| `||`              | Logical `OR` | Left         | 3 |
+| `&&`              | Logical `AND`| Left | 4 |
+| `==` `!=`         | Relational equality, inequality | Left | 5 |
+| `<` `<=` `>` `>=` | Relational comparison $<$, $\leqslant$, $>$ and $\geqslant$ | Left | 6 |
+| `|`               | Bitwise `OR` | Left | 7 |
+| `^`               | Bitwise `XOR` | Left | 8 |
+| `&`               | Bitwise `AND` | Left | 9 |
+| `<<` `>>`         | Bitwise left shift, right shift | Left | 10 |
+| `::`              | Concatenation | Left | 10 |
+| `+` `-`           | Addition, subtraction | Left | 11 |
+| `*` `/` `%`       | Multiplication, division, modulus | Left | 12 |
+| `!`               | Logical `NOT` | Right | 12 |
+| `#`               | Length | Right | 12 |
+| `+` `-`           | Unary plus, minus | Right | 12 |
+| `~`               | Bitwise `NOT` | Right | 12 |
+| `**`              | Exponentiation | Right | 14 |
+| `++` `--`         | Prefix increment, decrement | Right | 14 |
+| `()`              | Function call | Left | 15 |
+| `[]`              | Subscripting | Left | 15 |
+| `++` `--`         | Postfix increment, decrement | Left | 15 |
+| `$`               | `argv`/default array subscripting | Right | 16 |
+
+: Operators (increasing in precedence)
+
+Riff also supports the following compound assignment operators, with
+the same precedence and associativity as `=`
+
+```
++=      |=
+&=      **=
+::=     <<=
+/=      >>=
+%=      -=
+*=      ^=
+```
+
+The expression in between the `?` and `:` in the ternary conditional
+operator is treated as if parenthesized. You can also omit the middle
+expression entirely.
+
+```riff
+x ?: y  // Equivalent to x ? x : y
+```
+
+Note that if the middle expression is omitted, the leftmost expression
+is only evaluated once.
+
+```riff
+x = 1
+a = x++ ?: y    // a = 1; x = 2
+```
+
+The logical operators `||` and `&&` are
+[short-circuiting](https://en.wikipedia.org/wiki/Short-circuit_evaluation).
+For example, in the expression `lhs && rhs`, `rhs` is evaluated only
+if `lhs` is "truthy." Likewise, in the expression `lhs || rhs`, `rhs`
+is evaluated only if `lhs` is *not* "truthy."
+
+Values which evaluate as "false" are `null`, `0` and the empty string
+(`""`).
 
 ### Functions
 
