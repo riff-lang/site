@@ -1,9 +1,13 @@
 ---
 title:  User Guide
-before: Last updated 2020/09/05
+before: Last updated 2020/09/06
 ...
 
-## Overview
+> This document is a work in progress
+
+This document serves as a complete reference/specification of the Riff
+programming language. For a quicker overview of the language, check
+out the [examples](../examples).
 
 Riff is a dynamically-typed general-purpose programming language
 designed primarily for prototyping and command-line usage. Riff offers
@@ -38,20 +42,12 @@ See section below.
 - **`-v`**<br>
 Print version information and exit.
 
-## Language
+## Overview
 
-### Basic Concepts
-
-A Riff program is a sequence of statements.
-
-...
-
-### Values and Types
-
-Riff is a dynamically-typed language. Identifiers/variables do not
-contain explicit type information and the language has no syntactic
-constructs for specifying types. Values, however, are implicitly
-typed; carrying their own type information.
+Riff is dynamically-typed. Identifiers/variables do not contain
+explicit type information and the language has no syntactic constructs
+for specifying types. Values, however, are implicitly typed; carrying
+their own type information.
 
 All Riff values are first-class, meaning values of any type can be
 stored in variables, passed around as function arguments or returned
@@ -68,8 +64,8 @@ Internally, a Riff value can be any of the following types:
 - C function (built-in functions)
 
 `null` is a special value in Riff, typically representing the absence
-of a value. `null` is different than `0`, `0.0` or `""` (empty
-string).
+of a value. `null` is different than `0`, `0.0` or the empty string
+(`""`).
 
 Numbers in Riff can be integers or floats. Integers in Riff are signed
 64-bit by default (`int64_t` in C).  Floats in Riff are identical to a
@@ -95,6 +91,14 @@ functions are nearly identical, with a few limitations. For example, a C
 function cannot be subscripted (i.e. `f[0]`) like a Riff function can,
 since C functions are not arrays of bytecode like Riff functions.
 
+## Language
+
+### Basic Concepts
+
+A Riff program is a sequence of statements.
+
+...
+
 ### Keywords
 
 The following keywords are reserved for syntactic constructs and not
@@ -113,6 +117,216 @@ for         while
 ### Variables
 
 ### Statements
+
+#### `break`
+
+`break` is a control-flow construct which will immediately exit the
+current loop when reached. `break` is invalid outside of a loop
+structure; `riff` will throw an error when trying to compile a `break`
+statement outside of a loop.
+
+```riff
+while 1 {
+    "This will print"
+    break
+    "This will not print"
+}
+// program control transfers here
+```
+
+#### `continue`
+
+A `continue` statement causes the program to skip the remaining
+portion of the current loop, jumping to the end of the of the loop
+body. Like `break`, `continue` is invalid outside of a loop structure;
+`riff` will throw an error when trying to compile a `continue`
+statement outside of a loop.
+
+```riff
+do {
+    // ...
+    continue
+    // ...
+    // `continue` jumps here
+} while 1
+
+for x in y {
+    // ...
+    continue
+    // ...
+    // `continue` jumps here
+}
+
+while 1 {
+    // ...
+    continue
+    // ...
+    // `continue` jumps here
+}
+```
+
+#### `do`
+
+```
+do_stmt = 'do' stmt 'while' expr
+        | 'do' '{' stmt_list '}' 'while' expr
+```
+
+A `do` statement declares a *do-while* loop structure, which
+repeatedly executes the statement or brace-enclosed list of statements
+until the expression following the `while` keywords evaluates to `0`.
+
+Like all loop structures in Riff, the statement(s) inside a loop body
+establish their own local scope. Any locals declared inside the loop
+body are not accessible outside of the loop body. The `while`
+expression in a *do-while* loop is considered to be outside the loop
+body.
+
+A `do` statement declared without a `while` condition is invalid and
+will cause an error to be thrown upon compilation.
+
+#### `else`
+
+See [`if` statements](#if).
+
+#### `exit`
+
+When program control reaches an `exit` statement, the program will
+terminate immediately with code `0`.
+
+#### `fn`
+
+```
+fn_stmt = 'fn' id ['(' [ id {',' id } ')'] '{' stmt_list '}'
+```
+
+A function statement declares the definition of a *named* function.
+This is in contrast to an *anonymous* function, which is parsed as part
+of an [expression statement](#expression-statements).
+
+```riff
+fn f(x) {
+    return x ** 2
+}
+
+fn g() {
+    return 23.4
+}
+
+// Parentheses not required for functions without parameters
+fn h {
+    return "Hello"
+}
+``` 
+
+More information on user-defined functions in Riff can be found in the
+[Functions](#functions) section.
+
+#### `for`
+
+```
+for_stmt = 'for' id [ ',' id ] 'in' expr stmt
+         | 'for' id [ ',' id ] 'in' expr '{' stmt_list '}'
+```
+
+A `for` statement declares a generic loop structure which iterates
+over the item(s) in the `expr` result value. There are two general
+forms of a `for` loop declaration:
+
+- `for v in s {...}`
+- `for k,v in s {...}`
+
+In the first form, the value `s` is iterated over. Before each
+iteration, the variable `v` is populated with the *value* of the next
+item in the set.
+
+In the second form, the value `s` is iterated over. Before each
+iteration, the variable `k` is populated with the *key*, while
+variable `v` is populated with the *value* of the next item in a set.
+
+In both forms, the variables `k` and `v` are local to the inner loop
+body. Their values cannot be accessed once the loop terminates.
+
+```riff
+array = { "foo", "bar", "baz" }
+
+// This iterates over each item in `array`, populating `k` with the
+// current array index, and `v` with the corresponding array element
+for k,v in array {
+    // First iteration:  k = 0, v = "foo"
+    // Second iteration: k = 1, v = "bar"
+    // Third iteration:  k = 2, v = "baz"
+}
+```
+
+Note that the value to be iterated over is evaluated exactly *once*. A
+copy of the value is made upon initialization of a given iterator.
+This avoids an issue where a user continually adds items to a given
+set, effectively causing an infinite loop.
+
+The order in which arrays are iterated over is not *guaranteed* to be
+in-order for integer keys due to the nature of the array
+implementation.  However, in most cases, arrays will be traversed in
+order for integer keys $0..n$ where $n$ is the last element in a
+contiguous array. If an array is constructed using the constructor
+syntax, it is guaranteed to be traversed in-order, so long as no other
+keys were added. Even if keys were added, arrays are typically
+traversed in-order. Note that negative indices will always come after
+integer keys $\geqslant 0$.
+
+The value to be iterated over can be any Riff value, except C
+functions. For example, iterating over an integer `n` will populate
+the provided variable with the numbers $[0..n]$ (inclusive of `n`).
+
+```riff
+// Equivalent to `for (i = 0; i <= 10; ++i)`
+for i in 10 {
+    // ...
+}
+```
+
+Iterating over an integer `n` while using the `k,v` syntax will
+populate `v` with $[0..n]$, while leaving `k` as `null`.
+
+Iterating over a string is similar to iterating over an array.
+
+```riff
+for k,v in "Hello" {
+    // k = 0, v = "H"
+    // k = 1, v = "e"
+    // ...
+    // k = 4, v = "o"
+}
+```
+
+Iterating over a user-defined function is also similar to an array,
+iterating over each byte in its compiled bytecode array.
+
+```riff
+fn f(x) {
+    return x + 2
+}
+
+for k,v in f {
+    // k = 0, v = 78
+    // k = 1, v = 60
+    // ...
+}
+```
+
+#### `if`
+
+#### `local`
+
+#### `print`
+
+#### `return`
+
+#### `while`
+
+#### Expression Statements
+
+Any expression
 
 ### Expressions
 
@@ -145,7 +359,7 @@ for         while
 : Operators (increasing in precedence)
 
 Riff also supports the following compound assignment operators, with
-the same precedence and associativity as `=`
+the same precedence and associativity as simple assignment (`=`)
 
 ```
 +=      |=
@@ -156,7 +370,7 @@ the same precedence and associativity as `=`
 *=      ^=
 ```
 
-The expression in between the `?` and `:` in the ternary conditional
+The expression in between `?` and `:` in the ternary conditional
 operator is treated as if parenthesized. You can also omit the middle
 expression entirely.
 
@@ -323,10 +537,10 @@ array of individual characters. `d` can be multiple characters.
 library to split strings.
 
 ```riff
-a = split("A quick brown fox")
+sentence = split("A quick brown fox")
 
 // Print the words on separate lines in order
-for word in a {
+for word in sentence {
     word
 }
 
@@ -336,4 +550,32 @@ chars[0]        // "T"
 chars[23]       // "s"
 ```
 
-## Bytecode Listing Mnemonics
+## Bytecode Listing
+
+When `riff` is invoked with the `-l` option, it produces a listing of
+the given program's compiled bytecode along with their associated
+mnemonics.  The bytecode is proprietary to `riff`'s virtual machine.
+The mnemonics provided offer a human-readable format of the
+instructions and operands the bytecode is composed of; similar to
+[assembly](https://en.wikipedia.org/wiki/Assembly_language).
+
+The output of the command `riff -l '1+2'` may look like this:
+
+```
+source:<command-line> @ 0x7ffee30738b8 -> 5 bytes
+0: 3b       imm    1
+1: 3c       imm    2
+2: 0f       add
+3: 5c       print
+4: 52       ret
+```
+
+`riff`'s virtual machine is
+[stack-based](https://en.wikipedia.org/wiki/Stack_machine). The VM has
+the standard facilities found in many stack machines, such as an
+instruction pointer (`IP`) (AKA a program counter), a stack pointer
+(`SP`) and a frame pointer (`FP`). Each instruction has its own effect
+on the `IP`, `SP` and `FP`.
+
+In the `riff` VM, the `SP` always points to the next *available* slot
+in the stack.

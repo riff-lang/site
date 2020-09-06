@@ -37,5 +37,6 @@
     <ul>
         <li><a href="../doc">doc</a></li>
         <li><a href="https://github.com/rootbeersoup/riff">src</a></li>
+        <li><a class="download" href="../download">download</a></li>
     </ul>
 </nav>

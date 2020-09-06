@@ -52,6 +52,15 @@ header
   width: auto
   height: 50px
 
+.download
+  border-radius: 3px
+  padding: 2px 5px
+  background-color: var(--color-pr)
+  color: var(--color-bg)
+  &:hover
+    background-color: darken($color-primary, 12%)
+    color: var(--color-bg)
+
 body
   font-family: $font-base
   max-width: 46em
@@ -91,11 +100,12 @@ p, ul, ol
 ul li p
   font-size: 1em
 
-$size-header-base: 3.5em
+$size-header-base: 4em
 
 h1, h2
   font-family: $font-display
   font-weight: 300
+  margin: 0 auto
 
 h1
   font-size: $size-header-base
@@ -125,11 +135,12 @@ h4
   display: block
   +monospace
   +italic
+  margin: 0 auto
   font-size: 0.9em
 
 ol, ul
   list-style-position: outside
-  padding-left: 0
+  // padding-left: 0
 
 ol
   list-style-type: decimal
@@ -145,13 +156,12 @@ hr
   margin-top: 2em
 
 blockquote
-  border-left: solid 4px var(--color-fg)
-  +italic
+  display: block
   margin: 0 auto
-  margin-left: -1.2em
-  padding-left: 0.9em
+  border-radius: 0.4em
+  background-color: rgba(255,204,0,0.3)
   p
-    +monospace
+    padding: 0.5em
 
 pre
   +highlight
