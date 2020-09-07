@@ -1,6 +1,6 @@
 ---
 title:  User Guide
-before: Last updated 2020/09/06
+before: Last updated 2020/09/07
 ...
 
 > This document is a work in progress
@@ -95,9 +95,36 @@ since C functions are not arrays of bytecode like Riff functions.
 
 ### Basic Concepts
 
-A Riff program is a sequence of statements.
+A Riff program is a sequence of statements. Riff has no concept of
+statement terminators. The lexical analysis phase does not perform
+implicit semicolon insertion. A statement ends when the next lexical
+token in the token stream is not applicable to the current statement.
 
-...
+One of the conveniences Riff offers is the implicit printing of
+expression results in expression statements. Unless the leftmost
+expression in an expression statement is being altered in some way
+(e.g. a variable being assigned to), the result of the expression is
+printed. This allows for standard expression statements such as `x =
+1` or `y++` to *not* have their results printed, while otherwise invalid
+expression statements in many languages such as `x + y * z` now serve
+a purpose. The [expression statements](#expression-statements) section
+outlines the complete set of rules for whether an expression is
+printed or not printed.
+
+Variables are global by default. Riff allows local variable usage by
+explicitly declaring a variable with the [`local`](#local) keyword.
+Riff also allows the use/access of uninitialized variables. When an
+uninitialized variable is used, Riff reserves the variable with global
+scope and initializes it to `null`. Depending on the context, the
+variable may also be initialized to `0` or an empty array. Riff does
+not allow uninitialized variables to be called as functions^[Unless
+someone else has a really good idea how to handle that].
+
+### Constants and Literals
+
+#### Numerals
+
+#### Strings
 
 ### Keywords
 
@@ -316,7 +343,33 @@ for k,v in f {
 
 #### `if`
 
+```
+if_stmt = 'if' expr stmt [ 'else' ... ]
+        | 'if' expr '{' stmt_list '}' [ 'else' ... ]
+```
+
+An `if` statement conditionally executes code based on the result of
+`expr`. If the `expr` evaluates to non-zero or non-`null`, the
+succeeding statement or list of statements is executed. Otherwise, the
+code is skipped.
+
+If an `else` statement is provided following an `if` statement, the
+code in the `else` block is only executed if the `if` condition
+evaluated to zero or `null`. An `else` statement always associates to
+the closest preceding `if` statement.
+
+Any statements between an `if` and an `else` statement is invalid;
+Riff will throw an error when compiling an `else` statement not
+attached to an `if`.
+
 #### `local`
+
+`local` declares a variable visible only to the current block and any
+descending code blocks. Multiple variables can be declared as `local`
+with a comma-delimited expression list, similar to expression lists in
+expression statements. Expression lists in `local` declaration do not
+have any results printed implicitly, unlike standard expression
+statement lists.
 
 #### `print`
 
@@ -331,7 +384,7 @@ Any expression
 ### Expressions
 
 | Operator(s)       | Description | Associativity | Precedence |
-| ---               | ---         | ---           | ---        |
+| ---               | :--         | ---           | ---        |
 | `=`               | Assignment | Right | 1 |
 | `?:`              | Ternary conditional | Right | 2          |
 | `||`              | Logical `OR` | Left         | 3 |
@@ -358,7 +411,8 @@ Any expression
 
 : Operators (increasing in precedence)
 
-Riff also supports the following compound assignment operators, with
+Riff also supports the following [compound
+assignment](#assignment-operators) operators, with
 the same precedence and associativity as simple assignment (`=`)
 
 ```
@@ -369,6 +423,84 @@ the same precedence and associativity as simple assignment (`=`)
 %=      -=
 *=      ^=
 ```
+
+#### Arithmetic Operators
+
+| Operator | Type(s)         | Description                |
+| :------: | :------         | :----------                |
+| `+`      | Prefix, Infix   | Numeric coercion, Addition |
+| `-`      | Prefix, Infix   | Negation, Subtraction      |
+| `*`      | Infix           | Multiplication             |
+| `/`      | Infix           | Division                   |
+| `%`      | Infix           | Modulus                    |
+| `**`     | Infix           | Exponentiation             |
+| `++`     | Prefix, Postfix | Increment by 1             |
+| `--`     | Prefix, Postfix | Decrement by 1             |
+
+#### Bitwise Operators
+
+| Operator | Type   | Description         |
+| :------: | :---   | :----------         |
+| `&`      | Infix  | Bitwise `AND`       |
+| `|`      | Infix  | Bitwise `OR`        |
+| `^`      | Infix  | Bitwise `XOR`       |
+| `<<`     | Infix  | Bitwise left shift  |
+| `>>`     | Infix  | Bitwise right shift |
+| `~`      | Prefix | Bitwise `NOT`       |
+
+#### Logical Operators
+
+| Operator | Type   | Description   |
+| :------: | :---   | :----------   |
+| `!`      | Prefix | Logical `NOT` |
+| `&&`     | Infix  | Logical `AND` |
+| `||`     | Infix  | Logical `OR`  |
+
+The operators `||` and `&&` are
+[short-circuiting](https://en.wikipedia.org/wiki/Short-circuit_evaluation).
+For example, in the expression `lhs && rhs`, `rhs` is evaluated only
+if `lhs` is "truthy." Likewise, in the expression `lhs || rhs`, `rhs`
+is evaluated only if `lhs` is *not* "truthy."
+
+Values which evaluate as "false" are `null`, `0` and the empty string
+(`""`).
+
+#### Relational Operators
+
+| Operator | Type  | Description              |
+| :------: | :---  | :----------              |
+| `==`     | Infix | Equality                 |
+| `!=`     | Infix | Inequality               |
+| `<`      | Infix | Less-than                |
+| `<=`     | Infix | Less-than or equal-to    |
+| `>`      | Infix | Greater-than             |
+| `>=`     | Infix | Greater-than or equal-to |
+
+#### Assignment Operators
+
+The following assignment operators are all binary infix operators.
+
+| Operator | Description                       |
+| :------: | :----------                       |
+| `=`      | Simple assignment                 |
+| `+=`     | Assignment by addition            |
+| `-=`     | Assignment by subtraction         |
+| `*=`     | Assignment by multiplication      |
+| `/=`     | Assignment by division            |
+| `%=`     | Assignment by modulus             |
+| `**=`    | Assignment by exponentiation      |
+| `&=`     | Assignment by bitwise `AND`       |
+| `|=`     | Assignment by bitwise `OR`        |
+| `^=`     | Assignment by bitwise `XOR`       |
+| `<<=`    | Assignment by bitwise left shift  |
+| `>>=`    | Assignment by bitwise right shift |
+| `::=`    | Assignment by concatenation       |
+
+#### Ternary Conditional Operator
+
+The `?:` operator performs similarly to other C-style languages.
+
+*condition* `?` *expr-if-true* `:` *expr-if-false*
 
 The expression in between `?` and `:` in the ternary conditional
 operator is treated as if parenthesized. You can also omit the middle
@@ -386,14 +518,153 @@ x = 1
 a = x++ ?: y    // a = 1; x = 2
 ```
 
-The logical operators `||` and `&&` are
-[short-circuiting](https://en.wikipedia.org/wiki/Short-circuit_evaluation).
-For example, in the expression `lhs && rhs`, `rhs` is evaluated only
-if `lhs` is "truthy." Likewise, in the expression `lhs || rhs`, `rhs`
-is evaluated only if `lhs` is *not* "truthy."
+#### Concatenation Operator
 
-Values which evaluate as "false" are `null`, `0` and the empty string
-(`""`).
+The `::` operator concatenates two values together. The result of the
+operation is a string with the left-hand expression and right-hand concatenated together.
+
+```riff
+"Hello" :: "World"  // "HelloWorld"
+"str" :: 123        // "str123"
+```
+
+#### Length Operator
+
+`#` is a prefix operator which returns the length of a value. When
+performed on string values, the result of the expression is the length
+of the string. When performed on arrays, the result of the expression
+is the number of non-`null` values in the array. When performed on
+functions, the result is the number of bytes in the function's
+bytecode array.
+
+```riff
+s = "string"
+a = { 1, 2, 3, 4 }
+fn f(x) { return x + 3 }
+
+#s  // 6
+#a  // 4
+#f  // 5 (may vary depending on future versions of riff)
+```
+
+The length operator can be used on numeric values as well; returning
+the length of the number in decimal form.
+
+```riff
+#123    // 3
+#-230   // 4
+#0.6345 // 6
+#0x1f   // 2
+```
+
+#### Subscripting
+
+The `[]` operator is used to subscript a Riff value. All Riff values
+can be subscripted except for C (built-in) functions. Subscripting any
+value with an out-of-bounds index will evaluate to `null`.
+
+Subscripting a numeric value with expression $i$ will retrieve the
+$i$th character of that number as if it were a string in its base-10
+form (index starting at `0`).
+
+```riff
+34[0]       // "3"
+0.12[1]     // "."
+(-45)[0]    // "-"
+```
+
+Subscripting a string with expression $i$ retrieves the character at
+index $i$, as if the string were a contiguous array of characters.
+
+```
+"Hello"[1]  // "e"
+```
+
+Naturally, subscripting an array with expression $i$ will perform an
+array lookup with the key $i$.
+
+```riff
+pedals = {
+    "Fuzz",
+    "Wah-Wah",
+    "Uni-Vibe" 
+}
+
+pedals[0]   // "Fuzz"
+```
+
+Subscripting a user-defined function with the expression $i$ will
+return the $i$th byte in the function's compiled bytecode array.
+
+```riff
+fn f(x,y) {
+    return x << y
+}
+
+f[2]    // 25 (may vary depending on future riff versions)
+```
+
+#### `argv`/Default Array Operator
+
+`$` is a special prefix operator used for accessing the argument
+vector or "default array." `$` has the highest precedence of all Riff
+operators and is used for subscripting the default array.
+
+```
+$0          // Equivalent to argv[0]
+$a          // Equivalent to argv[a]
+$(1 << 3)   // Equivalent to argv[1 << 3]
+```
+
+Whenever `riff` is invoked, it collects all the command-line arguments
+and stores them as string literals in a Riff array. `$0` will always
+be the first user-provided argument following the program text or
+program filename. For example, when invoking `riff` on the
+command-line like this:
+
+```bash
+$ riff '$0<<$1' 2 3
+```
+
+The default array will be populated as follows:
+
+```
+$-2: "riff"
+$-1: "$0<<$1"
+$0:  "2"
+$1:  "3"
+```
+
+Another example, this time with a Riff program stored in a file name
+`prog.rf`:
+
+```bash
+$ riff -f prog.rf 43 22
+```
+
+The default array would be populated:
+
+```
+$-3: "riff"
+$-2: "-f"
+$-1: "prog.rf"
+$0:  "43"
+$1:  "22"
+```
+
+#### Function Calls
+
+`()` is a postfix operator used to execute function calls. Arguments
+are passed as a comma-delimited list of expressions inside the
+parentheses.
+
+```riff
+fn max(x,y) {
+    return x > y ? x : y
+}
+
+max(1+4, 3*2)
+```
 
 ### Functions
 
