@@ -1,6 +1,6 @@
 ---
 title:  User Guide
-before: Last updated 2020/09/07
+before: Last updated 2020/09/08
 ...
 
 > This document is a work in progress
@@ -304,16 +304,25 @@ integer keys $\geqslant 0$.
 The value to be iterated over can be any Riff value, except C
 functions. For example, iterating over an integer `n` will populate
 the provided variable with the numbers $[0..n]$ (inclusive of `n`).
+`n` can be negative.
 
 ```riff
 // Equivalent to `for (i = 0; i <= 10; ++i)`
 for i in 10 {
     // ...
 }
+
+// Equivalent to `for (i = 0; i >= -10; --i)`
+for i in -10 {
+    // ...
+}
 ```
 
 Iterating over an integer `n` while using the `k,v` syntax will
 populate `v` with $[0..n]$, while leaving `k` as `null`.
+
+Currently, floating-point numbers are truncated to integers when used
+as the expression to iterate over.
 
 Iterating over a string is similar to iterating over an array.
 
@@ -384,7 +393,7 @@ Any expression
 ### Expressions
 
 | Operator(s)       | Description | Associativity | Precedence |
-| ---               | :--         | ---           | ---        |
+| ---               | ---         | ---           | ---        |
 | `=`               | Assignment | Right | 1 |
 | `?:`              | Ternary conditional | Right | 2          |
 | `||`              | Logical `OR` | Left         | 3 |
@@ -427,7 +436,7 @@ the same precedence and associativity as simple assignment (`=`)
 #### Arithmetic Operators
 
 | Operator | Type(s)         | Description                |
-| :------: | :------         | :----------                |
+| :------: | -------         | -----------                |
 | `+`      | Prefix, Infix   | Numeric coercion, Addition |
 | `-`      | Prefix, Infix   | Negation, Subtraction      |
 | `*`      | Infix           | Multiplication             |
@@ -440,7 +449,7 @@ the same precedence and associativity as simple assignment (`=`)
 #### Bitwise Operators
 
 | Operator | Type   | Description         |
-| :------: | :---   | :----------         |
+| :------: | ----   | -----------         |
 | `&`      | Infix  | Bitwise `AND`       |
 | `|`      | Infix  | Bitwise `OR`        |
 | `^`      | Infix  | Bitwise `XOR`       |
@@ -451,7 +460,7 @@ the same precedence and associativity as simple assignment (`=`)
 #### Logical Operators
 
 | Operator | Type   | Description   |
-| :------: | :---   | :----------   |
+| :------: | ----   | -----------   |
 | `!`      | Prefix | Logical `NOT` |
 | `&&`     | Infix  | Logical `AND` |
 | `||`     | Infix  | Logical `OR`  |
@@ -468,7 +477,7 @@ Values which evaluate as "false" are `null`, `0` and the empty string
 #### Relational Operators
 
 | Operator | Type  | Description              |
-| :------: | :---  | :----------              |
+| :------: | ----  | -----------              |
 | `==`     | Infix | Equality                 |
 | `!=`     | Infix | Inequality               |
 | `<`      | Infix | Less-than                |
@@ -481,7 +490,7 @@ Values which evaluate as "false" are `null`, `0` and the empty string
 The following assignment operators are all binary infix operators.
 
 | Operator | Description                       |
-| :------: | :----------                       |
+| :------: | -----------                       |
 | `=`      | Simple assignment                 |
 | `+=`     | Assignment by addition            |
 | `-=`     | Assignment by subtraction         |
