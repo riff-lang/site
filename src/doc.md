@@ -76,8 +76,8 @@ completely transparent to the user.
 
 Strings in Riff are immutable sequences of 8-bit character literals.
 
-A sequence are a special "subtype" in Riff that allows the user to
-define a range of integral values with an optional interval parameter.
+Sequences are a special "subtype" in Riff that allow the user to
+define a range of integral values with an optional specified interval.
 Sequences can be used in [for loops](#for) to iterate through a
 sequence of numbers or in string subscripting to easily extract
 different types of substrings.
