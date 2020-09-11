@@ -1,6 +1,6 @@
 ---
 title:  User Guide
-before: Last updated 2020/09/08
+before: Last updated 2020/09/11
 ...
 
 > This document is a work in progress
@@ -59,6 +59,7 @@ Internally, a Riff value can be any of the following types:
 - Integer
 - Float
 - String
+- Sequence
 - Array
 - Riff function (user-defined)
 - C function (built-in functions)
@@ -74,6 +75,12 @@ performed implicitly depending on the operation and is designed to be
 completely transparent to the user.
 
 Strings in Riff are immutable sequences of 8-bit character literals.
+
+A sequence are a special "subtype" in Riff that allows the user to
+define a range of integral values with an optional interval parameter.
+Sequences can be used in [for loops](#for) to iterate through a
+sequence of numbers or in string subscripting to easily extract
+different types of substrings.
 
 Arrays are the single compound data structure available in Riff. Array
 elements can be any type of Riff value. Storing `null` as an array
@@ -395,28 +402,29 @@ Any expression
 | Operator(s)       | Description | Associativity | Precedence |
 | ---               | ---         | ---           | ---        |
 | `=`               | Assignment | Right | 1 |
-| `?:`              | Ternary conditional | Right | 2          |
-| `||`              | Logical `OR` | Left         | 3 |
-| `&&`              | Logical `AND`| Left | 4 |
-| `==` `!=`         | Relational equality, inequality | Left | 5 |
-| `<` `<=` `>` `>=` | Relational comparison $<$, $\leqslant$, $>$ and $\geqslant$ | Left | 6 |
-| `|`               | Bitwise `OR` | Left | 7 |
-| `^`               | Bitwise `XOR` | Left | 8 |
-| `&`               | Bitwise `AND` | Left | 9 |
-| `<<` `>>`         | Bitwise left shift, right shift | Left | 10 |
-| `::`              | Concatenation | Left | 10 |
-| `+` `-`           | Addition, subtraction | Left | 11 |
-| `*` `/` `%`       | Multiplication, division, modulus | Left | 12 |
-| `!`               | Logical `NOT` | Right | 12 |
-| `#`               | Length | Right | 12 |
-| `+` `-`           | Unary plus, minus | Right | 12 |
-| `~`               | Bitwise `NOT` | Right | 12 |
-| `**`              | Exponentiation | Right | 14 |
-| `++` `--`         | Prefix increment, decrement | Right | 14 |
-| `()`              | Function call | Left | 15 |
-| `[]`              | Subscripting | Left | 15 |
-| `++` `--`         | Postfix increment, decrement | Left | 15 |
-| `$`               | `argv`/default array subscripting | Right | 16 |
+| `?:`              | Ternary conditional | Right | 2 |
+| `..`              | Range/sequence constructor | Left | 3 |
+| `||`              | Logical `OR` | Left | 4 |
+| `&&`              | Logical `AND`| Left | 5 |
+| `==` `!=`         | Relational equality, inequality | Left | 6 |
+| `<` `<=` `>` `>=` | Relational comparison $<$, $\leqslant$, $>$ and $\geqslant$ | Left | 7 |
+| `|`               | Bitwise `OR` | Left | 8 |
+| `^`               | Bitwise `XOR` | Left | 9 |
+| `&`               | Bitwise `AND` | Left | 10 |
+| `<<` `>>`         | Bitwise left shift, right shift | Left | 11 |
+| `::`              | Concatenation | Left | 11 |
+| `+` `-`           | Addition, subtraction | Left | 12 |
+| `*` `/` `%`       | Multiplication, division, modulus | Left | 13 |
+| `!`               | Logical `NOT` | Right | 13 |
+| `#`               | Length | Right | 13 |
+| `+` `-`           | Unary plus, minus | Right | 13 |
+| `~`               | Bitwise `NOT` | Right | 13 |
+| `**`              | Exponentiation | Right | 15 |
+| `++` `--`         | Prefix increment, decrement | Right | 15 |
+| `()`              | Function call | Left | 16 |
+| `[]`              | Subscripting | Left | 16 |
+| `++` `--`         | Postfix increment, decrement | Left | 16 |
+| `$`               | `argv`/default array subscripting | Right | 17 |
 
 : Operators (increasing in precedence)
 
@@ -526,6 +534,8 @@ is only evaluated once.
 x = 1
 a = x++ ?: y    // a = 1; x = 2
 ```
+
+#### Ranges/Sequences
 
 #### Concatenation Operator
 
