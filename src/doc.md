@@ -1,6 +1,6 @@
 ---
 title:  User Guide
-before: Last updated 2020/09/11
+before: Last updated 2020/09/12
 ...
 
 > This document is a work in progress
@@ -829,6 +829,12 @@ hex(68.7)   // "0x44"
 hex("45")   // "0x2d"
 ```
 
+#### `lower(s)`
+
+Returns a copy of string `s` with all uppercase letters converted to
+lowercase. All other characters in string `s` are copied over
+unchanged.
+
 #### `split(s[,d])`
 
 Returns an array with elements being string `s` split on delimiter
@@ -852,6 +858,12 @@ chars = split("Thiswillbesplitintochars","")
 chars[0]        // "T"
 chars[23]       // "s"
 ```
+
+#### `upper(s)`
+
+Returns a copy of string `s` with all lowercase letters converted to
+uppercase. All other characters in string `s` are copied over
+unchanged.
 
 ## Bytecode Listing
 
