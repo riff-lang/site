@@ -583,7 +583,7 @@ can be subscripted except for C (built-in) functions. Subscripting any
 value with an out-of-bounds index will evaluate to `null`.
 
 Subscripting a numeric value with expression $i$ will retrieve the
-$i$th character of that number as if it were a string in its base-10
+$i$<sup>th</sup> character of that number as if it were a string in its base-10
 form (index starting at `0`).
 
 ```riff
@@ -696,12 +696,25 @@ library of functions.
 
 ### Arithmetic Functions
 
+#### `abs(x)`
+
+Returns the absolute value of `x` (i.e. $|x|$).
+
 #### `atan(y[,x])`
 
 When called with a single argument `y`, `atan(y)` returns
 $\arctan(y)$ in radians. When called with two arguments `y` and `x`,
 `atan(y,x)` returns $\arctan(\frac{y}{x})$ in radians. `atan(y)` is equivalent
 to `atan(y,1)`.
+
+#### `ceil(x)`
+
+Returns the smallest integer not less than `x` (i.e. $\lceil{x}\rceil$)
+
+```riff
+ceil(2.5)   // 3
+ceil(2)     // 2
+```
 
 #### `cos(x)`
 
