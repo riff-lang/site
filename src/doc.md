@@ -1,6 +1,6 @@
 ---
 title:  User Guide
-before: Last updated 2020/09/12
+before: Last updated 2020/09/19
 ...
 
 > This document is a work in progress
@@ -131,7 +131,88 @@ someone else has a really good idea how to handle that].
 
 #### Numerals
 
+Any string of characters beginning with a number (`0`..`9`) will be
+interpreted as a numeric constant. A string of characters will be
+interpreted as part of a single numeral until an invalid character is
+reached. Numerals can be integers or floating-point numbers in
+decimal or hexadecimal form. Numbers with the prefix `0x` or `0X` will
+be interpreted as hexadecimal. Valid hexadecimal characters can be any
+mix of lowercase and uppercase digits `A` through `F`.
+
+```riff
+23      // Decimal integer constant
+6.7     // Decimal floating-point constant
+.5      // Also a decimal floating-point constant (0.5)
+45.     // 45.0
+0xf     // Hexadecimal integer constant
+0XaB    // Valid hexadecimal integer (mixed lowercase and uppercase)
+0x.8    // Hexdecimal floating-point constant
+```
+
+Riff also supports integers in binary form:
+
+```riff
+0b1101  // 13 in binary
+```
+
+Riff does not support floating point numbers with the binary (`0b`)
+prefix.
+
+#### Characters
+
+Riff supports character literals enclosed in single quotation marks
+(`'`). Riff currently interprets character literals strictly as
+integer constants.
+
+```riff
+'A'     // 65
+'~'     // 126
+```
+
+Similar to [strings](#strings), Riff supports the use of the backslash
+character (`\`) to denote C-style escape sequences.
+
+| Character | ASCII code (hex) | Description       |
+| :-------: | :--------------: | -----------       |
+| `a`       | `07`             | Bell              |
+| `b`       | `08`             | Backspace         |
+| `e`       | `1B`             | Escape            |
+| `f`       | `0C`             | Form feed         |
+| `n`       | `0A`             | Newline/Line feed |
+| `r`       | `0D`             | Carriage return   |
+| `t`       | `09`             | Horizontal tab    |
+| `v`       | `0B`             | Vertical tab      |
+| `'`       | `27`             | Single quote      |
+| `\`       | `5C`             | Backslash         |
+
+Riff also supports arbitrary escape sequences in decimal and
+hexadecimal forms.
+
+| Sequence | Description |
+| :------: | ----------- |
+| `\nnn`   | Decimal escape sequence with up to three decimal digits |
+| `\xnn`   | Hexadecimal escape sequence with up to two hexadecimal digits |
+
 #### Strings
+
+String literals are denoted by matching enclosing double quotation
+marks (`"`). String literals spanning multiple lines will have the
+newline characters included. Alternatively, a single backslash (`\`)
+can be used in a string literal to indicate that the following newline
+be ignored. Riff supports the same escape sequences in string literals
+as the ones outlined in the [characters](#characters) section.
+
+```riff
+"Hello, world!"
+
+"String spanning
+multiple
+lines"
+
+"String spanning \
+multiple lines \
+without newlines"
+```
 
 ### Keywords
 
@@ -149,6 +230,14 @@ for         while
 ```
 
 ### Variables
+
+A variable represents a place to store a value in a Riff program.
+Variables can be global or local in scope.
+
+A valid identifier is a string of characters beginning with a
+lowercase letter (`a`..`z`), uppercase letter (`A`..`Z`) or underscore
+(`_`). Numeric characters (`0`..`9`) are valid in identifiers, but not
+as a starting character.
 
 ### Statements
 
@@ -389,13 +478,122 @@ statement lists.
 
 #### `print`
 
+A `print` statement will print the result of one or more
+comma-delimited expressions, with each subsequent expression result being
+separated by a single space when printed.
+
 #### `return`
+
+```
+ret_stmt = 'return' [expr]
+```
+
+A `return` statement is used for returning control from a function
+with an optional value.
+
+The empty `return` statement highlights a pitfall with Riff's grammar.
+Consider the following example.
+
+```riff
+if x == 1
+    return
+x++
+```
+
+At first glance, this code indicates to return control with no value
+if `x` equals `1` or increment `x` and continue execution. However,
+when Riff parses the stream of tokens above, it will consume the
+expression `x++` as part of the `return` statement. This type of
+pitfall can be avoided by appending a semicolon (`;`) to `return` or
+enclosing the statement(s) following the `if` conditional in braces.
+```riff
+if x == 1
+    return;
+x++
+```
+
+```riff
+if x == 1 {
+    return
+}
+x++
+```
 
 #### `while`
 
+```
+while_stmt = 'while' expr stmt
+           | 'while' expr '{' stmt_list '}'
+```
+
+A `while` statement declares a simple loop structure where the
+statement(s) following the expression *expr* are repeatedly executed
+until *expr* evaluates to `0`.
+
+Like all loop structures in Riff, the statement(s) inside a loop body
+establish their own local scope. Any locals declared inside the loop
+body are not accessible outside of the loop body. The expression
+following `while` has no access to any locals declared inside the loop
+body.
+
 #### Expression Statements
 
-Any expression
+Any expression not part of another syntactic structure such as `if` or
+`while` is an expression statement. Expression statements in Riff are
+simply standalone expressions which will invoke some side-effect in
+the program.
+
+By default, the result of an expression statement is implicitly
+printed. However, if the expression is a typical assignment expression
+or something that simply increments or decrements a variable, the
+result will *not* be printed. This accommodates expected behavior with
+statements such as `a = b` or `i++`, while also providing some form of
+functionality for expression statements such as `1 << 4`, which would
+typically induce an error or have its result simply discarded in other
+languages.
+
+The rules for printing or discarding the result of an expression
+statement is defined by the status of the leftmost primary expression.
+If the leftmost element is being mutated in any way (assignment,
+increment or decrement), the result is discarded. However, in the
+event of an expression statement where the leftmost expression is
+being incremented or decremented, if the expression is accompanied by
+another typical operation such as addition or subtraction, the result
+is *not* discarded and will be printed.
+
+These are some examples of expression statements that are *not*
+implicitly printed. The results of these expressions will be
+discarded.
+
+```riff
+a = b
+x = y + z
+c = f(x)
+++i
+j++
+array[i]++
+--array[j]
+```
+
+Below are some examples of expression statements which *will* have
+their results implicitly printed.
+
+```riff
+1 + 2
+x++ - 1
+array[++i]
+f(x)        // Prints the result returned from function f
+```
+
+Note that function calls which return nothing (e.g.
+[`srand()`](#srandx)) will not have anything printed implicitly.
+
+Expression statements can also be a comma-delimited list of
+expressions. Riff assumes all expressions in an expression list are
+intended to be printed and will ignore any rules that otherwise signal
+the compiler to not print the results of the expressions. Even if a
+function call which returns nothing is included in a comma-delimited
+expression list, `null` will be printed in its place.
 
 ### Expressions
 
@@ -536,6 +734,63 @@ a = x++ ?: y    // a = 1; x = 2
 ```
 
 #### Ranges/Sequences
+
+The `..` operator defines an integral range or sequence, which is a
+subtype in Riff. Sequences can contain an optional interval, denoted
+by an expression following a colon (`:`). Operands can be left blank
+to denote the absence of a bound, which will be interpreted
+differently based on the operation. There are 8 total permutations of
+valid sequences in Riff.
+
+| Syntax   | Range                              |
+| :----:   | -----                              |
+| `x..y`   | $[x..y]$                           |
+| `x..`    | $[x..$`INT_MAX`$]$                 |
+| `..y`    | $[0..y]$                           |
+| `..`     | $[0..$`INT_MAX`$]$                 |
+| `x..y:z` | $[x..y]$ on interval $z$           |
+| `x..:z`  | $[x..$`INT_MAX`$]$ on interval $z$ |
+| `..y:z`  | $[0..y]$ on interval $z$           |
+| `..:z`   | $[0..$`INT_MAX`$]$ on interval $z$ |
+
+All sequences are inclusive. For example, the sequence `1..7` will
+include both `1` and `7`. Riff also infers the direction of the
+sequence if no `z` value is provided.
+
+Sequences can be used in [`for` loops](#for) to iterate over a range of
+numbers.
+
+Sequences can also extract arbitrary substrings when used in a
+[subscript](#subscripting) expression with a string. When subscripting
+a string with a sequence such as `x..`, Riff will truncate the
+sequence to the end of the string to return the string's suffix
+starting at index `x`.
+
+```riff
+hello = "Helloworld"
+hello[5..]              // "world"
+hello[..4]              // "Hello"
+hello[..]               // "Helloworld"
+```
+
+Specifying an interval $n$ allows you to extract a substring with every
+$n$ characters.
+
+```riff
+abc = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+abc[..:2]               // "ACEGIKMOQSUWY"
+```
+
+Reversed strings can be easily extracted with a downward sequence.
+
+```riff
+a = "forwardstring"
+a[#a-1..0]              // "gnirtsdrawrof"
+```
+
+As mentioned in the [overview](#overview), a sequence is a type of
+Riff value. This means sequences can be stored in variables as well as
+passed as function parameters and returned from function calls.
 
 #### Concatenation Operator
 
