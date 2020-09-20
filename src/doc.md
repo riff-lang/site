@@ -261,9 +261,9 @@ while 1 {
 
 A `continue` statement causes the program to skip the remaining
 portion of the current loop, jumping to the end of the of the loop
-body. Like `break`, `continue` is invalid outside of a loop structure;
-`riff` will throw an error when trying to compile a `continue`
-statement outside of a loop.
+body. Like [`break`](#break), `continue` is invalid outside of a loop
+structure; `riff` will throw an error when trying to compile a
+`continue` statement outside of a loop.
 
 ```riff
 do {
@@ -469,6 +469,11 @@ attached to an `if`.
 
 #### `local`
 
+```
+local_stmt = 'local' expr { ',' expr }
+           | 'local' fn_stmt
+```
+
 `local` declares a variable visible only to the current block and any
 descending code blocks. Multiple variables can be declared as `local`
 with a comma-delimited expression list, similar to expression lists in
@@ -476,7 +481,24 @@ expression statements. Expression lists in `local` declaration do not
 have any results printed implicitly, unlike standard expression
 statement lists.
 
+A local variable can reference a variable in an outer scope of the
+same name without altering the outer variable.
+
+```riff
+a = 25
+if 1 {
+    local a = a     // Newly declared local `a` will be 25
+    a += 5
+    a               // Prints 30
+}
+a                   // Prints 25
+```
+
 #### `print`
+
+```
+print_stmt = 'print' expr { ',' expr }
+```
 
 A `print` statement will print the result of one or more
 comma-delimited expressions, with each subsequent expression result being
@@ -553,7 +575,7 @@ typically induce an error or have its result simply discarded in other
 languages.
 
 The rules for printing or discarding the result of an expression
-statement is defined by the status of the leftmost primary expression.
+statement are defined by the status of the leftmost primary expression.
 If the leftmost element is being mutated in any way (assignment,
 increment or decrement), the result is discarded. However, in the
 event of an expression statement where the leftmost expression is
