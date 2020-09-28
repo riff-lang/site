@@ -1,6 +1,6 @@
 ---
 title:  User Guide
-before: Last updated 2020/09/19
+before: Last updated 2020/09/28
 ...
 
 > This document is a work in progress
@@ -11,7 +11,7 @@ out the [examples](../examples).
 
 Riff is a dynamically-typed general-purpose programming language
 designed primarily for prototyping and command-line usage. Riff offers
-a familiar syntax to many C-style languages as well as many extra
+a familiar syntax to many C-style languages as well as some extra
 conveniences, aiming to be a useful supplementary tool for
 programmers.
 
@@ -126,6 +126,20 @@ scope and initializes it to `null`. Depending on the context, the
 variable may also be initialized to `0` or an empty array. Riff does
 not allow uninitialized variables to be called as functions^[Unless
 someone else has a really good idea how to handle that].
+
+### Comments
+
+Riff supports C++-style line comments with `//`, signaling to the
+interpreter to ignore everything following `//`. Riff also supports
+C-style block comments in the form of `/*...*/`; Riff will ignore
+everything following `/*` until it reaches `*/`.
+
+```riff
+// This is a comment
+/* This is also
+   a comment
+*/
+```
 
 ### Constants and Literals
 
@@ -1143,6 +1157,8 @@ uppercase. All other characters in string `s` are copied over
 unchanged.
 
 ## Bytecode Listing
+
+> Section is incomplete
 
 When `riff` is invoked with the `-l` option, it produces a listing of
 the given program's compiled bytecode along with their associated
