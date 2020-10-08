@@ -84,6 +84,7 @@ endif
 	mv $(DIST_DIR)/index/index.html $(DIST_DIR)/index.html
 	rm -rf $(DIST_DIR)/index
 	echo "Resolve index file"
+	cp -R asset $(DIST_DIR)
 
 plaintext:
 	mkdir -p $(DIST_DIR)/t

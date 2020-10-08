@@ -41,6 +41,8 @@ header
     color: var(--color-fg)
     @media (prefers-color-scheme: dark)
       color: $color-primary
+    img
+      height: 50px
   nav
     ul
       margin: 0 auto
@@ -48,13 +50,12 @@ header
       li
         display: inline-block
 
+// TODO not sure this is being rendered at all
 .logo
-  fill: var(--color-fg)
   margin: 0 auto
   width: auto
-  height: 50px
-  @media (prefers-color-scheme: dark)
-    fill: $color-primary
+  img
+    height: 50px
 
 .download
   border-radius: 3px
