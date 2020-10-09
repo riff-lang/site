@@ -1,48 +1,84 @@
 % Examples
 
-### Hello World
+- [Hello World](#hello-world)
+- [Values](#values)
+- [Variables](#variables)
+- [For loops](#for-loops)
+
+## Hello World
+
+The classic ["Hello,
+World!" program](https://en.wikipedia.org/wiki/%22Hello,_World!%22_program)
+is as simple as it gets in Riff. The string literal `Hello, World!`
+qualifies as an expression statement that gets implicitly printed.
 
 ```riff
-// The classic Hello World program in Riff
-"Hello, world!"
+"Hello, World!"
+```
+```
+Hello, World!
 ```
 
-### FizzBuzz
+## Values
 
 ```riff
-for i in 1..100 {
-    if i % 15 == 0
-        "FizzBuzz"
-    else if i % 3 == 0
-        "Fizz"
-    else if i % 5 == 0
-        "Buzz"
-    else
+// Two string literals concatenated together with the `::` operator
+"ri" :: "ff"
+
+// Expression lists delimited by a comma will have their results
+// printed on the same line, separated by a space.
+"1 + 1 =", 2
+
+// Various integer literals
+43, 0xabba7e, 0b1101011
+
+// Floating-point literals
+4.29, 0xA.f
+
+// Character literals are interpreted as integers, like in C
+'A'
+```
+```
+riff
+1 + 1 = 2
+43 11254398 107
+4.29 10.9375
+65
+```
+
+## Variables
+
+```riff
+x = 99
+x
+
+// Riff supports use of undeclared/uninitialized variables
+y++
+y
+
+// You can also explicitly print expression results with the `print`
+// keyword
+print z = "A string"
+```
+```
+99
+1
+A string
+```
+
+## For loops
+
+This will iterate over numbers 0 through 10 (inclusive), assigning the
+number to the variable `i` before each iteration.
+
+```riff
+for i in 10 {
+    if i % 5 == 0
         i
 }
 ```
-
-### Fibonacci (Iterative)
-
-```riff
-n = 20
-
-fib[i++] = 0
-fib[i++] = 1
-
-while i <= n {
-    fib[i] = fib[i-1] + fib[i-2]
-    i++
-}
-
-fib[n]  // Prints the nth number
 ```
-### Fibonacci (Recursive)
-
-```riff
-fn fib(n) {
-    return n < 2 ? n : fib(n-1) + fib(n-2)
-}
-
-fib(20) // Prints the result
+0
+5
+10
 ```
