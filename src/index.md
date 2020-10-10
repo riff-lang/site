@@ -3,4 +3,4 @@ protoyping and command-line usage.
 
 This website is a work in progress. For now, feel free to checkout the
 language's [documentation](/doc) as well as the [source
-code](https://github.com/rootbeersoup/riff) on GitHub.
+code](https://github.com/riff-lang/riff) on GitHub.

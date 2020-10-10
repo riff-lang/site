@@ -264,5 +264,3 @@ while 1
 10
 This will print once
 ```
-
----
