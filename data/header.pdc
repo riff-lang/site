@@ -8,9 +8,9 @@
 </div>
 <nav>
     <ul>
-        <li><a href="../examples">examples</a></li>
-        <li><a href="../doc">doc</a></li>
-        <li><a href="https://github.com/riff-lang/riff">src</a></li>
-        <li><a class="download" href="../download">download</a></li>
+        <li><a href="../examples">Examples</a></li>
+        <li><a href="../doc">Documentation</a></li>
+        <li><a href="https://github.com/riff-lang/riff">GitHub</a></li>
+        <li><a class="download" href="../download">Download</a></li>
     </ul>
 </nav>

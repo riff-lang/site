@@ -23,6 +23,11 @@ $color-primary: #ffcc00
 @mixin monospace
   font-family: $font-monospace
 
+@mixin display
+  font-family: $font-display
+  font-weight: 300
+  text-transform: uppercase
+
 *
   font-feature-settings: 'zero' on
 
@@ -33,7 +38,7 @@ html
 header
   margin: 1em 0
   justify-content: space-between
-  +monospace
+  +display
   display: flex
   flex-wrap: nowrap
   align-items: center
@@ -48,6 +53,8 @@ header
       margin: 0 auto
       list-style: none
       li
+        font-size: 1.6em
+        margin-left: 0.5em
         display: inline-block
 
 // TODO not sure this is being rendered at all
@@ -58,17 +65,14 @@ header
     height: 50px
 
 .download
-  border-radius: 3px
-  padding: 2px 5px
-  background-color: $color-primary
-  color: var(--color-fg)
+  border: 2px solid var(--color-fg)
+  padding: 0px 6px
   @media (prefers-color-scheme: dark)
-    color: var(--color-bg)
+    border: 2px solid $color-primary
   &:hover
-    background-color: var(--color-fg)
-    color: var(--color-bg)
+    border: 2px solid $color-primary
     @media (prefers-color-scheme: dark)
-      background-color: darken($color-primary, 12%)
+      border: 2px solid darken($color-primary, 12%)
 
 body
   font-family: $font-base
@@ -116,8 +120,7 @@ ul li p
 $size-header-base: 4em
 
 h1, h2
-  font-family: $font-display
-  font-weight: 300
+  +display
   margin: 0 auto
 
 h1
