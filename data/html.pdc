@@ -56,7 +56,7 @@ $for(after)$
     <p class=before-after>$after$</p>
 $endfor$
         <footer>
-            <p>© 2020 Darryl Abbate</p>
+            ${ footer() }
         </footer>
     </body>
 </html>
