@@ -158,7 +158,6 @@ mix of lowercase and uppercase digits `A` through `F`.
 23      // Decimal integer constant
 6.7     // Decimal floating-point constant
 .5      // Also a decimal floating-point constant (0.5)
-45.     // 45.0
 0xf     // Hexadecimal integer constant
 0XaB    // Valid hexadecimal integer (mixed lowercase and uppercase)
 0x.8    // Hexdecimal floating-point constant
