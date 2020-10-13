@@ -134,6 +134,7 @@ fn add(x,y) {
 add(3,4)
 
 // Functions that take no parameters can omit the empty parentheses
+// in the type signature
 fn say_hello {
     "Hello!"
 }
