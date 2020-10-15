@@ -25,7 +25,7 @@ $color-primary: #ffcc00
 
 @mixin display
   font-family: $font-display
-  font-weight: 300
+  font-weight: 400
   text-transform: uppercase
 
 *
@@ -53,7 +53,7 @@ header
       margin: 0 auto
       list-style: none
       li
-        font-size: 1.6em
+        font-size: 2em
         margin-left: 0.8em
         display: inline-block
 
@@ -65,14 +65,8 @@ header
     height: 50px
 
 .download
-  border: 2px solid var(--color-fg)
-  padding: 0px 6px
-  @media (prefers-color-scheme: dark)
-    border: 2px solid $color-primary
-  &:hover
-    border: 2px solid $color-primary
-    @media (prefers-color-scheme: dark)
-      border: 2px solid darken($color-primary, 12%)
+  padding: 5px
+  text-transform: lowercase
 
 body
   font-family: $font-base
@@ -119,7 +113,7 @@ ul li p
 
 $size-header-base: 4em
 
-h1, h2
+h1
   +display
   margin: 0 auto
 
@@ -127,7 +121,7 @@ h1
   font-size: $size-header-base
 
 h2
-  font-size: $size-header-base * 0.8
+  font-size: 2em
 
 h3
   font-size: 1.5em
