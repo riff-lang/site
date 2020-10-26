@@ -57,12 +57,11 @@ header
         margin-left: 0.8em
         display: inline-block
 
-// TODO not sure this is being rendered at all
 .logo
-  margin: 0 auto
   width: auto
-  img
-    height: 50px
+  a
+    img
+      height: 50px
 
 .download
   padding: 5px
@@ -201,6 +200,25 @@ table
 caption
   +monospace
   font-size: 0.8em
+
+.sidebar
+  +highlight
+  margin: 0 auto
+  height: 100%
+  position: fixed
+  top: 0
+  left: 0
+  padding: 2em
+  overflow: hidden
+  overflow-y: scroll
+  font-size: 1.2em
+  nav
+    ul
+      font-size: inherit
+      list-style-type: none
+      padding-left: 0
+      a
+        color: var(--color-fg)
 
 .footnotes
   margin: 3em 0 2em 0

@@ -1,9 +1,8 @@
 ---
 title:  User Guide
-before: Last updated 2020/09/28
+before: Last updated 2020/10/24 (WIP)
+toc:    false
 ...
-
-> This document is a work in progress
 
 This document serves as a complete reference/specification of the Riff
 programming language. For a quicker overview of the language, check

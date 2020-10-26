@@ -4,15 +4,6 @@ This page contains brief samples of various language features in Riff.
 For a complete specification of the language, check out the
 [documentation](../doc).
 
-- [Hello World](#hello-world)
-- [Values](#values)
-- [Variables](#variables)
-- [Arrays](#arrays)
-- [Functions](#functions)
-- [Sequences](#sequences)
-- [If-Else](#if-else)
-- [Loops](#loops)
-
 ## Hello World
 
 The classic ["Hello,
