@@ -35,22 +35,23 @@ $else$
 $endif$
     <body>
 $if(toc)$
-    <!-- Set `toc: true` in a markdown file's frontmatter to display
-         the TOC sidebar. Pandoc may render the TOC regardless. In
-         which case, set `toc: false` explicitly to prevent rendering -->
-    <div class="sidebar">
-        <div class="logo">
-            <a href="https://riff.cx">
+        <!-- Set `toc: true` in a markdown file's frontmatter to display -->
+        <!-- the TOC sidebar. Pandoc may render the TOC regardless. In -->
+        <!-- which case, set `toc: false` explicitly to prevent rendering -->
+        <div class="sidebar">
+            <a href="https://riff.cx" class="logo">
                 <picture>
                     <source srcset="../asset/logo-small-yellow.png" media="(prefers-color-scheme: dark)">
                     <img src="../asset/logo-small-black.png">
                 </picture>
             </a>
+            <nav id="$idprefix$TOC" role="doc-toc">
+                $table-of-contents$
+            </nav>
         </div>
-        <nav id="$idprefix$TOC" role="doc-toc">
-            $table-of-contents$
-        </nav>
-    </div>
+        <div class="main-left">
+$else$
+        <div class="main-center">
 $endif$
 $if(title)$
         <h1 class="title">$title$</h1>
@@ -78,5 +79,6 @@ $endfor$
             <!-- footer.pdc -->
             ${ footer() }
         </footer>
+        </div>
     </body>
 </html>

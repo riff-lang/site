@@ -88,6 +88,12 @@ a
     @media (prefers-color-scheme: dark)
       color: darken($color-primary, 12%)
 
+.main-left
+  margin: 0 auto
+
+.main-center
+  margin: 0 auto
+
 em
   +italic
 
@@ -110,26 +116,24 @@ p, ul, ol
 ul li p
   font-size: 1em
 
-$size-header-base: 4em
-
-h1
+h1.title
   +display
   margin: 0 auto
+  font-size: 4em
+
+$size-header-base: 2em
 
 h1
   font-size: $size-header-base
 
 h2
-  font-size: 2em
+  font-size: $size-header-base * 0.8
 
 h3
-  font-size: 1.5em
+  font-size: $size-header-base * 0.75
 
 h4
-  font-size: 1.2em
-
-.title
-  margin: 0 auto
+  font-size: $size-header-base * 0.6
 
 .postinfo, .postinfo a
   +monospace
@@ -205,11 +209,12 @@ caption
   +highlight
   margin: 0 auto
   height: 100%
+  width: 250px
   position: fixed
   top: 0
   left: 0
-  padding: 2em
-  overflow: hidden
+  padding: 1em
+  overflow-x: hidden
   overflow-y: scroll
   font-size: 1.2em
   nav
@@ -219,6 +224,14 @@ caption
       padding-left: 0
       a
         color: var(--color-fg)
+      li
+        font-weight: 700
+        line-height: 2em
+        ul li
+          font-weight: 400
+          line-height: 1.5em
+          &:before
+            content: "- "
 
 .footnotes
   margin: 3em 0 2em 0

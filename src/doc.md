@@ -16,7 +16,7 @@ programmers.
 
 Riff is offered as a standalone interpreter `riff`.
 
-### Synopsis
+## Synopsis
 
 ```
 riff [options] 'program' [argument ...]
@@ -28,7 +28,7 @@ evaluated as a Riff program. Any arguments following `'program'` or
 `-f program-file` are collected as string literals and made available
 to the user's program.
 
-### Options
+## Options
 
 - **`-f`** *`program-file`*<br>
 Interpret the Riff program contained in the file specified with the
@@ -41,7 +41,7 @@ See section below.
 - **`-v`**<br>
 Print version information and exit.
 
-## Overview
+# Overview
 
 Riff is dynamically-typed. Identifiers/variables do not contain
 explicit type information and the language has no syntactic constructs
@@ -97,9 +97,9 @@ functions are nearly identical, with a few limitations. For example, a C
 function cannot be subscripted (i.e. `f[0]`) like a Riff function can,
 since C functions are not arrays of bytecode like Riff functions.
 
-## Language
+# Language
 
-### Basic Concepts
+## Basic Concepts
 
 A Riff program is a sequence of statements. Riff has no concept of
 statement terminators. The lexical analysis phase does not perform
@@ -126,7 +126,7 @@ variable may also be initialized to `0` or an empty array. Riff does
 not allow uninitialized variables to be called as functions^[Unless
 someone else has a really good idea how to handle that].
 
-### Comments
+## Comments
 
 Riff supports C++-style line comments with `//`, signaling to the
 interpreter to ignore everything starting from `//` to the end of the
@@ -141,9 +141,9 @@ current line. Riff also supports C-style block comments in the form of
 */
 ```
 
-### Constants and Literals
+## Constants and Literals
 
-#### Numerals
+### Numerals
 
 Any string of characters beginning with a number (`0`..`9`) will be
 interpreted as a numeric constant. A string of characters will be
@@ -171,7 +171,7 @@ Riff also supports integers in binary form:
 Riff does not support floating point numbers with the binary (`0b`)
 prefix.
 
-#### Characters
+### Characters
 
 Riff supports character literals enclosed in single quotation marks
 (`'`). Riff currently interprets character literals strictly as
@@ -206,7 +206,7 @@ hexadecimal forms.
 | `\nnn`   | Decimal escape sequence with up to three decimal digits |
 | `\xnn`   | Hexadecimal escape sequence with up to two hexadecimal digits |
 
-#### Strings
+### Strings
 
 String literals are denoted by matching enclosing double quotation
 marks (`"`). String literals spanning multiple lines will have the
@@ -227,7 +227,7 @@ multiple lines \
 without newlines"
 ```
 
-### Keywords
+## Keywords
 
 The following keywords are reserved for syntactic constructs and not
 re-definable by the user.
@@ -242,7 +242,7 @@ fn          return
 for         while
 ```
 
-### Variables
+## Variables
 
 A variable represents a place to store a value in a Riff program.
 Variables can be global or local in scope.
@@ -252,9 +252,9 @@ lowercase letter (`a`..`z`), uppercase letter (`A`..`Z`) or underscore
 (`_`). Numeric characters (`0`..`9`) are valid in identifiers, but not
 as a starting character.
 
-### Statements
+## Statements
 
-#### `break`
+### `break`
 
 `break` is a control-flow construct which will immediately exit the
 current loop when reached. `break` is invalid outside of a loop
@@ -270,7 +270,7 @@ while 1 {
 // program control transfers here
 ```
 
-#### `continue`
+### `continue`
 
 A `continue` statement causes the program to skip the remaining
 portion of the current loop, jumping to the end of the of the loop
@@ -301,7 +301,7 @@ while 1 {
 }
 ```
 
-#### `do`
+### `do`
 
 ```
 do_stmt = 'do' stmt 'while' expr
@@ -321,16 +321,16 @@ body.
 A `do` statement declared without a `while` condition is invalid and
 will cause an error to be thrown upon compilation.
 
-#### `else`
+### `else`
 
 See [`if` statements](#if).
 
-#### `exit`
+### `exit`
 
 When program control reaches an `exit` statement, the program will
 terminate immediately with code `0`.
 
-#### `fn`
+### `fn`
 
 ```
 fn_stmt = 'fn' id ['(' [ id {',' id } ')'] '{' stmt_list '}'
@@ -358,7 +358,7 @@ fn h {
 More information on user-defined functions in Riff can be found in the
 [Functions](#functions) section.
 
-#### `for`
+### `for`
 
 ```
 for_stmt = 'for' id [ ',' id ] 'in' expr stmt
@@ -459,7 +459,7 @@ for k,v in f {
 }
 ```
 
-#### `if`
+### `if`
 
 ```
 if_stmt = 'if' expr stmt [ 'else' ... ]
@@ -480,7 +480,7 @@ Any statements between an `if` and an `else` statement is invalid;
 Riff will throw an error when compiling an `else` statement not
 attached to an `if`.
 
-#### `local`
+### `local`
 
 ```
 local_stmt = 'local' expr { ',' expr }
@@ -507,7 +507,7 @@ if 1 {
 a                   // Prints 25
 ```
 
-#### `print`
+### `print`
 
 ```
 print_stmt = 'print' expr { ',' expr }
@@ -517,7 +517,7 @@ A `print` statement will print the result of one or more
 comma-delimited expressions, with each subsequent expression result being
 separated by a single space when printed.
 
-#### `return`
+### `return`
 
 ```
 ret_stmt = 'return' [expr]
@@ -554,7 +554,7 @@ if x == 1 {
 x++
 ```
 
-#### `while`
+### `while`
 
 ```
 while_stmt = 'while' expr stmt
@@ -571,7 +571,7 @@ body are not accessible outside of the loop body. The expression
 following `while` has no access to any locals declared inside the loop
 body.
 
-#### Expression Statements
+### Expression Statements
 
 Any expression not part of another syntactic structure such as `if` or
 `while` is an expression statement. Expression statements in Riff are
@@ -630,7 +630,7 @@ the compiler to not print the results of the expressions. Even if a
 function call which returns nothing is included in a comma-delimited
 expression list, `null` will be printed in its place.
 
-### Expressions
+## Expressions
 
 | Operator(s)       | Description | Associativity | Precedence |
 | ---               | ---         | ---           | ---        |
@@ -674,7 +674,7 @@ the same precedence and associativity as simple assignment (`=`)
 *=      ^=
 ```
 
-#### Arithmetic Operators
+### Arithmetic Operators
 
 | Operator | Type(s)         | Description                |
 | :------: | -------         | -----------                |
@@ -687,7 +687,7 @@ the same precedence and associativity as simple assignment (`=`)
 | `++`     | Prefix, Postfix | Increment by 1             |
 | `--`     | Prefix, Postfix | Decrement by 1             |
 
-#### Bitwise Operators
+### Bitwise Operators
 
 | Operator | Type   | Description         |
 | :------: | ----   | -----------         |
@@ -698,7 +698,7 @@ the same precedence and associativity as simple assignment (`=`)
 | `>>`     | Infix  | Bitwise right shift |
 | `~`      | Prefix | Bitwise `NOT`       |
 
-#### Logical Operators
+### Logical Operators
 
 | Operator | Type   | Description   |
 | :------: | ----   | -----------   |
@@ -715,7 +715,7 @@ is evaluated only if `lhs` is *not* "truthy."
 Values which evaluate as "false" are `null`, `0` and the empty string
 (`""`).
 
-#### Relational Operators
+### Relational Operators
 
 | Operator | Type  | Description              |
 | :------: | ----  | -----------              |
@@ -726,7 +726,7 @@ Values which evaluate as "false" are `null`, `0` and the empty string
 | `>`      | Infix | Greater-than             |
 | `>=`     | Infix | Greater-than or equal-to |
 
-#### Assignment Operators
+### Assignment Operators
 
 The following assignment operators are all binary infix operators.
 
@@ -746,7 +746,7 @@ The following assignment operators are all binary infix operators.
 | `>>=`    | Assignment by bitwise right shift |
 | `::=`    | Assignment by concatenation       |
 
-#### Ternary Conditional Operator
+### Ternary Conditional Operator
 
 The `?:` operator performs similarly to other C-style languages.
 
@@ -768,7 +768,7 @@ x = 1
 a = x++ ?: y    // a = 1; x = 2
 ```
 
-#### Ranges/Sequences
+### Ranges/Sequences
 
 The `..` operator defines an integral range or sequence, which is a
 subtype in Riff. Sequences can contain an optional interval, denoted
@@ -827,7 +827,7 @@ As mentioned in the [overview](#overview), a sequence is a type of
 Riff value. This means sequences can be stored in variables as well as
 passed as function parameters and returned from function calls.
 
-#### Concatenation Operator
+### Concatenation Operator
 
 The `::` operator concatenates two values together. The result of the
 operation is a string with the left-hand expression and right-hand concatenated together.
@@ -837,7 +837,7 @@ operation is a string with the left-hand expression and right-hand concatenated 
 "str" :: 123        // "str123"
 ```
 
-#### Length Operator
+### Length Operator
 
 `#` is a prefix operator which returns the length of a value. When
 performed on string values, the result of the expression is the length
@@ -866,7 +866,7 @@ the length of the number in decimal form.
 #0x1f   // 2
 ```
 
-#### Subscripting
+### Subscripting
 
 The `[]` operator is used to subscript a Riff value. All Riff values
 can be subscripted except for C (built-in) functions. Subscripting any
@@ -913,7 +913,7 @@ fn f(x,y) {
 f[2]    // 25 (may vary depending on future riff versions)
 ```
 
-#### `argv`/Default Array Operator
+### `argv`/Default Array Operator
 
 `$` is a special prefix operator used for accessing the argument
 vector or "default array." `$` has the highest precedence of all Riff
@@ -961,7 +961,7 @@ $0:  "43"
 $1:  "22"
 ```
 
-#### Function Calls
+### Function Calls
 
 `()` is a postfix operator used to execute function calls. Arguments
 are passed as a comma-delimited list of expressions inside the
@@ -975,29 +975,29 @@ fn max(x,y) {
 max(1+4, 3*2)
 ```
 
-### Functions
+## Functions
 
 ...
 
 See the following section for a detailed description of the included
 library of functions.
 
-## Included Functions
+# Included Functions
 
-### Arithmetic Functions
+## Arithmetic Functions
 
-#### `abs(x)`
+### `abs(x)`
 
 Returns the absolute value of `x` (i.e. $|x|$).
 
-#### `atan(y[,x])`
+### `atan(y[,x])`
 
 When called with a single argument `y`, `atan(y)` returns
 $\arctan(y)$ in radians. When called with two arguments `y` and `x`,
 `atan(y,x)` returns $\arctan(\frac{y}{x})$ in radians. `atan(y)` is equivalent
 to `atan(y,1)`.
 
-#### `ceil(x)`
+### `ceil(x)`
 
 Returns the smallest integer not less than `x` (i.e. $\lceil{x}\rceil$)
 
@@ -1006,15 +1006,15 @@ ceil(2.5)   // 3
 ceil(2)     // 2
 ```
 
-#### `cos(x)`
+### `cos(x)`
 
 Returns $\cos(x)$ in radians.
 
-#### `exp(x)`
+### `exp(x)`
 
 Returns [$e$](https://en.wikipedia.org/wiki/E_(mathematical_constant)) raised to the power `x` (i.e. $e^x$).
 
-#### `int(x)`
+### `int(x)`
 
 Returns `x` truncated to an integer.
 
@@ -1022,24 +1022,24 @@ Returns `x` truncated to an integer.
 int(16.34)  // 16
 ```
 
-#### `log(x[,b])`
+### `log(x[,b])`
 
 Returns $\log_b(x)$. If `b` is not provided, `log(x)` returns the
 natural log of `x` (i.e. $\ln(x)$ or $\log_e(x)$).
 
-#### `sin(x)`
+### `sin(x)`
 
 Returns $\sin(x)$ in radians.
 
-#### `sqrt(x)`
+### `sqrt(x)`
 
 Returns $\sqrt{x}$.
 
-#### `tan(x)`
+### `tan(x)`
 
 Returns $\tan(x)$ in radians.
 
-### Pseudo-Random Number Generation
+## Pseudo-Random Number Generation
 
 Riff currently utilizes the POSIX
 [rand48](https://pubs.opengroup.org/onlinepubs/9699919799/functions/drand48.html)
@@ -1049,7 +1049,7 @@ initialized once with `srand48(time(0))`. Riff also provides an `srand()`
 function documented below to allow control over the sequence of the
 randomly generated numbers.
 
-#### `rand([n])`
+### `rand([n])`
 
 When called without arguments, `rand()` returns a pseudo-random
 floating-point number in the range $[0..1)$. When called with an
@@ -1063,7 +1063,7 @@ pseudo-random signed 64-bit integer. `rand(n)` uses two calls to
 `lrand48()` to produce a pseudo-random unsigned integer and modifies
 the result if `n` is negative.
 
-#### `srand([x])`
+### `srand([x])`
 
 Initializes the PRNG with seed `x`. If `x` is not given, `time(0)` is
 used. When the PRNG is initialized with a seed `x`, `rand()` will
@@ -1075,9 +1075,9 @@ rand()      // 0.783235
 rand()      // 0.863673
 ```
 
-### String Functions
+## String Functions
 
-#### `byte(s[,i])`
+### `byte(s[,i])`
 
 Returns the ASCII code of character `i` in string `s`. `i` is `0`
 unless specified by the user. If a user-defined function is passed as
@@ -1098,7 +1098,7 @@ byte(f,2)   // 17
 f[2]        // 17
 ```
 
-#### `char(...)`
+### `char(...)`
 
 Takes zero or more integers and returns a string composed of the ASCII
 codes of each argument in order.
@@ -1107,7 +1107,7 @@ codes of each argument in order.
 char(104, 101, 108, 108, 111)   // "hello"
 ```
 
-#### `hex(x)`
+### `hex(x)`
 
 Returns a string with the hexadecimal representation of `x` as an
 integer. The string is prepended with "`0x`." Riff currently converts
@@ -1119,13 +1119,13 @@ hex(68.7)   // "0x44"
 hex("45")   // "0x2d"
 ```
 
-#### `lower(s)`
+### `lower(s)`
 
 Returns a copy of string `s` with all uppercase letters converted to
 lowercase. All other characters in string `s` are copied over
 unchanged.
 
-#### `split(s[,d])`
+### `split(s[,d])`
 
 Returns an array with elements being string `s` split on delimiter
 `d`. If `d` is not provided, the delimiter `" \t"` will be used. If
@@ -1149,13 +1149,13 @@ chars[0]        // "T"
 chars[23]       // "s"
 ```
 
-#### `upper(s)`
+### `upper(s)`
 
 Returns a copy of string `s` with all lowercase letters converted to
 uppercase. All other characters in string `s` are copied over
 unchanged.
 
-## Bytecode Listing
+# Bytecode Listing
 
 > Section is incomplete
 

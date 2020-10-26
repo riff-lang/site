@@ -4,7 +4,7 @@ This page contains brief samples of various language features in Riff.
 For a complete specification of the language, check out the
 [documentation](../doc).
 
-## Hello World
+# Hello World
 
 The classic ["Hello,
 World!" program](https://en.wikipedia.org/wiki/%22Hello,_World!%22_program)
@@ -15,7 +15,7 @@ qualifies as an expression statement that gets implicitly printed.
 "Hello, World!"
 ```
 
-### Output
+## Output
 
 ```
 Hello, World!
@@ -23,7 +23,7 @@ Hello, World!
 
 ---
 
-## Values
+# Values
 
 ```riff
 // Two string literals concatenated together with the `::` operator
@@ -43,7 +43,7 @@ Hello, World!
 'A'
 ```
 
-### Output
+## Output
 
 ```
 riff
@@ -55,7 +55,7 @@ riff
 
 ---
 
-## Variables
+# Variables
 
 ```riff
 x = 99
@@ -70,7 +70,7 @@ y
 print z = "A string"
 ```
 
-### Output
+## Output
 
 ```
 99
@@ -80,7 +80,7 @@ A string
 
 ---
 
-## Arrays
+# Arrays
 
 ```riff
 // Declaration/initialization of an array
@@ -105,7 +105,7 @@ opcodes = {
 opcodes[0](3,2,1)
 ```
 
-### Output
+## Output
 
 ```
 3
@@ -115,7 +115,7 @@ opcodes[0](3,2,1)
 
 ---
 
-## Functions
+# Functions
 
 ```riff
 fn add(x,y) {
@@ -143,7 +143,7 @@ fn ff(f,g) {
 ff(sin,cos)
 ```
 
-### Output
+## Output
 
 ```
 7
@@ -153,7 +153,7 @@ Hello!
 
 ---
 
-## Sequences
+# Sequences
 
 ```riff
 // Sequences are a special "subtype" in Riff used in for loops to
@@ -178,7 +178,7 @@ for i in (..)
 "reverseme"[8..0]
 ```
 
-### Output (infinite loop omitted)
+## Output (infinite loop omitted)
 
 ```
 0
@@ -195,7 +195,7 @@ emesrever
 
 ---
 
-## If-Else
+# If-Else
 
 ```riff
 n = 3
@@ -220,7 +220,7 @@ else
 n == 2 ? "n is 2" : "n is not 2"
 ```
 
-### Output
+## Output
 
 ```
 n is positive
@@ -230,7 +230,7 @@ n is not 2
 
 ---
 
-## Loops
+# Loops
 
 ```riff
 // Equivalent to the C-style for loop:
@@ -248,7 +248,7 @@ while 1
     "infinite loop!"
 ```
 
-### Output (infinite loop omitted)
+## Output (infinite loop omitted)
 
 ```
 0

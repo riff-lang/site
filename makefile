@@ -22,7 +22,7 @@ HFLAGS    += --title-prefix="Riff"
 HFLAGS    += --css=../style.css
 HFLAGS    += --mathjax
 HFLAGS    += --table-of-contents
-HFLAGS    += --toc-depth=4
+HFLAGS    += --toc-depth=3
 
 TFLAGS     = --from $(INPUT_FMT)
 TFLAGS    += --to $(TEXT_FMT)
