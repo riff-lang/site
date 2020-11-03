@@ -1,4 +1,7 @@
-% Examples
+---
+title: Examples
+toc:   false
+...
 
 This page contains brief samples of various language features in Riff.
 For a complete specification of the language, check out the

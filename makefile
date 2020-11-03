@@ -89,7 +89,7 @@ endif
 	echo "Resolve index file"
 	cp -R $(FONT_DIR) $(DIST_DIR)
 	echo "Copy fonts to dist/"
-	cp -R asset $(DIST_DIR)
+	cp -R assets $(DIST_DIR)
 
 plaintext:
 	mkdir -p $(DIST_DIR)/t

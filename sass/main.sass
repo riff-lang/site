@@ -1,12 +1,15 @@
 :root
   color-scheme: light dark
-  --color-bg: #ffffff
-  --color-fg: #000000
+  --color-bg: #fff
+  --color-fg: #000
   @media (prefers-color-scheme: dark)
-    --color-bg: #222222
-    --color-fg: #dddddd
+    --color-bg: #222
+    --color-fg: #ddd
 
-$color-primary: #ffcc00
+$color-primary: #fc0
+
+$size-header-base: 2em
+$size-sidebar-width: 16em
 
 @import 'fonts.sass'
 @import 'syntax.sass'
@@ -15,7 +18,9 @@ $color-primary: #ffcc00
   color: rgba(128,128,128,0.7)
 
 @mixin highlight
-  background-color: rgba(0,0,0,0.15)
+  background-color: rgba(0,0,0,0.12)
+  @media (prefers-color-scheme: dark)
+    background-color: rgba(0,0,0,0.2)
 
 @mixin italic
   font-style: italic
@@ -36,9 +41,9 @@ html
   font-kerning: normal
 
 header
+  +display
   margin: 1em 0
   justify-content: space-between
-  +display
   display: flex
   flex-wrap: nowrap
   align-items: center
@@ -58,10 +63,10 @@ header
         display: inline-block
 
 .logo
-  width: auto
-  a
-    img
-      height: 50px
+  margin: 2em auto
+  width: fit-content
+  img
+    height: 100px
 
 .download
   padding: 5px
@@ -69,13 +74,28 @@ header
 
 body
   font-family: $font-base
-  max-width: 46em
   background: var(--color-bg)
   font-weight: 400
   font-size: 16px
   color: var(--color-fg)
+
+// Main wrapper when sidebar is present (left-justified)
+.main-left
+  position: fixed
+  top: 0
+  right: 0
+  left: $size-sidebar-width
+  bottom: 0
+  height: 100%
+  overflow-y: auto
+
+// Main wrapper when no sidebar is present (centered)
+.main-center
   margin: 0 auto
-  padding: 0.75em 1.2em
+
+.main
+  padding: 1em 2em
+  max-width: 46em
 
 a
   text-decoration: none
@@ -88,12 +108,6 @@ a
     @media (prefers-color-scheme: dark)
       color: darken($color-primary, 12%)
 
-.main-left
-  margin: 0 auto
-
-.main-center
-  margin: 0 auto
-
 em
   +italic
 
@@ -102,7 +116,6 @@ code
 
 p
   line-height: 1.5em
-  max-width: 100em
   white-space: pre-line
   code
     padding: 0 0.1em
@@ -110,42 +123,27 @@ p
     max-width: 100%
     height: auto
 
-p, ul, ol
-  font-size: 1.1em
-
-ul li p
-  font-size: 1em
-
 h1.title
   +display
   margin: 0 auto
   font-size: 4em
 
-$size-header-base: 2em
-
-h1
-  font-size: $size-header-base
-
-h2
-  font-size: $size-header-base * 0.8
-
-h3
-  font-size: $size-header-base * 0.75
-
-h4
-  font-size: $size-header-base * 0.6
+// h{n} tag size calc
+@for $i from 1 through 5
+  h#{$i}
+    font-size: $size-header-base * (1 - ($i / 10))
 
 .postinfo, .postinfo a
   +monospace
-  font-size: 0.9em
+  font-size: 0.8em
   color: var(--color-fg)
 
 .before-after
-  display: block
   +monospace
   +italic
-  margin: 0 auto
-  font-size: 0.9em
+  margin: 0
+  display: block
+  font-size: 0.8em
 
 ol, ul
   list-style-position: outside
@@ -155,9 +153,6 @@ ol
   list-style-type: decimal
   p
     margin: 0 auto
-
-ul
-  list-style-type: square
 
 hr
   border: 0
@@ -209,29 +204,36 @@ caption
   +highlight
   margin: 0 auto
   height: 100%
-  width: 250px
+  width: $size-sidebar-width
   position: fixed
   top: 0
   left: 0
-  padding: 1em
   overflow-x: hidden
   overflow-y: scroll
-  font-size: 1.2em
   nav
-    ul
-      font-size: inherit
+    > ul
+      padding: 0
       list-style-type: none
-      padding-left: 0
+    li
+      font-weight: 700
+      line-height: 2em
+      & a:hover
+        +highlight
       a
+        padding: 0 1em
+        display: block
         color: var(--color-fg)
-      li
-        font-weight: 700
-        line-height: 2em
-        ul li
+      ul
+        margin-left: 1em
+        list-style-type: disc
+        li
           font-weight: 400
           line-height: 1.5em
-          &:before
-            content: "- "
+          a
+            margin-left: -1em
+          ul
+            margin: 0
+            padding: 0
 
 .footnotes
   margin: 3em 0 2em 0
@@ -253,8 +255,8 @@ caption
   ol, p
     font-size: 0.9em
     > li:hover
-      transition: all 0.05s linear
       +highlight
+      transition: all 0.05s linear
 
 a.footnote-back
   float: right
@@ -272,9 +274,7 @@ sub
   top: 0.4em
 
 footer
-  p
-    +subtle
-    margin: 0 auto
-    text-align: right
-    +monospace
-    font-size: 0.8em
+  +monospace
+  +subtle
+  text-align: right
+  font-size: 0.8em

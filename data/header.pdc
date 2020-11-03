@@ -1,8 +1,8 @@
 <div class="logo">
     <a href="https://riff.cx">
         <picture>
-            <source srcset="../asset/logo-small-yellow.png" media="(prefers-color-scheme: dark)">
-            <img src="../asset/logo-small-black.png">
+            <source srcset="../assets/logo-small-yellow.png" media="(prefers-color-scheme: dark)">
+            <img src="../assets/logo-small-black.png">
         </picture>
     </a>
 </div>

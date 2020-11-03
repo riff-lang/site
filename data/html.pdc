@@ -39,12 +39,14 @@ $if(toc)$
         <!-- the TOC sidebar. Pandoc may render the TOC regardless. In -->
         <!-- which case, set `toc: false` explicitly to prevent rendering -->
         <div class="sidebar">
-            <a href="https://riff.cx" class="logo">
-                <picture>
-                    <source srcset="../asset/logo-small-yellow.png" media="(prefers-color-scheme: dark)">
-                    <img src="../asset/logo-small-black.png">
-                </picture>
-            </a>
+            <div class="logo">
+                <a href="https://riff.cx">
+                    <picture>
+                        <source srcset="../assets/logo-yellow.png" media="(prefers-color-scheme: dark)">
+                        <img src="../assets/logo-black.png">
+                    </picture>
+                </a>
+            </div>
             <nav id="$idprefix$TOC" role="doc-toc">
                 $table-of-contents$
             </nav>
@@ -53,6 +55,7 @@ $if(toc)$
 $else$
         <div class="main-center">
 $endif$
+            <div class="main">
 $if(title)$
         <h1 class="title">$title$</h1>
     $if(subtitle)$
@@ -67,18 +70,19 @@ $if(title)$
     $endif$
 $endif$
 $for(before)$
-    <p class=before-after>$before$</p>
+        <p class=before-after>$before$</p>
 $endfor$
         <article>
 $body$
         </article>
 $for(after)$
-    <p class=before-after>$after$</p>
+        <p class=before-after>$after$</p>
 $endfor$
         <footer>
             <!-- footer.pdc -->
             ${ footer() }
         </footer>
+            </div>
         </div>
     </body>
 </html>
