@@ -1,6 +1,6 @@
 ---
 title:  User Guide
-before: Last updated 2020/10/24 (WIP)
+before: Last updated 2021/01/31
 toc:    false
 ...
 
@@ -1107,6 +1107,31 @@ codes of each argument in order.
 char(104, 101, 108, 108, 111)   // "hello"
 ```
 
+### `fmt(f, ...)`
+
+Returns a formatted string of the arguments following the format
+string `f`. This functions largely resembles the C function
+`sprintf()` without support for length modifiers such as `l` or `ll`.
+Due to Riff's implicit printing functionality, `fmt()` serves as the
+language's `printf()` function, as well as `sprintf()`.
+
+```riff
+fmt("%x", 123)      // Prints to the screen
+s = fmt("%x", 123)  // Stores the formatted string in variable `s`
+```
+
+Each conversion specification in the format string begins with a `%`
+character and ends with a character which determines the conversion of
+the argument. Each specification may also contain one or more flags
+following the initial `%` character.
+
+| Flag      | Description |
+| :--:      | ----------- |
+| `0`       |             |
+| `+`       |             |
+| *<space>* |             |
+| `-`       |             |
+
 ### `hex(x)`
 
 Returns a string with the hexadecimal representation of `x` as an
@@ -1124,6 +1149,10 @@ hex("45")   // "0x2d"
 Returns a copy of string `s` with all uppercase letters converted to
 lowercase. All other characters in string `s` are copied over
 unchanged.
+
+### `num(s[,r])`
+
+TODO
 
 ### `split(s[,d])`
 
@@ -1154,35 +1183,3 @@ chars[23]       // "s"
 Returns a copy of string `s` with all lowercase letters converted to
 uppercase. All other characters in string `s` are copied over
 unchanged.
-
-# Bytecode Listing
-
-> Section is incomplete
-
-When `riff` is invoked with the `-l` option, it produces a listing of
-the given program's compiled bytecode along with their associated
-mnemonics.  The bytecode is proprietary to `riff`'s virtual machine.
-The mnemonics provided offer a human-readable format of the
-instructions and operands the bytecode is composed of; similar to
-[assembly](https://en.wikipedia.org/wiki/Assembly_language).
-
-The output of the command `riff -l '1+2'` may look like this:
-
-```
-source:<command-line> @ 0x7ffee30738b8 -> 5 bytes
-0: 3b       imm    1
-1: 3c       imm    2
-2: 0f       add
-3: 5c       print
-4: 52       ret
-```
-
-`riff`'s virtual machine is
-[stack-based](https://en.wikipedia.org/wiki/Stack_machine). The VM has
-the standard facilities found in many stack machines, such as an
-instruction pointer (`IP`) (AKA a program counter), a stack pointer
-(`SP`) and a frame pointer (`FP`). Each instruction has its own effect
-on the `IP`, `SP` and `FP`.
-
-In the `riff` VM, the `SP` always points to the next *available* slot
-in the stack.
