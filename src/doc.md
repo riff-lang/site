@@ -1117,7 +1117,7 @@ language's `printf()` function, as well as `sprintf()`.
 
 ```riff
 fmt("%x", 123)      // Prints to the screen
-s = fmt("%x", 123)  // Stores the formatted string in variable `s`
+s = fmt("%x", 123)  // Stores the formatted string in `s`
 ```
 
 Each conversion specification in the format string begins with a `%`
@@ -1127,10 +1127,47 @@ following the initial `%` character.
 
 | Flag      | Description |
 | :--:      | ----------- |
-| `0`       |             |
-| `+`       |             |
-| *<space>* |             |
-| `-`       |             |
+| `0`       | For numeric conversions, leading zeros are used to pad
+the string instead of spaces, which is the default. |
+| `+`       | The sign is prepended to the resulting conversion. This
+only applies to signed conversions (`d`, `f`, `g`, `i`). |
+| *<space>* | If the result of a signed conversion is non-negative, a
+space is prepended to the conversion. This flag is ignored if `+` is
+specified. |
+| `-`       | The resulting conversion is left-justified instead of
+right-justified, which is the default. |
+
+A *minimum field width* can be specified following any flags (or `%`
+if no flags specified), provided as an integer value. The resulting
+conversion is padded with spaces on to the left by default, or to the
+right if left-justified. A `*` can also be specified in lieu of an
+integer, where an argument will be consumed (as an integer) and used
+to specify the minimum field width.
+
+The *precision* of the conversion can be specified with `.` and an
+integer value or `*`, similar to the minimum field width specifier.
+For numeric conversion, the precision specifies the minimum number of
+digits for the resulting conversion. For strings, it specifies the
+maximum number of characters in the conversion. Precision is ignored
+for character conversions (`%c`).
+
+The table below outlines the available conversion specifiers.
+
+| Specifier | Description |
+| :-------: | ----------- |
+| `%`       | A literal `%`. |
+| `a`       | |
+| `A`       | |
+| `c`       | |
+| `d`/`i`   | |
+| `e`       | |
+| `E`       | |
+| `f`       | |
+| `g`       | |
+| `o`       | |
+| `s`       | |
+| `x`       | |
+| `X`       | |
 
 ### `hex(x)`
 
