@@ -1,6 +1,6 @@
 ---
 title:  User Guide
-before: Last updated 2021/01/31
+before: Last updated 2021/02/01
 toc:    false
 ...
 
@@ -1155,19 +1155,19 @@ The table below outlines the available conversion specifiers.
 
 | Specifier | Description |
 | :-------: | ----------- |
-| `%`       | A literal `%`. |
-| `a`       | |
-| `A`       | |
-| `c`       | |
-| `d`/`i`   | |
-| `e`       | |
-| `E`       | |
-| `f`       | |
-| `g`       | |
-| `o`       | |
-| `s`       | |
-| `x`       | |
-| `X`       | |
+| `%`       | A literal `%` |
+| `a`/`A`   | A number in hexadecimal exponent notation (lowercase/uppercase) |
+| `c`       | A single character |
+| `d`/`i`   | A *signed* decimal integer |
+| `e`/`E`   | A number in decimal exponent notation (lowercase `e`/uppercase `E` used) |
+| `f`/`F`   | A decimal floating-point number |
+| `g`/`G`   | A decimal floating-point number, either in standard form (`f`/`F`) or exponent notation (`e`/`E`); whichever is shorter |
+| `o`       | An *unsigned* octal integer |
+| `s`       | A character string |
+| `x`/`X`   | An *unsigned* hexadecimal integer (lowercase/uppercase) |
+
+Note that the `%s` format specifier will try to handle arguments of
+any type, falling back to `%d` for integers and `%g` for floats.
 
 ### `hex(x)`
 
@@ -1187,9 +1187,27 @@ Returns a copy of string `s` with all uppercase letters converted to
 lowercase. All other characters in string `s` are copied over
 unchanged.
 
-### `num(s[,r])`
+### `num(s[,b])`
 
-TODO
+Returns a number interpreted from the string `s` on base (or radix)
+`b`. If no base is provided, the default is `0`. When the base is
+`0`, `num()` will convert to string to a number using the same lexical
+conventions of the language itself. `num()` can return an integer or
+float depending on the string's structure (see lexical conventions) or
+if the number is too large to be stored as a signed 64-bit integer.
+Valid values for `b` are `0` or integers `2` through `36`. Bases
+outside this range will default back to `0`. Providing bases other
+than `0`, `10` or `16` will force `s` to only be interpreted as an
+integer value (current implementation limitation).
+
+```riff
+num("76")           // 76
+num("0x54")         // 84
+num("54", 16)       // 84
+num("0b0110")       // 6
+num("0110", 2)      // 6
+num("abcxyz", 36)   // 623741435
+```
 
 ### `split(s[,d])`
 
