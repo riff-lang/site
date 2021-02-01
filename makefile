@@ -14,9 +14,11 @@ INPUT_FMT := markdown
 HTML_FMT  := html
 TEXT_FMT  := plain
 
+INPUT_EXT  = +multiline_tables
+
 HFLAGS     = --standalone
 HFLAGS    += --template=$(DATA_DIR)/html.pdc
-HFLAGS    += --from $(INPUT_FMT)
+HFLAGS    += --from $(INPUT_FMT)$(INPUT_EXT)
 HFLAGS    += --to $(HTML_FMT)
 HFLAGS    += --title-prefix="Riff"
 HFLAGS    += --css=../style.css
