@@ -978,10 +978,70 @@ max(1+4, 3*2)
 
 ## Functions
 
-...
+There are two basic "forms" of defining functions in Riff. The first
+is defining a "named" function, which populates either the global or
+local namespace with the function.
 
-See the following section for a detailed description of the included
-library of functions.
+```riff
+fn f(x) {
+    return x + 1
+}
+
+local fn g(x) {
+    return x - 1
+}
+```
+
+The second is [anonymous
+functions](https://en.wikipedia.org/wiki/Anonymous_function), which
+are technically considered a part of an [expression
+statement](#expression-statements).
+
+```riff
+f = fn(x) {
+    return x + 1
+}
+
+local g = fn(x) {
+    return x - 1
+}
+```
+
+A key difference between the two forms is that named functions can
+reference themselves
+[recursively](https://en.wikipedia.org/wiki/Recursion), whereas
+anonymous functions cannot.
+
+Riff allows all functions to be treated as
+[variadic](https://en.wikipedia.org/wiki/Variadic_function). This means
+functions can be called with fewer arguments, or more arguments than
+a given function is designed to accept. The virtual machine will
+compensate by passing `null` for any insufficient arguments, or by
+discarding extraneous arguments.
+
+```riff
+// Function `f` is defined to accept 3 arguments, `x`, `y` and `z`
+fn f(x, y, z) {
+    ...
+}
+
+f(1,2,3)    // x = 1        y = 2       z = 3
+f(1,2)      // x = 1        y = 2       z = null
+f(1,2,3,4)  // x = 1        y = 2       z = 3       (4 is discarded)
+f()         // x = null     y = null    z = null
+```
+
+Additionally, many included library functions are designed to accept a
+varying number of arguments, such as `atan()` and `fmt()`. See the
+following section for a detailed description of the included library
+of functions.
+
+### Scoping
+
+Currently, functions only have access to global variables and their
+own parameters and local variables. Functions cannot access any local
+variables defined outside of their scope, even if a `local` is defined
+at the higher scope than the function.
 
 # Included Functions
 
