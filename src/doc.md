@@ -93,9 +93,9 @@ their pointers converted to strings and subsequently used identically
 to strings.
 
 User-defined functions are treated just as any other value. C
-functions are nearly identical, with a few limitations. For example, a C
-function cannot be subscripted (i.e. `f[0]`) like a Riff function can,
-since C functions are not arrays of bytecode like Riff functions.
+functions are nearly identical, with a few limitations. For example, a
+C function cannot be subscripted (i.e. `f[0]`) like a Riff function
+can, since C functions are not arrays of bytecode like Riff functions.
 
 # Language
 
@@ -111,11 +111,11 @@ expression results in expression statements. Unless the leftmost
 expression in an expression statement is being altered in some way
 (e.g. a variable being assigned to), the result of the expression is
 printed. This allows for standard expression statements such as `x =
-1` or `y++` to *not* have their results printed, while otherwise invalid
-expression statements in many languages such as `x + y * z` now serve
-a purpose. The [expression statements](#expression-statements) section
-outlines the complete set of rules for whether an expression is
-printed or not printed.
+1` or `y++` to *not* have their results printed, while otherwise
+invalid expression statements in many languages such as `x + y * z`
+now serve a purpose. The [expression
+statements](#expression-statements) section outlines the complete set
+of rules for whether an expression is printed or not printed.
 
 Variables are global by default. Riff allows local variable usage by
 explicitly declaring a variable with the [`local`](#local) keyword.
@@ -337,8 +337,8 @@ fn_stmt = 'fn' id ['(' [ id {',' id } ')'] '{' stmt_list '}'
 ```
 
 A function statement declares the definition of a *named* function.
-This is in contrast to an *anonymous* function, which is parsed as part
-of an [expression statement](#expression-statements).
+This is in contrast to an *anonymous* function, which is parsed as
+part of an [expression statement](#expression-statements).
 
 ```riff
 fn f(x) {
@@ -588,13 +588,13 @@ typically induce an error or have its result simply discarded in other
 languages.
 
 The rules for printing or discarding the result of an expression
-statement are defined by the status of the leftmost primary expression.
-If the leftmost element is being mutated in any way (assignment,
-increment or decrement), the result is discarded. However, in the
-event of an expression statement where the leftmost expression is
-being incremented or decremented, if the expression is accompanied by
-another typical operation such as addition or subtraction, the result
-is *not* discarded and will be printed.
+statement are defined by the status of the leftmost primary
+expression.  If the leftmost element is being mutated in any way
+(assignment, increment or decrement), the result is discarded.
+However, in the event of an expression statement where the leftmost
+expression is being incremented or decremented, if the expression is
+accompanied by another typical operation such as addition or
+subtraction, the result is *not* discarded and will be printed.
 
 These are some examples of expression statements that are *not*
 implicitly printed. The results of these expressions will be
@@ -808,8 +808,8 @@ hello[..4]              // "Hello"
 hello[..]               // "Helloworld"
 ```
 
-Specifying an interval $n$ allows you to extract a substring with every
-$n$ characters.
+Specifying an interval $n$ allows you to extract a substring with
+every $n$ characters.
 
 ```riff
 abc = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -830,7 +830,8 @@ passed as function parameters and returned from function calls.
 ### Concatenation Operator
 
 The `::` operator concatenates two values together. The result of the
-operation is a string with the left-hand expression and right-hand concatenated together.
+operation is a string with the left-hand expression and right-hand
+concatenated together.
 
 ```riff
 "Hello" :: "World"  // "HelloWorld"
@@ -873,8 +874,8 @@ can be subscripted except for C (built-in) functions. Subscripting any
 value with an out-of-bounds index will evaluate to `null`.
 
 Subscripting a numeric value with expression $i$ will retrieve the
-$i$<sup>th</sup> character of that number as if it were a string in its base-10
-form (index starting at `0`).
+$i$<sup>th</sup> character of that number as if it were a string in
+its base-10 form (index starting at `0`).
 
 ```riff
 34[0]       // "3"
@@ -994,12 +995,13 @@ Returns the absolute value of `x` (i.e. $|x|$).
 
 When called with a single argument `y`, `atan(y)` returns
 $\arctan(y)$ in radians. When called with two arguments `y` and `x`,
-`atan(y,x)` returns $\arctan(\frac{y}{x})$ in radians. `atan(y)` is equivalent
-to `atan(y,1)`.
+`atan(y,x)` returns $\arctan(\frac{y}{x})$ in radians. `atan(y)` is
+equivalent to `atan(y,1)`.
 
 ### `ceil(x)`
 
-Returns the smallest integer not less than `x` (i.e. $\lceil{x}\rceil$)
+Returns the smallest integer not less than `x` (i.e.
+$\lceil{x}\rceil$)
 
 ```riff
 ceil(2.5)   // 3
@@ -1012,7 +1014,8 @@ Returns $\cos(x)$ in radians.
 
 ### `exp(x)`
 
-Returns [$e$](https://en.wikipedia.org/wiki/E_(mathematical_constant)) raised to the power `x` (i.e. $e^x$).
+Returns [$e$](https://en.wikipedia.org/wiki/E_(mathematical_constant))
+raised to the power `x` (i.e. $e^x$).
 
 ### `int(x)`
 
@@ -1045,16 +1048,16 @@ Riff currently utilizes the POSIX
 [rand48](https://pubs.opengroup.org/onlinepubs/9699919799/functions/drand48.html)
 family of functions to generate pseudo-random numbers. When the
 virtual machine registers the built-in functions, the PRNG is
-initialized once with `srand48(time(0))`. Riff also provides an `srand()`
-function documented below to allow control over the sequence of the
-randomly generated numbers.
+initialized once with `srand48(time(0))`. Riff also provides an
+`srand()` function documented below to allow control over the sequence
+of the randomly generated numbers.
 
 ### `rand([n])`
 
 When called without arguments, `rand()` returns a pseudo-random
 floating-point number in the range $[0..1)$. When called with an
-integer `n`, `rand(n)` returns a pseudo-random Riff integer in the range
-$[0..n]$.  `n` can be negative. When called with `0`, `rand(0)`
+integer `n`, `rand(n)` returns a pseudo-random Riff integer in the
+range $[0..n]$. `n` can be negative. When called with `0`, `rand(0)`
 returns a pseudo-random Riff integer (signed 64-bit).
 
 `rand()` uses exactly one call to `drand48()` to produce floating
