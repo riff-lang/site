@@ -994,7 +994,7 @@ local fn g(x) {
 
 The second is [anonymous
 functions](https://en.wikipedia.org/wiki/Anonymous_function), which
-are technically considered a part of an [expression
+are parsed as part of an [expression
 statement](#expression-statements).
 
 ```riff
@@ -1012,12 +1012,12 @@ reference themselves
 [recursively](https://en.wikipedia.org/wiki/Recursion), whereas
 anonymous functions cannot.
 
-Riff allows all functions to be treated as
-[variadic](https://en.wikipedia.org/wiki/Variadic_function). This means
-functions can be called with fewer arguments, or more arguments than
-a given function is designed to accept. The virtual machine will
-compensate by passing `null` for any insufficient arguments, or by
-discarding extraneous arguments.
+Riff allows all functions to be called with fewer arguments, or more
+arguments than a given function is designed to accept. The virtual
+machine will compensate by passing `null` for any insufficient
+arguments, or by discarding extraneous arguments. Note that this is
+not true [variadic
+function](https://en.wikipedia.org/wiki/Variadic_function) support.
 
 ```riff
 // Function `f` is defined to accept 3 arguments, `x`, `y` and `z`
@@ -1033,8 +1033,8 @@ f()         // x = null     y = null    z = null
 
 Additionally, many included library functions are designed to accept a
 varying number of arguments, such as `atan()` and `fmt()`. See the
-following section for a detailed description of the included library
-of functions.
+[included functions](#included-functions) section for a detailed
+description of the included library of functions.
 
 ### Scoping
 
