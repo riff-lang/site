@@ -1013,14 +1013,14 @@ reference themselves
 anonymous functions cannot.
 
 Riff allows all functions to be called with fewer arguments, or more
-arguments than a given function is designed to accept. The virtual
+arguments than the specified arity of a given function. The virtual
 machine will compensate by passing `null` for any insufficient
 arguments, or by discarding extraneous arguments. Note that this is
 not true [variadic
 function](https://en.wikipedia.org/wiki/Variadic_function) support.
 
 ```riff
-// Function `f` is defined to accept 3 arguments, `x`, `y` and `z`
+// Arity of the function is 3
 fn f(x, y, z) {
     ...
 }
