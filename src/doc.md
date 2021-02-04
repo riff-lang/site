@@ -162,14 +162,48 @@ mix of lowercase and uppercase digits `A` through `F`.
 0x.8    // Hexdecimal floating-point constant
 ```
 
-Riff also supports integers in binary form:
+Riff supports numbers written in exponent notation. For decimal
+numbers, an optional decimal exponent part (marked by `e` or `E`) can
+follow an integer or the optional fractional part. For hexadecimal
+numbers, a binary exponent part can be indicated with `p` or `P`.
+
+```riff
+45e2    // 4500
+0xffP3  // 2040
+0.25e-4 // 0.000025
+0X10p+2 // 64
+```
+
+Riff supports integers in binary form. Numeric literals with the
+prefix `0b` or `0B` will be interpreted as base-2. Riff does not
+support floating point numbers with the binary (`0b`) prefix.
 
 ```riff
 0b1101  // 13 in binary
 ```
 
-Riff does not support floating point numbers with the binary (`0b`)
-prefix.
+Additionally, Riff supports arbitrary underscores in numeric literals.
+Any number of underscores can appear between digits.
+
+Some valid examples:
+
+```riff
+1_2
+12_
+1_2_
+1__2_
+300_000_000
+0x__80
+45_e2
+0b1101_0011_1010_1111
+```
+
+Some *invalid* examples:
+
+```riff
+_12     // Will be parsed as an indentifier
+0_x80   // Underscore cannot be between `0` and `x`
+```
 
 ### Characters
 
