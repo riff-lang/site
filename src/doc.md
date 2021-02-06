@@ -267,13 +267,11 @@ The following keywords are reserved for syntactic constructs and not
 re-definable by the user.
 
 ```
-break       if
-continue    in
-do          local
-else        null
-exit        print
-fn          return
-for         while
+break       exit        local
+continue    fn          null
+do          for         print
+elif        if          return
+else        in          while
 ```
 
 ## Variables
@@ -354,6 +352,10 @@ body.
 
 A `do` statement declared without a `while` condition is invalid and
 will cause an error to be thrown upon compilation.
+
+### `elif`
+
+Syntactic sugar for `else if`. See [`if` statements](#if).
 
 ### `else`
 
@@ -496,8 +498,8 @@ for k,v in f {
 ### `if`
 
 ```
-if_stmt = 'if' expr stmt [ 'else' ... ]
-        | 'if' expr '{' stmt_list '}' [ 'else' ... ]
+if_stmt = 'if' expr stmt { `elif` expr ... } [ 'else' ... ]
+        | 'if' expr '{' stmt_list '}' { `elif` expr ... } [ 'else' ... ]
 ```
 
 An `if` statement conditionally executes code based on the result of
@@ -510,9 +512,26 @@ code in the `else` block is only executed if the `if` condition
 evaluated to zero or `null`. An `else` statement always associates to
 the closest preceding `if` statement.
 
-Any statements between an `if` and an `else` statement is invalid;
-Riff will throw an error when compiling an `else` statement not
-attached to an `if`.
+Any statements between an `if` and `elif` or `else` statements is
+invalid; Riff will throw an error when compiling an `else` statement
+not attached to an `if` or `elif`.
+
+`elif` is syntactic sugar for `else if`. Riff allows either syntax
+in a given `if` construct.
+
+```riff
+// `elif` and `else if` used in the same `if` construct
+x = 2
+if x == 1 {
+    ...
+} elif x == 2 {
+    ...
+} else if x == 3 {
+    ...
+} else {
+    ...
+}
+```
 
 ### `local`
 
