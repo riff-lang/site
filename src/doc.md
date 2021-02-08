@@ -1,6 +1,6 @@
 ---
 title:  User Guide
-before: Last updated 2021/02/01
+before: Last updated 2021/02/08
 toc:    false
 ...
 
@@ -213,7 +213,7 @@ integer constants.
 
 ```riff
 'A'     // 65
-'~'     // 126
+'π'     // 960
 ```
 
 Similar to [strings](#strings), Riff supports the use of the backslash
@@ -236,9 +236,11 @@ Riff also supports arbitrary escape sequences in decimal and
 hexadecimal forms.
 
 | Sequence | Description |
-| :------: | ----------- |
+| -------- | ----------- |
 | `\nnn`   | Decimal escape sequence with up to three decimal digits |
 | `\xnn`   | Hexadecimal escape sequence with up to two hexadecimal digits |
+
+: Decimal/hexadecimal escape sequence formats
 
 ### Strings
 
@@ -246,8 +248,17 @@ String literals are denoted by matching enclosing double quotation
 marks (`"`). String literals spanning multiple lines will have the
 newline characters included. Alternatively, a single backslash (`\`)
 can be used in a string literal to indicate that the following newline
-be ignored. Riff supports the same escape sequences in string literals
-as the ones outlined in the [characters](#characters) section.
+be ignored. In addition to the escape sequences outlined in the
+[characters](#characters) section, Riff also supports escaped
+[Unicode](https://en.wikipedia.org/wiki/Unicode) literals in the
+following forms.
+
+| Sequence     | Description |
+| --------     | ----------- |
+| `\uXXXX`     | Unicode escape sequence with up to 4 hexadecimal digits |
+| `\UXXXXXXXX` | Unicode escape sequence with up to 8 hexadecimal digits |
+
+: Unicode escape sequence formats
 
 ```riff
 "Hello, world!"
@@ -895,10 +906,10 @@ concatenated together.
 
 `#` is a prefix operator which returns the length of a value. When
 performed on string values, the result of the expression is the length
-of the string. When performed on arrays, the result of the expression
-is the number of non-`null` values in the array. When performed on
-functions, the result is the number of bytes in the function's
-bytecode array.
+of the string *in bytes*. When performed on arrays, the result of the
+expression is the number of non-`null` values in the array. When
+performed on functions, the result is the number of bytes in the
+function's bytecode array.
 
 ```riff
 s = "string"
@@ -942,6 +953,12 @@ index $i$, as if the string were a contiguous array of characters.
 ```
 "Hello"[1]  // "e"
 ```
+
+Note that any subscripting or indexing into string values will only be
+treated as if the characters in the string were byte-sized. I.e. You
+cannot arbitrarily subscript a string value with an integer value and
+extract a substring containing a Unicode character larger than one
+byte.
 
 Naturally, subscripting an array with expression $i$ will perform an
 array lookup with the key $i$.
@@ -1195,7 +1212,7 @@ rand()      // 0.863673
 
 ### `byte(s[,i])`
 
-Returns the ASCII code of character `i` in string `s`. `i` is `0`
+Returns the integer value of byte `i` in string `s`. `i` is `0`
 unless specified by the user. If a user-defined function is passed as
 argument `s`, the byte at index `i` in the function's bytecode array
 is returned. This is identical to subscripting the function.
@@ -1216,8 +1233,9 @@ f[2]        // 17
 
 ### `char(...)`
 
-Takes zero or more integers and returns a string composed of the ASCII
-codes of each argument in order.
+Takes zero or more integers and returns a string composed of the
+character codes of each argument in order. `char()` accepts valid
+Unicode code points as arguments.
 
 ```riff
 char(104, 101, 108, 108, 111)   // "hello"
@@ -1323,9 +1341,9 @@ hex("45")   // "0x2d"
 
 ### `lower(s)`
 
-Returns a copy of string `s` with all uppercase letters converted to
-lowercase. All other characters in string `s` are copied over
-unchanged.
+Returns a copy of string `s` with all uppercase ASCII letters
+converted to lowercase ASCII. All other characters in string `s`
+(including non-ASCII characters) are copied over unchanged.
 
 ### `num(s[,b])`
 
@@ -1375,6 +1393,6 @@ chars[23]       // "s"
 
 ### `upper(s)`
 
-Returns a copy of string `s` with all lowercase letters converted to
-uppercase. All other characters in string `s` are copied over
-unchanged.
+Returns a copy of string `s` with all lowercase ASCII letters
+converted to uppercase ASCII. All other characters in string `s`
+(including non-ASCII characters) are copied over unchanged.
