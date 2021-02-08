@@ -248,7 +248,21 @@ String literals are denoted by matching enclosing double quotation
 marks (`"`). String literals spanning multiple lines will have the
 newline characters included. Alternatively, a single backslash (`\`)
 can be used in a string literal to indicate that the following newline
-be ignored. In addition to the escape sequences outlined in the
+be ignored.
+
+```riff
+"Hello, world!"
+
+"String spanning
+multiple
+lines"
+
+"String spanning \
+multiple lines \
+without newlines"
+```
+
+In addition to the escape sequences outlined in the
 [characters](#characters) section, Riff also supports escaped
 [Unicode](https://en.wikipedia.org/wiki/Unicode) literals in the
 following forms.
@@ -261,15 +275,8 @@ following forms.
 : Unicode escape sequence formats
 
 ```riff
-"Hello, world!"
-
-"String spanning
-multiple
-lines"
-
-"String spanning \
-multiple lines \
-without newlines"
+"\u3c0"     // "π"
+"\U1d11e"   // "𝄞"
 ```
 
 ## Keywords
