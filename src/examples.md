@@ -29,8 +29,8 @@ Hello, World!
 # Values
 
 ```riff
-// Two string literals concatenated together with the `::` operator
-"ri" :: "ff"
+// Two string literals concatenated together with the `#` operator
+"ri" # "ff"
 
 // Expression lists delimited by a comma will have their results
 // printed on the same line, separated by a space.

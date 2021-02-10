@@ -716,7 +716,7 @@ expression list, `null` will be printed in its place.
 | `^`               | Bitwise `XOR` | Left | 9 |
 | `&`               | Bitwise `AND` | Left | 10 |
 | `<<` `>>`         | Bitwise left shift, right shift | Left | 11 |
-| `::`              | Concatenation | Left | 11 |
+| `#`               | Concatenation | Left | 11 |
 | `+` `-`           | Addition, subtraction | Left | 12 |
 | `*` `/` `%`       | Multiplication, division, modulus | Left | 13 |
 | `!`               | Logical `NOT` | Right | 13 |
@@ -739,7 +739,7 @@ the same precedence and associativity as simple assignment (`=`)
 ```
 +=      |=
 &=      **=
-::=     <<=
+#=     <<=
 /=      >>=
 %=      -=
 *=      ^=
@@ -815,7 +815,7 @@ The following assignment operators are all binary infix operators.
 | `^=`     | Assignment by bitwise `XOR`       |
 | `<<=`    | Assignment by bitwise left shift  |
 | `>>=`    | Assignment by bitwise right shift |
-| `::=`    | Assignment by concatenation       |
+| `#=`     | Assignment by concatenation       |
 
 ### Ternary Conditional Operator
 
@@ -900,22 +900,22 @@ passed as function parameters and returned from function calls.
 
 ### Concatenation Operator
 
-The `::` operator concatenates two values together. The result of the
-operation is a string with the left-hand expression and right-hand
-concatenated together.
+The `#` (infix) operator concatenates two values together. The result
+of the operation is a string with the left-hand expression and
+right-hand concatenated together.
 
 ```riff
-"Hello" :: "World"  // "HelloWorld"
-"str" :: 123        // "str123"
+"Hello" # "World"   // "HelloWorld"
+"str" # 123         // "str123"
 ```
 
 ### Length Operator
 
-`#` is a prefix operator which returns the length of a value. When
-performed on string values, the result of the expression is the length
-of the string *in bytes*. When performed on arrays, the result of the
-expression is the number of non-`null` values in the array. When
-performed on functions, the result is the number of bytes in the
+When used as a prefix operator, `#` returns the length of a value.
+When performed on string values, the result of the expression is the
+length of the string *in bytes*. When performed on arrays, the result
+of the expression is the number of non-`null` values in the array.
+When performed on functions, the result is the number of bytes in the
 function's bytecode array.
 
 ```riff
