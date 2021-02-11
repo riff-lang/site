@@ -739,7 +739,7 @@ the same precedence and associativity as simple assignment (`=`)
 ```
 +=      |=
 &=      **=
-#=     <<=
+#=      <<=
 /=      >>=
 %=      -=
 *=      ^=
