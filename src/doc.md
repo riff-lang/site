@@ -1,6 +1,6 @@
 ---
 title:  User Guide
-before: Last updated 2021/02/08
+before: Last updated 2021/02/10
 toc:    false
 ...
 
