@@ -1016,10 +1016,10 @@ $ riff '$0<<$1' 2 3
 The default table will be populated as follows:
 
 ```
-$-2: "riff"
-$-1: "$0<<$1"
-$0:  "2"
-$1:  "3"
+$-1: "riff"
+$0:  "$0<<$1"
+$1:  "2"
+$2:  "3"
 ```
 
 Another example, this time with a Riff program stored in a file name
@@ -1032,11 +1032,11 @@ $ riff -f prog.rf 43 22
 The default table would be populated:
 
 ```
-$-3: "riff"
-$-2: "-f"
-$-1: "prog.rf"
-$0:  "43"
-$1:  "22"
+$-2: "riff"
+$-1: "-f"
+$0:  "prog.rf"
+$1:  "43"
+$2:  "22"
 ```
 
 ### Function Calls
