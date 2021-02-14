@@ -83,20 +83,20 @@ A string
 
 ---
 
-# Arrays
+# Tables
 
 ```riff
-// Declaration/initialization of an array
+// Declaration/initialization of a table
 a = { 1, 0xff, "hello" }
 
-// Use the length operator (#) to easily retrieve an array's length
+// Use the length operator (#) to easily retrieve a table's length
 #a
 
-// Arrays are indexed at 0 by default
+// Tables are indexed at 0 by default
 a[0]
 
-// Arrays can hold any type of Riff value, even functions
-// Here is an array holding anonymous functions
+// Tables can hold any type of Riff value, even functions
+// Here is a table holding anonymous functions
 opcodes = {
     fn(x,y,z) { return x * y + z },
     fn(x,y,z) { return x * y - z },
@@ -104,7 +104,7 @@ opcodes = {
     fn(x,y,z) { exit             }
 }
 
-// Of course, we can call anonymous functions stored in an array
+// Of course, we can call anonymous functions stored in a table
 opcodes[0](3,2,1)
 ```
 

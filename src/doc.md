@@ -1,6 +1,6 @@
 ---
 title:  User Guide
-before: Last updated 2021/02/10
+before: Last updated 2021/02/14
 toc:    false
 ...
 
@@ -59,7 +59,7 @@ Internally, a Riff value can be any of the following types:
 - Float
 - String
 - Sequence
-- Array
+- Table
 - Riff function (user-defined)
 - C function (built-in functions)
 
@@ -81,21 +81,21 @@ Sequences can be used in [for loops](#for) to iterate through a
 sequence of numbers or in string subscripting to easily extract
 different types of substrings.
 
-Arrays are the single compound data structure available in Riff. Array
-elements can be any type of Riff value. Storing `null` as an array
+Tables are the single compound data structure available in Riff. Table
+elements can be any type of Riff value. Storing `null` as a table
 element effectively deletes that key/value pair.
 
-Arrays in Riff are
-[associative](https://en.wikipedia.org/wiki/Associative_array). Any
-type of Riff value (even `null`) is a valid key for a given array
-element. Internally, arrays or functions as array *indices* are simply
-their pointers converted to strings and subsequently used identically
-to strings.
+Tables in Riff are [associative
+arrays](https://en.wikipedia.org/wiki/Associative_array). Any type of
+Riff value (even `null`) is a valid key for a given table element.
+Internally, tables or functions as table *indices* are simply their
+pointers converted to strings and subsequently used identically to
+strings.
 
 User-defined functions are treated just as any other value. C
 functions are nearly identical, with a few limitations. For example, a
 C function cannot be subscripted (i.e. `f[0]`) like a Riff function
-can, since C functions are not arrays of bytecode like Riff functions.
+can, since C functions are not tables of bytecode like Riff functions.
 
 # Language
 
@@ -122,7 +122,7 @@ explicitly declaring a variable with the [`local`](#local) keyword.
 Riff also allows the use/access of uninitialized variables. When an
 uninitialized variable is used, Riff reserves the variable with global
 scope and initializes it to `null`. Depending on the context, the
-variable may also be initialized to `0` or an empty array. Riff does
+variable may also be initialized to `0` or an empty table. Riff does
 not allow uninitialized variables to be called as functions^[Unless
 someone else has a really good idea how to handle that].
 
@@ -438,11 +438,11 @@ In both forms, the variables `k` and `v` are local to the inner loop
 body. Their values cannot be accessed once the loop terminates.
 
 ```riff
-array = { "foo", "bar", "baz" }
+table = { "foo", "bar", "baz" }
 
-// This iterates over each item in `array`, populating `k` with the
-// current array index, and `v` with the corresponding array element
-for k,v in array {
+// This iterates over each item in `table`, populating `k` with the
+// current table index, and `v` with the corresponding table element
+for k,v in table {
     // First iteration:  k = 0, v = "foo"
     // Second iteration: k = 1, v = "bar"
     // Third iteration:  k = 2, v = "baz"
@@ -454,13 +454,13 @@ copy of the value is made upon initialization of a given iterator.
 This avoids an issue where a user continually adds items to a given
 set, effectively causing an infinite loop.
 
-The order in which arrays are iterated over is not *guaranteed* to be
-in-order for integer keys due to the nature of the array
-implementation.  However, in most cases, arrays will be traversed in
+The order in which tables are iterated over is not *guaranteed* to be
+in-order for integer keys due to the nature of the table
+implementation.  However, in most cases, tables will be traversed in
 order for integer keys $0..n$ where $n$ is the last element in a
-contiguous array. If an array is constructed using the constructor
+contiguous table. If a table is constructed using the constructor
 syntax, it is guaranteed to be traversed in-order, so long as no other
-keys were added. Even if keys were added, arrays are typically
+keys were added. Even if keys were added, tables are typically
 traversed in-order. Note that negative indices will always come after
 integer keys $\geqslant 0$.
 
@@ -487,7 +487,7 @@ populate `v` with $[0..n]$, while leaving `k` as `null`.
 Currently, floating-point numbers are truncated to integers when used
 as the expression to iterate over.
 
-Iterating over a string is similar to iterating over an array.
+Iterating over a string is similar to iterating over a table.
 
 ```riff
 for k,v in "Hello" {
@@ -498,8 +498,8 @@ for k,v in "Hello" {
 }
 ```
 
-Iterating over a user-defined function is also similar to an array,
-iterating over each byte in its compiled bytecode array.
+Iterating over a user-defined function is also similar to a table,
+iterating over each byte in its compiled bytecode table.
 
 ```riff
 fn f(x) {
@@ -677,8 +677,8 @@ x = y + z
 c = f(x)
 ++i
 j++
-array[i]++
---array[j]
+table[i]++
+--table[j]
 ```
 
 Below are some examples of expression statements which *will* have
@@ -687,7 +687,7 @@ their results implicitly printed.
 ```riff
 1 + 2
 x++ - 1
-array[++i]
+table[++i]
 f(x)        // Prints the result returned from function f
 ```
 
@@ -728,7 +728,7 @@ expression list, `null` will be printed in its place.
 | `()`              | Function call | Left | 16 |
 | `[]`              | Subscripting | Left | 16 |
 | `++` `--`         | Postfix increment, decrement | Left | 16 |
-| `$`               | `argv`/default array subscripting | Right | 17 |
+| `$`               | `arg` table subscripting | Right | 17 |
 
 : Operators (increasing in precedence)
 
@@ -913,10 +913,10 @@ right-hand concatenated together.
 
 When used as a prefix operator, `#` returns the length of a value.
 When performed on string values, the result of the expression is the
-length of the string *in bytes*. When performed on arrays, the result
-of the expression is the number of non-`null` values in the array.
+length of the string *in bytes*. When performed on tables, the result
+of the expression is the number of non-`null` values in the table.
 When performed on functions, the result is the number of bytes in the
-function's bytecode array.
+function's bytecode table.
 
 ```riff
 s = "string"
@@ -955,7 +955,7 @@ its base-10 form (index starting at `0`).
 ```
 
 Subscripting a string with expression $i$ retrieves the character at
-index $i$, as if the string were a contiguous array of characters.
+index $i$, as if the string were a contiguous table of characters.
 
 ```
 "Hello"[1]  // "e"
@@ -967,8 +967,8 @@ cannot arbitrarily subscript a string value with an integer value and
 extract a substring containing a Unicode character larger than one
 byte.
 
-Naturally, subscripting an array with expression $i$ will perform an
-array lookup with the key $i$.
+Naturally, subscripting a table with expression $i$ will perform an
+table lookup with the key $i$.
 
 ```riff
 pedals = {
@@ -981,7 +981,7 @@ pedals[0]   // "Fuzz"
 ```
 
 Subscripting a user-defined function with the expression $i$ will
-return the $i$th byte in the function's compiled bytecode array.
+return the $i$th byte in the function's compiled bytecode table.
 
 ```riff
 fn f(x,y) {
@@ -991,20 +991,20 @@ fn f(x,y) {
 f[2]    // 25 (may vary depending on future riff versions)
 ```
 
-### `argv`/Default Array Operator
+### `arg` Table Operator
 
 `$` is a special prefix operator used for accessing the argument
-vector or "default array." `$` has the highest precedence of all Riff
-operators and is used for subscripting the default array.
+vector or "default table." `$` has the highest precedence of all Riff
+operators and is used for subscripting the default table.
 
 ```
-$0          // Equivalent to argv[0]
-$a          // Equivalent to argv[a]
-$(1 << 3)   // Equivalent to argv[1 << 3]
+$0          // Equivalent to arg[0]
+$a          // Equivalent to arg[a]
+$(1 << 3)   // Equivalent to arg[1 << 3]
 ```
 
 Whenever `riff` is invoked, it collects all the command-line arguments
-and stores them as string literals in a Riff array. `$0` will always
+and stores them as string literals in a Riff table. `$0` will always
 be the first user-provided argument following the program text or
 program filename. For example, when invoking `riff` on the
 command-line like this:
@@ -1013,7 +1013,7 @@ command-line like this:
 $ riff '$0<<$1' 2 3
 ```
 
-The default array will be populated as follows:
+The default table will be populated as follows:
 
 ```
 $-2: "riff"
@@ -1029,7 +1029,7 @@ Another example, this time with a Riff program stored in a file name
 $ riff -f prog.rf 43 22
 ```
 
-The default array would be populated:
+The default table would be populated:
 
 ```
 $-3: "riff"
@@ -1221,7 +1221,7 @@ rand()      // 0.863673
 
 Returns the integer value of byte `i` in string `s`. `i` is `0`
 unless specified by the user. If a user-defined function is passed as
-argument `s`, the byte at index `i` in the function's bytecode array
+argument `s`, the byte at index `i` in the function's bytecode table
 is returned. This is identical to subscripting the function.
 
 ```riff
@@ -1376,10 +1376,10 @@ num("abcxyz", 36)   // 623741435
 
 ### `split(s[,d])`
 
-Returns an array with elements being string `s` split on delimiter
+Returns a table with elements being string `s` split on delimiter
 `d`. If `d` is not provided, the delimiter `" \t"` will be used. If
 the empty string `""` is provided, the string will be split into an
-array of individual characters. `d` can be multiple characters.
+table of individual characters. `d` can be multiple characters.
 
 `split()` currently uses the `strtok()` function from the C standard
 library to split strings.
