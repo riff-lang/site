@@ -1,6 +1,6 @@
 ---
 title:  User Guide
-before: Last updated 2021/02/14
+before: Last updated 2021/02/17
 toc:    false
 ...
 
@@ -1004,20 +1004,20 @@ $(1 << 3)   // Equivalent to arg[1 << 3]
 ```
 
 Whenever `riff` is invoked, it collects all the command-line arguments
-and stores them as string literals in a Riff table. `$0` will always
+and stores them as string literals in a Riff table. `$1` will always
 be the first user-provided argument following the program text or
 program filename. For example, when invoking `riff` on the
 command-line like this:
 
 ```bash
-$ riff '$0<<$1' 2 3
+$ riff '$1<<$2' 2 3
 ```
 
 The default table will be populated as follows:
 
 ```
 $-1: "riff"
-$0:  "$0<<$1"
+$0:  "$1<<$2"
 $1:  "2"
 $2:  "3"
 ```
