@@ -107,8 +107,8 @@ a
   color: darken($color-primary, 12%)
   @media (prefers-color-scheme: dark)
     color: $color-primary
-  transition: all 0.05s linear
   &:hover
+    transition: all 0.05s linear
     color: $color-primary
     @media (prefers-color-scheme: dark)
       color: darken($color-primary, 12%)
@@ -193,10 +193,10 @@ table
     border-bottom: 2px solid var(--color-fg)
   tr
     display: table-row
-    transition: all 0.05s linear
   tr.odd, tr.even
     &:hover
       +highlight
+      transition: all 0.05s linear
   td, th
     margin: 0 auto
     padding: 0.3em 0.5em
