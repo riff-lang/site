@@ -285,11 +285,10 @@ The following keywords are reserved for syntactic constructs and not
 re-definable by the user.
 
 ```
-break       exit        local
-continue    fn          null
-do          for         print
-elif        if          return
-else        in          while
+break       else        if          null
+continue    exit        in          print
+do          fn          loop        return
+elif        for         local       while
 ```
 
 ## Variables
