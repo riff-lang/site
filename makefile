@@ -6,7 +6,6 @@ UNAME     := $(shell uname -s)
 
 DATA_DIR  := data
 DIST_DIR  := dist
-FONT_DIR  := fonts
 SASS_DIR  := sass
 SRC_DIR   := src
 
@@ -89,8 +88,6 @@ endif
 	mv $(DIST_DIR)/index/index.html $(DIST_DIR)/index.html
 	rm -rf $(DIST_DIR)/index
 	echo "Resolve index file"
-	cp -R $(FONT_DIR) $(DIST_DIR)
-	echo "Copy fonts to dist/"
 	cp -R assets $(DIST_DIR)
 
 plaintext:
