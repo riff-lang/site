@@ -498,7 +498,7 @@ for k,v in "Hello" {
 ```
 
 Iterating over a user-defined function is also similar to a table,
-iterating over each byte in its compiled bytecode table.
+iterating over each byte in its compiled bytecode array.
 
 ```riff
 fn f(x) {
@@ -928,7 +928,7 @@ When performed on string values, the result of the expression is the
 length of the string *in bytes*. When performed on tables, the result
 of the expression is the number of non-`null` values in the table.
 When performed on functions, the result is the number of bytes in the
-function's bytecode table.
+function's bytecode array.
 
 ```riff
 s = "string"
@@ -979,7 +979,7 @@ cannot arbitrarily subscript a string value with an integer value and
 extract a substring containing a Unicode character larger than one
 byte.
 
-Naturally, subscripting a table with expression $i$ will perform an
+Naturally, subscripting a table with expression $i$ will perform a
 table lookup with the key $i$.
 
 ```riff
@@ -993,7 +993,7 @@ pedals[0]   // "Fuzz"
 ```
 
 Subscripting a user-defined function with the expression $i$ will
-return the $i$th byte in the function's compiled bytecode table.
+return the $i$th byte in the function's compiled bytecode array.
 
 ```riff
 fn f(x,y) {
@@ -1233,7 +1233,7 @@ rand()      // 0.863673
 
 Returns the integer value of byte `i` in string `s`. `i` is `0`
 unless specified by the user. If a user-defined function is passed as
-argument `s`, the byte at index `i` in the function's bytecode table
+argument `s`, the byte at index `i` in the function's bytecode array
 is returned. This is identical to subscripting the function.
 
 ```riff
@@ -1390,7 +1390,7 @@ num("abcxyz", 36)   // 623741435
 
 Returns a table with elements being string `s` split on delimiter
 `d`. If `d` is not provided, the delimiter `" \t"` will be used. If
-the empty string `""` is provided, the string will be split into an
+the empty string `""` is provided, the string will be split into a
 table of individual characters. `d` can be multiple characters.
 
 `split()` currently uses the `strtok()` function from the C standard
