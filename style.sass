@@ -1,0 +1,399 @@
+@import url(https://use.typekit.net/xiz7evu.css)
+
+$font-base: 'source-sans-pro', 'source sans pro', sans-serif
+
+$color-dark: #1b1b1d
+$color-light: #fafafa
+$color-primary: #C94848
+
+// NOTE: svg > path > fill properties don't properly accept CSS vars
+// when intialized with Sass variables
+:root
+  color-scheme: light dark
+  --color-bg: #fafafa
+  --color-fg: #1b1b1d
+  --color-bg-abs: #fff
+  --color-fg-abs: #000
+  --color-border: #ccc
+  --color-comment: #999
+  --color-string: #f4bf75
+  --color-string-2: #d28445
+  --color-number: #aa759f
+  --color-operator: #333
+  --color-builtin: #6a9fb5
+  --color-atom: #aa759f
+  --color-keyword: #ac4142
+  --color-variable: #6a9fb5
+  --color-attribute: #6a9fb5
+  --color-selection: #e0e0e0
+  @media (prefers-color-scheme: dark)
+    --color-bg: #1b1b1c
+    --color-fg: #bbbbbb
+    --color-bg-abs: #000
+    --color-fg-abs: #fff
+    --color-border: #333
+    --color-comment: #666
+    --color-string: #f4bf75
+    --color-string-2: #d28445
+    --color-number: #aa759f
+    --color-operator: #ccc
+    --color-builtin: #6a9fb5
+    --color-atom: #aa759f
+    --color-keyword: #ac4142
+    --color-variable: #6a9fb5
+    --color-attribute: #6a9fb5
+    --color-selection: #333
+
+$size-header-base: 2em
+$size-sidebar-width: 16em
+
+@mixin subtle
+  color: rgba(128,128,128,0.7)
+
+@mixin highlight
+  background-color: #ddd
+  @media (prefers-color-scheme: dark)
+    background-color: #222226
+
+@mixin display
+  font-family: rift, sans-serif
+  font-weight: 600
+
+@mixin italic
+  font-style: italic
+
+@mixin monospace
+  font-family: 'source code pro', 'source-code-pro', 'andale mono', 'andale-mono', monospace
+
+*
+  font-feature-settings: 'zero' on
+
+html
+  -webkit-text-size-adjust: 100%
+  font-kerning: normal
+
+body
+  font-family: $font-base
+  background: var(--color-bg)
+  font-weight: 400
+  font-size: 16px
+  color: var(--color-fg)
+
+.sidebar
+  background-color: darken($color-light, 2%)
+  @media (prefers-color-scheme: dark)
+    background-color: lighten($color-dark, 2%)
+  margin: 0 auto
+  height: 100%
+  width: $size-sidebar-width
+  position: fixed
+  top: 0
+  left: 0
+  overflow-x: hidden
+  overflow-y: scroll
+  nav
+    > ul
+      padding: 0
+      list-style-type: none
+    li
+      font-weight: 700
+      line-height: 2em
+      & a:hover
+        background-color: #ccc
+        @media (prefers-color-scheme: dark)
+          background-color: #333339
+      a
+        padding: 0 1em
+        display: block
+        color: var(--color-fg)
+      ul
+        margin-left: 1em
+        list-style-type: disc
+        li
+          font-weight: 400
+          line-height: 1.5em
+          a
+            margin-left: -1em
+          ul
+            margin: 0
+            padding: 0
+
+.logo
+  margin: 1em auto
+  display: flex
+  justify-content: center
+  svg
+    width: auto
+    height: 100px
+    path
+      fill: var(--color-fg)
+
+.links
+  text-align: center
+  font-size: 0.9em
+  a
+    color: var(--color-fg)
+    +monospace
+    text-transform: uppercase
+
+// Main wrapper when sidebar is present (left-justified)
+.main-wrapper
+  position: fixed
+  top: 0
+  right: 0
+  left: $size-sidebar-width
+  bottom: 0
+  height: 100%
+  width: calc(50% - 8em)
+  overflow-y: auto
+
+// Main wrapper when no sidebar is present (centered)
+// .main-center
+//   max-width: 46em
+//   margin: 0 auto
+
+.main
+  margin: 0 auto
+  padding: 1em 2em
+  max-width: 45em
+
+.playground
+  position: fixed
+  display: flex
+  flex-direction: column
+  top: 0
+  right: 0
+  width: calc(50% - 8em)
+  height: 100%
+  background-color: darken($color-light, 2%)
+  @media (prefers-color-scheme: dark)
+    background-color: darken($color-dark, 2%)
+
+.playground-input
+  height: 55%
+
+.playground-controls
+  +monospace
+  padding: 0.5em
+  display: flex
+  flex-direction: row
+  align-items: center
+  justify-content: space-between
+  button
+    +monospace
+    cursor: pointer
+    font-size: 0.9em
+    text-transform: uppercase
+    background: none
+    padding: 0 0.5em
+    border: 1px solid var(--color-fg)
+    border-radius: 2px
+
+#metrics
+  font-size: 0.75em
+
+.playground-output
+  border-top: 1px dashed var(--color-fg)
+
+
+a
+  text-decoration: none
+  color: darken($color-primary, 12%)
+  @media (prefers-color-scheme: dark)
+    color: $color-primary
+  &:hover
+    transition: all 0.05s linear
+    color: $color-primary
+    @media (prefers-color-scheme: dark)
+      color: darken($color-primary, 12%)
+
+em
+  +italic
+
+code
+  +monospace
+
+p
+  line-height: 1.5em
+  white-space: pre-line
+  code
+    padding: 0 0.1em
+  img
+    max-width: 100%
+    height: auto
+
+h1.title
+  +display
+  margin: 0 auto
+  font-size: 3em
+
+// h{n} tag size calc
+@for $i from 1 through 5
+  h#{$i}
+    font-size: $size-header-base * (1 - ($i / 10))
+
+.before-after
+  +monospace
+  +italic
+  margin: 0
+  display: block
+  font-size: 0.8em
+
+ol, ul
+  list-style-position: outside
+  padding-left: 1.1em
+
+ol
+  list-style-type: decimal
+  p
+    margin: 0 auto
+
+hr
+  border: 0
+  border-top: 2px dashed var(--color-fg)
+  margin-top: 2em
+
+blockquote
+  display: block
+  margin: 0 auto
+  border-radius: 0.4em
+  background-color: rgba(255,204,0,0.3)
+  p
+    padding: 0.5em
+
+pre
+  +highlight
+  display: block
+  white-space: pre
+  padding: 0.5em
+  margin: -0.5em
+  border-radius: 0.25em
+  overflow: hidden
+  overflow-x: scroll
+  code
+    overflow: hidden
+    overflow-x: scroll
+
+table
+  border-collapse: collapse
+  margin: 0 auto
+  border: 1px solid #333339
+  thead
+    +highlight
+    border-bottom: 1px solid #333339
+  tr
+    display: table-row
+  tr.odd, tr.even
+    &:hover
+      +highlight
+      transition: all 0.05s linear
+  td, th
+    margin: 0 auto
+    padding: 0.3em 0.5em
+
+// Hack for Pandoc's goofy multiline_tables
+th
+  text-align: center !important
+
+caption
+  +monospace
+  font-size: 0.8em
+
+.footnotes
+  margin: 3em 0 2em 0
+  ol
+    list-style-type: none
+    counter-reset: fn-counter
+    padding-left: 1em
+    margin: 0 auto
+  ol li
+    counter-increment: fn-counter
+    position: relative
+  ol li::before
+    font-size: 0.9em
+    content: counter(fn-counter)
+    position: absolute
+    left: -1.1em
+  a, ol, li, p
+    +monospace
+  ol, p
+    font-size: 0.9em
+    > li:hover
+      +highlight
+      transition: all 0.05s linear
+
+a.footnote-back
+  float: right
+  padding: 0
+
+a.footnote-ref
+  font-size: 0.9em
+
+sup, sub
+  vertical-align: baseline
+  position: relative
+  top: -0.4em
+
+sub
+  top: 0.4em
+
+footer
+  +monospace
+  +subtle
+  text-align: right
+  font-size: 0.8em
+
+// CodeMirror overrides
+
+.CodeMirror
+  +monospace
+  padding: 0 0.5em
+  // height: calc(100vh - 6em)
+  height: 100%
+  direction: ltr
+  background: none
+  color: var(--color-fg)
+  // @media screen and (max-width: $bp1)
+  //   height: calc(50vh - 4em)
+
+// Syntax highlighting
+
+.cm-s-riff
+  .cm-comment
+    color: var(--color-comment)
+  .cm-string
+    color: var(--color-string)
+  .cm-string-2
+    color: var(--color-string-2)
+  .cm-number
+    color: var(--color-number)
+  .cm-operator
+    color: var(--color-operator)
+  .cm-builtin
+    color: var(--color-builtin)
+  .cm-atom
+    color: var(--color-atom)
+  .cm-keyword
+    color: var(--color-keyword)
+  .cm-variable
+    color: var(--color-fg)
+  .cm-attribute
+    color: var(--color-attribute)
+
+  .CodeMirror-cursor
+    border-left: 2px solid var(--color-fg)
+
+  .CodeMirror-gutters
+    border: none
+    background-color: var(--color-bg)
+  .CodeMirror-linenumber
+    color: var(--color-comment)
+  .CodeMirror-focused .CodeMirror-selected
+    background-color: var(--color-selection)
+  .CodeMirror-selected,
+  .CodeMirror-line::selection, .CodeMirror-line > span::selection,
+  .CodeMirror-line > span > span::selection
+    background-color: var(--color-selection)
+  .CodeMirror-line::-moz-selection, .CodeMirror-line > span::-moz-selection,
+  .CodeMirror-line > span > span::-moz-selection
+    background-color: var(--color-selection)

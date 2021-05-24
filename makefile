@@ -1,5 +1,3 @@
-STYLE     := main
-
 SHELL     := /bin/sh
 AWK       := mawk
 UNAME     := $(shell uname -s)
@@ -16,11 +14,9 @@ TEXT_FMT  := plain
 INPUT_EXT  = +multiline_tables
 
 HFLAGS     = --standalone
-HFLAGS    += --template=$(DATA_DIR)/html.pdc
+HFLAGS    += --template=doc.pdc
 HFLAGS    += --from $(INPUT_FMT)$(INPUT_EXT)
 HFLAGS    += --to $(HTML_FMT)
-HFLAGS    += --title-prefix="Riff"
-HFLAGS    += --css=../style.css
 HFLAGS    += --mathjax
 HFLAGS    += --table-of-contents
 HFLAGS    += --toc-depth=3
@@ -65,7 +61,7 @@ usage:
 .SILENT: help html plaintext sass
 
 
-build: sass html plaintext
+build: sass html
 
 clean:
 	rm -rf $(DIST_DIR)
@@ -74,21 +70,18 @@ deploy:
 	git push server # Assume "server" is set up in SSH config
 
 html: sass
-	for i in $$(find $(SRC_DIR) -iname "*.md"); do \
-	mkdir -p $(DIST_DIR)/$$(basename $$i ".md"); \
-	pandoc $$i -o $(DIST_DIR)/$$(basename $$i ".md")/index.html $(HFLAGS); \
-	done
+	# for i in $$(find $(SRC_DIR) -iname "*.md"); do \
+	# mkdir -p $(DIST_DIR)/$$(basename $$i ".md"); \
+	# pandoc $$i -o $(DIST_DIR)/$$(basename $$i ".md")/index.html $(HFLAGS); \
+	# done
+	pandoc doc.md -o index.html $(HFLAGS)
 	echo "Compile Markdown to HTML"
 ifeq ($(UNAME), Darwin)
-	find $(DIST_DIR) -type f -iname "index.html" | xargs sed -i '' 's/$(FN_GARB)/[return]/g'
+	find . -type f -iname "index.html" | xargs sed -i '' 's/$(FN_GARB)/[return]/g'
 else ifeq ($(UNAME), Linux)
-	find $(DIST_DIR) -type f -iname "index.html" | xargs sed -i 's/$(FN_GARB)/[return]/g'
+	find . -type f -iname "index.html" | xargs sed -i 's/$(FN_GARB)/[return]/g'
 endif
 	echo "Replace default Pandoc footnote character"
-	mv $(DIST_DIR)/index/index.html $(DIST_DIR)/index.html
-	rm -rf $(DIST_DIR)/index
-	echo "Resolve index file"
-	cp -R assets $(DIST_DIR)
 
 plaintext:
 	mkdir -p $(DIST_DIR)/t
@@ -108,8 +101,8 @@ endif
 	echo "Remove blank lines between footnote entries"
 
 sass:
-	sass $(SASS_DIR)/$(STYLE).sass $(DIST_DIR)/style.css $(SFLAGS)
-	echo "Compile SASS stylesheets"
+	sass style.sass style.css $(SFLAGS)
+	echo "Compile CSS from Sass"
 
 sass-live:
-	sass $(SASS_DIR)/$(STYLE).sass $(DIST_DIR)/style.css $(SFLAGS) $(SWFLAGS)
+	sass style.sass style.css $(SFLAGS) $(SWFLAGS)

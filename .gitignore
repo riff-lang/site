@@ -1,6 +1,8 @@
 build/
 dist/
+*.html
 .sass-cache/
+*.css
 *.css.map
 *.sass.map
 *.scss.map

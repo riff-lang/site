@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<!-- Boilerplate from Pandoc template -->
+<html xmlns="http://www.w3.org/1999/xhtml" lang="$lang$" xml:lang="$lang$"$if(dir)$ dir="$dir$"$endif$>
+<head>
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+$for(author-meta)$
+<meta name="author" content="$author-meta$" />
+$endfor$
+$if(date-meta)$
+<meta name="dcterms.date" content="$date-meta$" />
+$endif$
+$if(keywords)$
+<meta name="keywords" content="$for(keywords)$$keywords$$sep$, $endfor$" />
+$endif$
+<title>The Riff Programming Language</title>
+<link rel="stylesheet" href="lib/codemirror.css" />
+
+<!-- Import custom stylesheet after CodeMirror's to override defaults -->
+<link rel="stylesheet" href="style.css" />
+<script src="lib/codemirror.js"></script>
+<script src="lib/simple.js"></script>
+<script src="lib/riff.js"></script>
+$if(math)$
+$math$
+$endif$
+$for(header-includes)$
+$header-includes$
+$endfor$
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <a href="https://riff.cx">
+
+                        <svg width="100%" height="100%" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 119.737 92.314" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+
+<g transform="translate(-77.989 -124.255)">
+<g transform="translate(77.989 124.255)">
+  <g transform="translate(58.812)">
+    <g>
+      <path d="M277.1,142.293a3.39,3.39,0,0,0-.667,2.019v70.2a2.031,2.031,0,0,0,2.032,2.031l11.143-.007a2.034,2.034,0,0,0,1.5-.662l4.723-5.177a1.354,1.354,0,0,0-1-2.266l-2.978-.006a1.354,1.354,0,0,1-1.351-1.354V158.477a1.354,1.354,0,0,1,1.293-1.353l2.546-.115a1.352,1.352,0,0,0,1.185-.822l3.559-8.374a1.354,1.354,0,0,0-1.24-1.883l-5.994-.026a1.353,1.353,0,0,1-1.349-1.354v-5.391a1.354,1.354,0,0,1,1.353-1.354l9.316-.012a2.031,2.031,0,0,0,1.667-.873c1.459-2.1,5.207-7.508,7.3-10.529a1.354,1.354,0,0,0-1.112-2.125l-16.823-.01a3.386,3.386,0,0,0-2.718,1.366Z" transform="translate(-276.437 -124.255)" fill-rule="evenodd"/>
+    </g>
+  </g>
+  <g transform="translate(40.051 26.364)">
+  <g>
+      <path id="Path_13" data-name="Path 13" d="M213.132,226.39a3.383,3.383,0,0,1,1.035-2.436l10.741-10.361a1.354,1.354,0,0,1,2.294.974v62.541a2.03,2.03,0,0,1-2.03,2.031l-10.008,0a2.031,2.031,0,0,1-2.032-2.031C213.132,268.989,213.132,233.33,213.132,226.39Z" transform="translate(-213.131 -213.214)" fill-rule="evenodd"/>
+    </g>
+  </g>
+  <g transform="translate(0 15.641)">
+      <g>
+      <path id="Path_14" data-name="Path 14" d="M78.816,192.322a3.385,3.385,0,0,0-.827,2.217v57.108a2.03,2.03,0,0,0,2.025,2.031l10.543.026a3.385,3.385,0,0,0,2.511-1.105l4.327-4.753a1.354,1.354,0,0,0-1-2.266l-2.994-.012a1.354,1.354,0,0,1-1.348-1.354c0-7.08,0-45.531,0-52.571a1.353,1.353,0,0,1,1.332-1.353c2.048-.034,4.839-.1,6.914-.133a1.354,1.354,0,0,1,1.376,1.353v10.779a1.354,1.354,0,0,0,2.291.977l9.8-9.391a2.029,2.029,0,0,0,.626-1.466V179.062a2.03,2.03,0,0,0-2.032-2.031l-18.76.014a3.384,3.384,0,0,0-2.555,1.168Z" transform="translate(-77.989 -177.031)" fill-rule="evenodd"/>
+    </g>
+  </g>
+  <g transform="translate(41.021 2.302)">
+  <g>
+      <path id="Path_15" data-name="Path 15" d="M230.474,133.378a1.354,1.354,0,0,0-2.309-.96l-11.363,11.3a1.356,1.356,0,0,0-.4.96V157.11a1.354,1.354,0,0,0,2.309.959l11.362-11.3a1.354,1.354,0,0,0,.4-.96Z" transform="translate(-216.404 -132.024)" fill-rule="evenodd"/>
+    </g>
+  </g>
+</g>
+<g transform="translate(163.777 124.255)">
+<g>
+    <path id="Path_16" data-name="Path 16" d="M368.127,142.293a3.389,3.389,0,0,0-.667,2.019v70.2a2.03,2.03,0,0,0,2.032,2.031l11.142-.007a2.034,2.034,0,0,0,1.5-.662l4.723-5.177a1.354,1.354,0,0,0-1-2.266l-2.978-.006a1.354,1.354,0,0,1-1.351-1.354V158.477a1.354,1.354,0,0,1,1.293-1.353l2.546-.115a1.353,1.353,0,0,0,1.185-.822l3.559-8.374a1.354,1.354,0,0,0-1.24-1.883l-5.994-.026a1.353,1.353,0,0,1-1.348-1.354v-5.391a1.354,1.354,0,0,1,1.353-1.354l9.316-.012a2.031,2.031,0,0,0,1.667-.873c1.46-2.1,5.207-7.508,7.3-10.529a1.353,1.353,0,0,0-1.111-2.125l-16.823-.01a3.385,3.385,0,0,0-2.719,1.366Z" transform="translate(-367.46 -124.255)" fill-rule="evenodd"/>
+  </g>
+</g>
+</g>
+</svg>
+
+        </div>
+        <div class="links">
+            <a href="https://github.com/riff-lang">GitHub</a>
+            &#x2022;
+            <a href="https://play.riff.cx">Demo</a>
+        </div>
+        <nav id="$idprefix$TOC" role="doc-toc">
+            $table-of-contents$
+        </nav>
+    </div>
+    <div class="main-wrapper">
+        <div class="main">
+$if(title)$
+            <h1 class="title">$title$</h1>
+$endif$
+$for(before)$
+            <p class=before-after>$before$</p>
+$endfor$
+            <article>
+$body$
+            </article>
+$for(after)$
+            <p class="before-after">$after$</p>
+$endfor$
+        </div>
+    </div>
+    <div class="playground">
+        <div class="playground-input">
+            <textarea id="input">
+// You can edit this code!
+// Use this playground to experiment
+// with Riff as you read through the
+// documentation
+// Click the "Run" button below to execute
+// this program directly in your browser
+"Hello, World!"</textarea>
+        </div>
+        <div class="playground-controls">
+            <div>
+            <button onclick="riffExec(1);">Run</button>
+            <button onclick="riffExec(0);">Disassemble</button>
+            </div>
+            <div id="metrics"></div>
+        </div>
+        <div class="playground-output">
+            <textarea id="output"></textarea>
+        </div>
+    </div>
+    <script async type='text/javascript' src='playground.js'></script>
+    <script async type='text/javascript' src='riff.js'></script>
+</body>
+</html>
