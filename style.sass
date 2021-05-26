@@ -6,6 +6,9 @@ $color-dark: #1b1b1d
 $color-light: #fafafa
 $color-primary: #C94848
 
+$breakpoint-1: 1440px
+$breakpoint-2: 600px
+
 // NOTE: svg > path > fill properties don't properly accept CSS vars
 // when intialized with Sass variables
 :root
@@ -45,7 +48,7 @@ $color-primary: #C94848
     --color-selection: #333
 
 $size-header-base: 2em
-$size-sidebar-width: 16em
+$size-sidebar-width: 12em
 
 @mixin subtle
   color: rgba(128,128,128,0.7)
@@ -79,7 +82,7 @@ body
   font-size: 16px
   color: var(--color-fg)
 
-.sidebar
+.menu
   background-color: darken($color-light, 2%)
   @media (prefers-color-scheme: dark)
     background-color: lighten($color-dark, 2%)
@@ -92,6 +95,7 @@ body
   overflow-x: hidden
   overflow-y: scroll
   nav
+    font-size: 0.9em
     > ul
       padding: 0
       list-style-type: none
@@ -107,19 +111,21 @@ body
         display: block
         color: var(--color-fg)
       ul
-        margin-left: 1em
-        list-style-type: disc
+        // margin-left: 1em
+        list-style: none
         li
           font-weight: 400
           line-height: 1.5em
           a
             margin-left: -1em
+            &::before
+              content: "- "
           ul
             margin: 0
             padding: 0
 
 .logo
-  margin: 1em auto
+  margin: 1em auto 0.5em auto
   display: flex
   justify-content: center
   svg
@@ -144,8 +150,14 @@ body
   left: $size-sidebar-width
   bottom: 0
   height: 100%
-  width: calc(50% - 8em)
+  width: calc(50% - (#{$size-sidebar-width} / 2))
   overflow-y: auto
+  @media screen and (max-width: $breakpoint-1)
+    width: calc(100% - #{$size-sidebar-width})
+    height: 70%
+  @media screen and (max-width: $breakpoint-2)
+    width: calc(100% - #{$size-sidebar-width})
+    height: 100%
 
 // Main wrapper when no sidebar is present (centered)
 // .main-center
@@ -155,7 +167,10 @@ body
 .main
   margin: 0 auto
   padding: 1em 2em
-  max-width: 45em
+  max-width: 50em
+  @media screen and (max-width: $breakpoint-1)
+    margin: 0
+    max-width: $breakpoint-1
 
 .playground
   position: fixed
@@ -163,22 +178,39 @@ body
   flex-direction: column
   top: 0
   right: 0
-  width: calc(50% - 8em)
+  width: calc(50% - (#{$size-sidebar-width} / 2))
   height: 100%
   background-color: darken($color-light, 2%)
   @media (prefers-color-scheme: dark)
     background-color: darken($color-dark, 2%)
+  @media screen and (max-width: $breakpoint-1)
+    flex-direction: row
+    width: calc(100% - #{$size-sidebar-width})
+    height: 30%
+    left: $size-sidebar-width
+    top: 70%
+  @media screen and (max-width: $breakpoint-2)
+    display: none
+
 
 .playground-input
+  order: 1
   height: 55%
+  @media screen and (max-width: $breakpoint-1)
+    width: 50%
+    height: 100%
 
 .playground-controls
+  order: 2
   +monospace
   padding: 0.5em
   display: flex
   flex-direction: row
   align-items: center
   justify-content: space-between
+  border-bottom: 1px dashed var(--color-fg)
+  @media screen and (max-width: $breakpoint-1)
+    border: none
   button
     +monospace
     cursor: pointer
@@ -193,7 +225,13 @@ body
   font-size: 0.75em
 
 .playground-output
-  border-top: 1px dashed var(--color-fg)
+  order: 3
+  height: 40%
+  @media screen and (max-width: $breakpoint-1)
+    height: 100%
+    width: 50%
+    border-top: none
+    border-left: 1px dashed var(--color-fg)
 
 
 a
@@ -266,7 +304,7 @@ pre
   display: block
   white-space: pre
   padding: 0.5em
-  margin: -0.5em
+  margin: 1em -0.5em
   border-radius: 0.25em
   overflow: hidden
   overflow-x: scroll
@@ -343,21 +381,33 @@ footer
   text-align: right
   font-size: 0.8em
 
-// CodeMirror overrides
+// Pandoc syntax highlighting
+.sourceCode .riff
+  .co
+    color: var(--color-comment)
+  .st
+    color: var(--color-string)
+  .ch
+    color: var(--color-string-2)
+  .dv, .fl, .bn, .kc
+    color: var(--color-number)
+  .bu
+    color: var(--color-builtin)
+  .cf, .kw
+    color: var(--color-keyword)
+  .at, .sc
+    color: var(--color-attribute)
 
+// CodeMirror overrides
 .CodeMirror
   +monospace
   padding: 0 0.5em
-  // height: calc(100vh - 6em)
   height: 100%
   direction: ltr
   background: none
   color: var(--color-fg)
-  // @media screen and (max-width: $bp1)
-  //   height: calc(50vh - 4em)
 
-// Syntax highlighting
-
+// CodeMirror syntax highlighting
 .cm-s-riff
   .cm-comment
     color: var(--color-comment)

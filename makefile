@@ -14,7 +14,8 @@ TEXT_FMT  := plain
 INPUT_EXT  = +multiline_tables
 
 HFLAGS     = --standalone
-HFLAGS    += --template=doc.pdc
+HFLAGS    += --template=pandoc/doc.pdc
+HFLAGS    += --syntax-definition=pandoc/riff.xml
 HFLAGS    += --from $(INPUT_FMT)$(INPUT_EXT)
 HFLAGS    += --to $(HTML_FMT)
 HFLAGS    += --mathjax

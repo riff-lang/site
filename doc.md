@@ -1187,7 +1187,7 @@ Returns $\sqrt{x}$.
 
 Returns $\tan(x)$ in radians.
 
-## Pseudo-Random Number Generation
+## Pseudo-Random Numbers
 
 Riff currently utilizes the POSIX
 [rand48](https://pubs.opengroup.org/onlinepubs/9699919799/functions/drand48.html)

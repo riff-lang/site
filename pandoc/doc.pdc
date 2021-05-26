@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!-- Boilerplate from Pandoc template -->
 <html xmlns="http://www.w3.org/1999/xhtml" lang="$lang$" xml:lang="$lang$"$if(dir)$ dir="$dir$"$endif$>
 <head>
 <meta charset="utf-8" />
@@ -30,11 +29,10 @@ $header-includes$
 $endfor$
 </head>
 <body>
-    <div class="sidebar">
+    <div class="menu">
         <div class="logo">
             <a href="https://riff.cx">
-
-                        <svg width="100%" height="100%" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 119.737 92.314" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+                <svg width="100%" height="100%" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 119.737 92.314" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
 
 <g transform="translate(-77.989 -124.255)">
 <g transform="translate(77.989 124.255)">
@@ -104,6 +102,7 @@ $endfor$
 // this program directly in your browser
 "Hello, World!"</textarea>
         </div>
+        <div class="playground-output">
         <div class="playground-controls">
             <div>
             <button onclick="riffExec(1);">Run</button>
@@ -111,7 +110,6 @@ $endfor$
             </div>
             <div id="metrics"></div>
         </div>
-        <div class="playground-output">
             <textarea id="output"></textarea>
         </div>
     </div>
