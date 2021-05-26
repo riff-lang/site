@@ -150,7 +150,7 @@ body
   left: $size-sidebar-width
   bottom: 0
   height: 100%
-  width: calc(50% - (#{$size-sidebar-width} / 2))
+  width: calc(55% - (#{$size-sidebar-width} / 2))
   overflow-y: auto
   @media screen and (max-width: $breakpoint-1)
     width: calc(100% - #{$size-sidebar-width})
@@ -178,7 +178,7 @@ body
   flex-direction: column
   top: 0
   right: 0
-  width: calc(50% - (#{$size-sidebar-width} / 2))
+  width: calc(45% - (#{$size-sidebar-width} / 2))
   height: 100%
   background-color: darken($color-light, 2%)
   @media (prefers-color-scheme: dark)
@@ -263,7 +263,8 @@ p
 h1.title
   +display
   margin: 0 auto
-  font-size: 3em
+  font-size: 3.5em
+  line-height: 1em
 
 // h{n} tag size calc
 @for $i from 1 through 5
