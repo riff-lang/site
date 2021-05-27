@@ -2,7 +2,7 @@
 
 $font-base: 'source-sans-pro', 'source sans pro', sans-serif
 
-$color-dark: #1b1b1d
+$color-dark: #1b1b1b
 $color-light: #fafafa
 $color-primary: #C94848
 
@@ -17,7 +17,7 @@ $breakpoint-2: 850px
 :root
   color-scheme: light dark
   --color-bg: #{$color-light}
-  --color-fg: #{$color-dark}
+  --color-fg: #1b1b1d
   --color-bg-abs: #fff
   --color-fg-abs: #000
   --color-border: #ccc
@@ -57,7 +57,7 @@ $size-sidebar-width: 12em
   color: rgba(128,128,128,0.7)
 
 @mixin highlight
-  background-color: darken($color-light, 3%)
+  background-color: darken($color-light, 4%)
   @media (prefers-color-scheme: dark)
     background-color: lighten($color-dark, 2%)
 
@@ -88,7 +88,7 @@ body
 .menu
   display: flex
   flex-direction: column
-  background-color: darken($color-light, 2%)
+  background-color: darken($color-light, 4%)
   @media (prefers-color-scheme: dark)
     background-color: lighten($color-dark, 2%)
   margin: 0 auto
@@ -117,9 +117,9 @@ body
       font-weight: 700
       line-height: 2em
       & a:hover
-        background-color: #ccc
+        background-color: darken($color-light, 10%)
         @media (prefers-color-scheme: dark)
-          background-color: #333339
+          background-color: lighten($color-dark, 5%)
       a
         padding: 0 1em
         display: block
@@ -220,7 +220,7 @@ body
   right: 0
   width: calc(45% - (#{$size-sidebar-width} / 2))
   height: 100%
-  background-color: darken($color-light, 2%)
+  background-color: darken($color-light, 5%)
   @media (prefers-color-scheme: dark)
     background-color: darken($color-dark, 2%)
   @media screen and (max-width: $breakpoint-1)
