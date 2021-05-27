@@ -6,15 +6,18 @@ $color-dark: #1b1b1d
 $color-light: #fafafa
 $color-primary: #C94848
 
+// Documentation and playground stacked
 $breakpoint-1: 1200px
-$breakpoint-2: 600px
 
-// NOTE: svg > path > fill properties don't properly accept CSS vars
-// when intialized with Sass variables
+// Sidebar and playground disappear
+// Logo and links appear above documentation as a header
+$breakpoint-2: 850px
+
+// NOTE: Interpolate Sass variables inside CSS vars
 :root
   color-scheme: light dark
-  --color-bg: #fafafa
-  --color-fg: #1b1b1d
+  --color-bg: #{$color-light}
+  --color-fg: #{$color-dark}
   --color-bg-abs: #fff
   --color-fg-abs: #000
   --color-border: #ccc
@@ -30,8 +33,8 @@ $breakpoint-2: 600px
   --color-attribute: #6a9fb5
   --color-selection: #e0e0e0
   @media (prefers-color-scheme: dark)
-    --color-bg: #1b1b1c
-    --color-fg: #bbbbbb
+    --color-bg: #{$color-dark}
+    --color-fg: #{darken($color-light, 20%)}
     --color-bg-abs: #000
     --color-fg-abs: #fff
     --color-border: #333
@@ -54,9 +57,9 @@ $size-sidebar-width: 12em
   color: rgba(128,128,128,0.7)
 
 @mixin highlight
-  background-color: #eee
+  background-color: darken($color-light, 3%)
   @media (prefers-color-scheme: dark)
-    background-color: #222226
+    background-color: lighten($color-dark, 2%)
 
 @mixin display
   font-family: teko, sans-serif
@@ -83,6 +86,8 @@ body
   color: var(--color-fg)
 
 .menu
+  display: flex
+  flex-direction: column
   background-color: darken($color-light, 2%)
   @media (prefers-color-scheme: dark)
     background-color: lighten($color-dark, 2%)
@@ -94,6 +99,15 @@ body
   left: 0
   overflow-x: hidden
   overflow-y: scroll
+  @media screen and (max-width: $breakpoint-2)
+    padding: 1em
+    width: auto
+    background-color: var(--color-bg)
+    flex-direction: row
+    justify-content: space-between
+    align-items: center
+    position: relative
+    height: auto
   nav
     font-size: 0.9em
     > ul
@@ -125,7 +139,7 @@ body
             padding: 0
 
 .logo
-  margin: 1em auto 0.5em auto
+  margin: 2em auto 0 auto
   display: flex
   justify-content: center
   svg
@@ -133,14 +147,36 @@ body
     height: 100px
     path
       fill: var(--color-fg)
+  @media screen and (max-width: $breakpoint-2)
+    margin: 0
+    svg
+      height: 60px
 
 .links
-  text-align: center
   font-size: 0.9em
+  ul
+    padding: 0
+    display: flex
+    flex-direction: column
+    align-items: center
+    justify-content: center
+    list-style-type: none
+    li
+      padding: 0 0.4em
   a
     color: var(--color-fg)
     +monospace
     text-transform: uppercase
+  @media screen and (max-width: $breakpoint-2)
+    font-size: 1.2em
+    ul
+      flex-direction: row
+      li
+        padding: 0 0 0 1.2em
+
+#TOC
+  @media screen and (max-width: $breakpoint-2)
+    display: none
 
 // Main wrapper when sidebar is present (left-justified)
 .main-wrapper
@@ -156,8 +192,10 @@ body
     width: calc(100% - #{$size-sidebar-width})
     height: 70%
   @media screen and (max-width: $breakpoint-2)
-    width: calc(100% - #{$size-sidebar-width})
-    height: 100%
+    position: relative
+    left: auto
+    width: auto
+    // height: 70%
 
 // Main wrapper when no sidebar is present (centered)
 // .main-center
@@ -166,11 +204,13 @@ body
 
 .main
   margin: 0 auto
-  padding: 1em 2em
+  padding: 2em
   max-width: 50em
   @media screen and (max-width: $breakpoint-1)
     margin: 0
     max-width: $breakpoint-1
+  @media screen and (max-width: $breakpoint-2)
+    padding: 1em
 
 .playground
   position: fixed
