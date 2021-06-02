@@ -167,6 +167,9 @@ body
     color: var(--color-fg)
     +monospace
     text-transform: uppercase
+    &:hover
+      transition: all 0.1s linear
+      color: var(--color-fg-abs)
   @media screen and (max-width: $breakpoint-2)
     font-size: 1.2em
     ul
@@ -261,6 +264,10 @@ body
     padding: 0 0.5em
     border: 1px solid var(--color-fg)
     border-radius: 2px
+    &:hover
+      transition: all 0.1s linear
+      color: var(--color-fg-abs)
+      border: 1px solid var(--color-fg-abs)
 
 #metrics
   font-size: 0.75em
