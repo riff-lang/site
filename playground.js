@@ -33,23 +33,18 @@ var Module = {
     noInitialRun: true,
     noExitRuntime: true,
     print: function(text) {
-        var element = document.getElementById('output');
         console.log(text);
-        element.value += text + "\n";
+        document.getElementById('output').value += text + "\n";
     },
     printErr: function(text) {
-        var element = document.getElementById('output');
         console.error(text);
-        element.value += text + "\n";
+        document.getElementById('output').value += text + "\n";
     },
     totalDependencies: 0,
     monitorRunDependencies: function(left) {
         this.totalDependencies = Math.max(this.totalDependencies, left);
     }
 };
-
-// Initialize with "Hello, World!"
-// loadSample('hello');
 
 // Riff code execution
 function riffExec(exec) {
@@ -97,19 +92,5 @@ function riffExec(exec) {
     var execTime = Date.now() - start;
     console.log('Runtime: ' + (execTime / 1000));
     document.getElementById('metrics').innerHTML =
-        'riff 0.1a / ~' + (execTime / 1000) + 's';
+        'riff 0.1a / ' + (execTime / 1000) + 's';
 }
-
-// function revealDropdown(d) {
-//     document.getElementById(d).classList.toggle('open');
-// }
-
-// function loadSample(sample) {
-
-//     // Clear the output textarea
-//     cmOutput.setValue('');
-
-//     var s = riffSamples[sample];
-//     if (s != null)
-//         cmInput.setValue(s);
-// }

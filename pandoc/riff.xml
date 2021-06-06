@@ -36,7 +36,7 @@
         <!-- Builtin functions -->
         <RegExpr      attribute="Builtin" String="(?:abs|atan|ceil|cos|exp|int|log|sin|sqrt|tan)\b" />
         <RegExpr      attribute="Builtin" String="(?:rand|srand)\b" />
-        <RegExpr      attribute="Builtin" String="(?:byte|char|fmt|hex|lower|num|split|upper)\b" />
+        <RegExpr      attribute="Builtin" String="(?:byte|char|fmt|hex|lower|num|split|type|upper)\b" />
 
         <!-- null -->
         <RegExpr      attribute="Constant" String="null\b" />

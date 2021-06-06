@@ -1,6 +1,6 @@
 ---
 title:  The Riff Programming Language
-before: Last updated 2021/05/25
+before: Last updated 2021/06/05
 toc:    true
 ...
 
@@ -1401,9 +1401,22 @@ for word in sentence {
 }
 
 chars = split("Thiswillbesplitintochars","")
-#chars          // 24
 chars[0]        // "T"
 chars[23]       // "s"
+```
+
+### `type(x)`
+
+Returns the type of value `x` in the form of a string.
+
+```riff
+type(null)  // "null"
+type(0xF)   // "int"
+type(1.4)   // "float"
+type("str") // "string"
+type(0..1)  // "sequence"
+type({1,2}) // "table"
+type(sin)   // "function"
 ```
 
 ### `upper(s)`

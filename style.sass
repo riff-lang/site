@@ -123,7 +123,6 @@ body
         display: block
         color: var(--color-fg)
       ul
-        // margin-left: 1em
         list-style: none
         li
           font-weight: 400
@@ -131,7 +130,10 @@ body
           a
             margin-left: -1em
             &::before
-              content: "- "
+              content: "\2012"
+              font-weight: 700
+              padding-right: 0.5em
+              color: #888
           ul
             margin: 0
             padding: 0
@@ -196,12 +198,6 @@ body
     position: relative
     left: auto
     width: auto
-    // height: 70%
-
-// Main wrapper when no sidebar is present (centered)
-// .main-center
-//   max-width: 46em
-//   margin: 0 auto
 
 .main
   margin: 0 auto
@@ -327,6 +323,9 @@ h1.title
 ol, ul
   list-style-position: outside
   padding-left: 1.1em
+
+ul
+  list-style-type: square
 
 ol
   list-style-type: decimal
