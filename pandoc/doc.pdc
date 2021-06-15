@@ -14,6 +14,11 @@ $if(keywords)$
 <meta name="keywords" content="$for(keywords)$$keywords$$sep$, $endfor$" />
 $endif$
 <title>The Riff Programming Language</title>
+<link rel="icon" href="assets/favicon.ico">
+<link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+<link rel="assets/apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="assets/manifest.webmanifest">
+<link rel="mask-icon" href="assets/safari-pinned-icon.svg" color="#000000"/>
 <link rel="stylesheet" href="lib/codemirror.css" />
 
 <!-- Import custom stylesheet after CodeMirror's to override defaults -->

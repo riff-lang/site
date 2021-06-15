@@ -628,7 +628,7 @@ x++
 
 ```riff
 if x == 1 {
-    return
+  return
 }
 x++
 ```
