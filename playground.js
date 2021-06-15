@@ -66,23 +66,7 @@ function riffExec(exec) {
     try {
         Module.ccall('wasm_main', 'number', ['number', 'string'],
             [exec, inputProgram]);
-        // if (exec == 0)
-        //     document.getElementById('output-title').innerHTML =
-        //         'Disassembly';
-        // else
-        //     document.getElementById('output-title').innerHTML =
-        //         'Output';
-    } catch (e) {
-
-        // This allows Riff programs to `exit` without Emscripten
-        // treating it as an error
-        // if (e.status != 0)
-        //     document.getElementById('output-title').innerHTML =
-        //         '<span style="color:#ac4142";>Error</span>';
-        // else
-        //     document.getElementById('output-title').innerHTML =
-        //         'Output';
-    }
+    } catch (e) { }
 
     // Set the output
     // NOTE: This performs significantly better by setting the output
@@ -92,5 +76,5 @@ function riffExec(exec) {
     var execTime = Date.now() - start;
     console.log('Runtime: ' + (execTime / 1000));
     document.getElementById('metrics').innerHTML =
-        'riff 0.1a / ' + (execTime / 1000) + 's';
+        'riff 0.1 / ' + (execTime / 1000) + 's';
 }
