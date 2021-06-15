@@ -16,7 +16,7 @@ $endif$
 <title>The Riff Programming Language</title>
 <link rel="icon" href="assets/favicon.ico">
 <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
-<link rel="assets/apple-touch-icon" href="apple-touch-icon.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <link rel="manifest" href="assets/manifest.webmanifest">
 <link rel="mask-icon" href="assets/safari-pinned-icon.svg" color="#000000"/>
 <link rel="stylesheet" href="lib/codemirror.css" />
