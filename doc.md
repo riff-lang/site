@@ -1,6 +1,6 @@
 ---
 title:  The Riff Programming Language
-before: Last updated 2021/06/05
+before: Last updated 2021/06/15
 toc:    true
 ...
 
@@ -308,9 +308,9 @@ statement outside of a loop.
 
 ```riff
 while 1 {
-    "This will print"
-    break
-    "This will not print"
+  "This will print"
+  break
+  "This will not print"
 }
 // program control transfers here
 ```
@@ -325,24 +325,24 @@ structure; `riff` will throw an error when trying to compile a
 
 ```riff
 do {
-    // ...
-    continue
-    // ...
-    // `continue` jumps here
+  // ...
+  continue
+  // ...
+  // `continue` jumps here
 } while 1
 
 for x in y {
-    // ...
-    continue
-    // ...
-    // `continue` jumps here
+  // ...
+  continue
+  // ...
+  // `continue` jumps here
 }
 
 while 1 {
-    // ...
-    continue
-    // ...
-    // `continue` jumps here
+  // ...
+  continue
+  // ...
+  // `continue` jumps here
 }
 ```
 
@@ -391,16 +391,16 @@ part of an [expression statement](#expression-statements).
 
 ```riff
 fn f(x) {
-    return x ** 2
+  return x ** 2
 }
 
 fn g() {
-    return 23.4
+  return 23.4
 }
 
 // Parentheses not required for functions without parameters
 fn h {
-    return "Hello"
+  return "Hello"
 }
 ``` 
 
@@ -438,9 +438,9 @@ table = { "foo", "bar", "baz" }
 // This iterates over each item in `table`, populating `k` with the
 // current table index, and `v` with the corresponding table element
 for k,v in table {
-    // First iteration:  k = 0, v = "foo"
-    // Second iteration: k = 1, v = "bar"
-    // Third iteration:  k = 2, v = "baz"
+  // First iteration:  k = 0, v = "foo"
+  // Second iteration: k = 1, v = "bar"
+  // Third iteration:  k = 2, v = "baz"
 }
 ```
 
@@ -467,12 +467,12 @@ the provided variable with the numbers $[0..n]$ (inclusive of `n`).
 ```riff
 // Equivalent to `for (i = 0; i <= 10; ++i)`
 for i in 10 {
-    // ...
+  // ...
 }
 
 // Equivalent to `for (i = 0; i >= -10; --i)`
 for i in -10 {
-    // ...
+  // ...
 }
 ```
 
@@ -486,10 +486,10 @@ Iterating over a string is similar to iterating over a table.
 
 ```riff
 for k,v in "Hello" {
-    // k = 0, v = "H"
-    // k = 1, v = "e"
-    // ...
-    // k = 4, v = "o"
+  // k = 0, v = "H"
+  // k = 1, v = "e"
+  // ...
+  // k = 4, v = "o"
 }
 ```
 
@@ -498,13 +498,13 @@ iterating over each byte in its compiled bytecode array.
 
 ```riff
 fn f(x) {
-    return x + 2
+  return x + 2
 }
 
 for k,v in f {
-    // k = 0, v = 78
-    // k = 1, v = 60
-    // ...
+  // k = 0, v = 78
+  // k = 1, v = 60
+  // ...
 }
 ```
 
@@ -536,13 +536,13 @@ in a given `if` construct.
 // `elif` and `else if` used in the same `if` construct
 x = 2
 if x == 1 {
-    ...
+  ...
 } elif x == 2 {
-    ...
+  ...
 } else if x == 3 {
-    ...
+  ...
 } else {
-    ...
+  ...
 }
 ```
 
@@ -566,11 +566,11 @@ same name without altering the outer variable.
 ```riff
 a = 25
 if 1 {
-    local a = a     // Newly declared local `a` will be 25
-    a += 5
-    a               // Prints 30
+  local a = a     // Newly declared local `a` will be 25
+  a += 5
+  a               // Prints 30
 }
-a                   // Prints 25
+a                 // Prints 25
 ```
 
 ### `loop`
@@ -610,7 +610,7 @@ Consider the following example.
 
 ```riff
 if x == 1
-    return
+  return
 x++
 ```
 
@@ -622,7 +622,7 @@ pitfall can be avoided by appending a semicolon (`;`) to `return` or
 enclosing the statement(s) following the `if` conditional in braces.
 ```riff
 if x == 1
-    return;
+  return;
 x++
 ```
 
@@ -965,7 +965,7 @@ its base-10 form (index starting at `0`).
 Subscripting a string with expression $i$ retrieves the character at
 index $i$, as if the string were a contiguous table of characters.
 
-```
+```riff
 "Hello"[1]  // "e"
 ```
 
@@ -980,9 +980,9 @@ table lookup with the key $i$.
 
 ```riff
 pedals = {
-    "Fuzz",
-    "Wah-Wah",
-    "Uni-Vibe" 
+  "Fuzz",
+  "Wah-Wah",
+  "Uni-Vibe" 
 }
 
 pedals[0]   // "Fuzz"
@@ -993,7 +993,7 @@ return the $i$th byte in the function's compiled bytecode array.
 
 ```riff
 fn f(x,y) {
-    return x << y
+  return x << y
 }
 
 f[2]    // 25 (may vary depending on future riff versions)
@@ -1005,7 +1005,7 @@ f[2]    // 25 (may vary depending on future riff versions)
 vector or "default table." `$` has the highest precedence of all Riff
 operators and is used for subscripting the default table.
 
-```
+```riff
 $0          // Equivalent to arg[0]
 $a          // Equivalent to arg[a]
 $(1 << 3)   // Equivalent to arg[1 << 3]
@@ -1055,7 +1055,7 @@ parentheses.
 
 ```riff
 fn max(x,y) {
-    return x > y ? x : y
+  return x > y ? x : y
 }
 
 max(1+4, 3*2)
@@ -1069,11 +1069,11 @@ local namespace with the function.
 
 ```riff
 fn f(x) {
-    return x + 1
+  return x + 1
 }
 
 local fn g(x) {
-    return x - 1
+  return x - 1
 }
 ```
 
@@ -1084,11 +1084,11 @@ statement](#expression-statements).
 
 ```riff
 f = fn(x) {
-    return x + 1
+  return x + 1
 }
 
 local g = fn(x) {
-    return x - 1
+  return x - 1
 }
 ```
 
@@ -1107,7 +1107,7 @@ function](https://en.wikipedia.org/wiki/Variadic_function) support.
 ```riff
 // Arity of the function is 3
 fn f(x, y, z) {
-    ...
+  ...
 }
 
 f(1,2,3)    // x = 1        y = 2       z = 3
@@ -1238,7 +1238,7 @@ byte(s)     // 104
 byte(s,2)   // 108
 
 fn f(x) {
-    return x * 2
+  return x * 2
 }
 byte(f)     // 78
 f[0]        // 78
@@ -1397,7 +1397,7 @@ sentence = split("A quick brown fox")
 
 // Print the words on separate lines in order
 for word in sentence {
-    word
+  word
 }
 
 chars = split("Thiswillbesplitintochars","")
