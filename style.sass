@@ -1,3 +1,4 @@
+@use "sass:math"
 @import url(https://use.typekit.net/xiz7evu.css)
 
 $font-base: 'source-sans-pro', 'source sans pro', sans-serif
@@ -311,7 +312,7 @@ h1.title
 // h{n} tag size calc
 @for $i from 1 through 5
   h#{$i}
-    font-size: $size-header-base * (1 - ($i / 10))
+    font-size: $size-header-base * (1 - math.div($i, 10))
 
 .before-after
   +monospace
@@ -433,7 +434,7 @@ footer
     color: var(--color-comment)
   .st
     color: var(--color-string)
-  .ch
+  .ch, .ss
     color: var(--color-string-2)
   .dv, .fl, .bn, .kc
     color: var(--color-number)

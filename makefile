@@ -7,11 +7,18 @@ DIST_DIR  := dist
 SASS_DIR  := sass
 SRC_DIR   := src
 
+DOCS       = doc/intro.md
+DOCS      += doc/synopsis.md
+DOCS      += doc/options.md
+DOCS      += doc/overview.md
+DOCS      += doc/language.md
+DOCS      += doc/builtins.md
+
 INPUT_FMT := markdown
 HTML_FMT  := html
 TEXT_FMT  := plain
 
-INPUT_EXT  = +multiline_tables
+INPUT_EXT  = +header_attributes+multiline_tables
 
 HFLAGS     = --standalone
 HFLAGS    += --template=pandoc/doc.pdc
@@ -75,7 +82,7 @@ html: sass
 	# mkdir -p $(DIST_DIR)/$$(basename $$i ".md"); \
 	# pandoc $$i -o $(DIST_DIR)/$$(basename $$i ".md")/index.html $(HFLAGS); \
 	# done
-	pandoc doc.md -o index.html $(HFLAGS)
+	pandoc $(DOCS) -o index.html $(HFLAGS)
 	echo "Compile Markdown to HTML"
 ifeq ($(UNAME), Darwin)
 	find . -type f -iname "index.html" | xargs sed -i '' 's/$(FN_GARB)/[return]/g'
