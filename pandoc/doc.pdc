@@ -15,6 +15,12 @@ $if(keywords)$
 $endif$
 <title>The Riff Programming Language</title>
 
+<!-- Social/Open Graph image -->
+<meta property="og:image" content="https://riff.cx/assets/social.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:type" content="image/png" />
+
 <!-- Short titles for mobile shortcuts -->
 <meta name="apple-mobile-web-app-title" content="Riff">
 <meta name="application-name" content="Riff">
