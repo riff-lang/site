@@ -1085,9 +1085,8 @@ f()         // x = null     y = null    z = null
 ```
 
 Additionally, many included library functions are designed to accept a
-varying number of arguments, such as `atan()` and `fmt()`. See the
-[included functions](#included-functions) section for a detailed
-description of the included library of functions.
+varying number of arguments, such as [`atan()`](#atan) and
+[`fmt()`](#fmt).
 
 ### Scoping
 
