@@ -1,11 +1,9 @@
+@use "sass:color"
 @use "sass:math"
 @import url(https://use.typekit.net/xiz7evu.css)
 
 $font-base: 'source-sans-pro', 'source sans pro', sans-serif
 
-$color-dark: #1b1b1b
-$color-light: #fafafa
-$color-primary: #C94848
 
 // Documentation and playground stacked
 $breakpoint-1: 1200px
@@ -14,7 +12,20 @@ $breakpoint-1: 1200px
 // Logo and links appear above documentation as a header
 $breakpoint-2: 850px
 
-// NOTE: Interpolate Sass variables inside CSS vars
+$color-primary: #C94848     // Links
+$color-dark:    #1b1b1b
+$color-light:   #fafafa
+
+// Base colors for syntax highlighting
+$color-number:  #a06666     // Numeric literals
+$color-char:    #e3a37d     // Character literals
+$color-string:  #dd9999     // String literals
+$color-regex:   #fbcb97     // Regex literals
+$color-op:      #cccccc     // Operator (only `in` for now)
+$color-builtin: #5fa195     // Builtin tables/functions
+$color-atom:    #974b46     // `null`
+$color-keyword: #888888     // Keywords
+
 :root
   color-scheme: light dark
   --color-bg: #{$color-light}
@@ -22,13 +33,14 @@ $breakpoint-2: 850px
   --color-bg-abs: #fff
   --color-fg-abs: #000
   --color-comment: #999
-  --color-string: #dd9999
-  --color-string-2: #CCA57A
-  --color-number: #a06666
-  --color-operator: #cccccc
-  --color-builtin: #5fa195
-  --color-atom: #974b46
-  --color-keyword: #888888
+  --color-number: #{$color-number}
+  --color-char: #{$color-char}
+  --color-string: #{darken($color-string, 10%)}
+  --color-string-2: #{color.adjust($color-regex, $saturation: -30%, $lightness: -20%)}
+  --color-operator: #{$color-op}
+  --color-builtin: #{$color-builtin}
+  --color-atom: #{$color-atom}
+  --color-keyword: #{$color-keyword}
   --color-variable: #6a9fb5     // Unused
   --color-attribute: #5f81a5
   --color-selection: #e0e0e0
@@ -38,13 +50,14 @@ $breakpoint-2: 850px
     --color-bg-abs: #000000
     --color-fg-abs: #ffffff
     --color-comment: #555555
-    --color-string: #dd9999
-    --color-string-2: #fbcb97
-    --color-number: #a06666
-    --color-operator: #cccccc
-    --color-builtin: #5fa195
-    --color-atom: #974b46
-    --color-keyword: #888888
+    --color-number: #{$color-number}
+    --color-char: #{$color-char}
+    --color-string: #{$color-string}
+    --color-string-2: #{$color-regex}
+    --color-operator: #{$color-op}
+    --color-builtin: #{$color-builtin}
+    --color-atom: #{$color-atom}
+    --color-keyword: #{$color-keyword}
     --color-variable: #6a9fb5   // Unused
     --color-attribute: #d0dfee
     --color-selection: #333333
@@ -432,12 +445,14 @@ footer
 .sourceCode
   .co
     color: var(--color-comment)
-  .st
-    color: var(--color-string)
-  .ch, .ss
-    color: var(--color-string-2)
   .dv, .fl, .bn, .kc
     color: var(--color-number)
+  .ch
+    color: var(--color-char)
+  .st
+    color: var(--color-string)
+  .ss
+    color: var(--color-string-2)
   .bu
     color: var(--color-builtin)
   .cf, .kw
@@ -458,12 +473,14 @@ footer
 .cm-s-riff
   .cm-comment
     color: var(--color-comment)
+  .cm-number
+    color: var(--color-number)
+  .cm-char
+    color: var(--color-char)
   .cm-string
     color: var(--color-string)
   .cm-string-2
     color: var(--color-string-2)
-  .cm-number
-    color: var(--color-number)
   .cm-operator
     color: var(--color-operator)
   .cm-builtin

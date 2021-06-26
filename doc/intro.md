@@ -1,6 +1,6 @@
 ---
 title:  The Riff Programming Language
-before: Last updated 2021/06/24
+before: Last updated 2021/06/26
 toc:    true
 ...
 
