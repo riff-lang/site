@@ -500,7 +500,9 @@ footer
 
   .CodeMirror-gutters
     border: none
-    background-color: var(--color-bg)
+    background-color: darken($color-light, 5%)
+    @media (prefers-color-scheme: dark)
+      background-color: darken($color-dark, 2%)
   .CodeMirror-linenumber
     color: var(--color-comment)
   .CodeMirror-focused .CodeMirror-selected
