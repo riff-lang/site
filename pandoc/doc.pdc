@@ -81,12 +81,10 @@ $endfor$
     <div class="playground">
         <div class="playground-input">
             <textarea id="input">
-// Edit me!
-// Use this playground to experiment
-// with Riff as you read through the
-// documentation
-// Click "Run" button to execute this
-// program directly in your browser
+// Riff Playground
+// ***************
+// Experiment with Riff as you read
+// through the documentation!
 "Hello, World!"</textarea>
         </div>
         <div class="playground-output">
