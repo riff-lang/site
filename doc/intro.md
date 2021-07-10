@@ -1,7 +1,5 @@
 ---
-title:  The Riff Programming Language
-before: Last updated 2021/06/26
-toc:    true
+title: The Riff Programming Language
 ...
 
 Riff is a dynamically-typed general-purpose programming language

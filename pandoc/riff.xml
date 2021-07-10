@@ -28,19 +28,19 @@
         <DetectChar   attribute="Char" context="Char" char="'" />
 
         <!-- Numbers -->
-        <RegExpr      attribute="Bin Int"   context="Infix Op" String="[+-]?0[bB][01_]*" />
-        <RegExpr      attribute="Hex Float" context="Infix Op" String="[+-]?0[xX][A-Fa-f0-9_]*(?:[pP][+-]?[A-Fa-f0-9][A-Fa-f0-9_]*)?" />
-        <RegExpr      attribute="Hex Float" context="Infix Op" String="[+-]?0[xX][A-Fa-f0-9_]*\.?[A-Fa-f0-9][A-Fa-f0-9_]*(?:[pP][+-]?[A-Fa-f0-9][A-Fa-f0-9_]*)?" />
-        <RegExpr      attribute="Dec Float" context="Infix Op" String="[+-]?(\d[\d_]*)?\.?\d[\d_]*(?:[eE][+-]?\d[\d_]*)?" />
-        <RegExpr      attribute="Dec Float" context="Infix Op" String="[+-]?\.\d[\d_]*(?:[eE][+-]?\d[\d_]*)?" />
-        <RegExpr      attribute="Hex Int"   context="Infix Op" String="[+-]?0[xX][0-9A-Fa-f_]*" />
-        <RegExpr      attribute="Dec Int"   context="Infix Op" String="[+-]?\d[\d_]*" />
+        <RegExpr      attribute="Bin Int"   context="Infix Op" String="0[bB][01_]*" />
+        <RegExpr      attribute="Hex Float" context="Infix Op" String="0[xX][A-Fa-f0-9_]*(?:[pP][+-]?[A-Fa-f0-9][A-Fa-f0-9_]*)?" />
+        <RegExpr      attribute="Hex Float" context="Infix Op" String="0[xX][A-Fa-f0-9_]*\.?[A-Fa-f0-9][A-Fa-f0-9_]*(?:[pP][+-]?[A-Fa-f0-9][A-Fa-f0-9_]*)?" />
+        <RegExpr      attribute="Dec Float" context="Infix Op" String="(\d[\d_]*)?\.?\d[\d_]*(?:[eE][+-]?\d[\d_]*)?" />
+        <RegExpr      attribute="Dec Float" context="Infix Op" String="\.\d[\d_]*(?:[eE][+-]?\d[\d_]*)?" />
+        <RegExpr      attribute="Hex Int"   context="Infix Op" String="0[xX][0-9A-Fa-f_]*" />
+        <RegExpr      attribute="Dec Int"   context="Infix Op" String="\d[\d_]*" />
 
         <!-- .. -->
         <RegExpr      attribute="Operator" String="\.\." />
 
         <!-- Builtin functions -->
-        <RegExpr      attribute="Builtin" String="(?:abs|atan|ceil|cos|exp|int|log|sin|sqrt|tan)\b" />
+        <RegExpr      attribute="Builtin" String="(?:abs|atan|ceil|cos|exp|int|log|pow|sin|sqrt|tan)\b" />
         <RegExpr      attribute="Builtin" String="(?:rand|srand)\b" />
         <RegExpr      attribute="Builtin" String="(?:byte|char|fmt|gsub|hex|lower|num|split|sub|type|upper)\b" />
 
@@ -69,8 +69,6 @@
         <DetectChar   attribute="Normal Text" context="#pop" char="/" />
         <Detect2Chars attribute="Infix Op"    context="#stay" char="+" char1="+" />
         <Detect2Chars attribute="Infix Op"    context="#stay" char="-" char1="-" />
-        <DetectChar   attribute="Normal Text" context="#pop" char="+" />
-        <DetectChar   attribute="Normal Text" context="#pop" char="-" />
       </context>
 
       <!-- Block comments -->
@@ -83,7 +81,7 @@
       <context attribute="String" name="String" lineEndContext="#stay">
 
         <!-- fmt() format modifiers/specifiers -->
-        <RegExpr      attribute="Attribute" context="#stay" String="(?:%%|%[-+ 0]*(?:\*|\d*)?(?:\.(?:\d*|\*)?)?[aAcdeEfFgGiosxX])" />
+        <RegExpr      attribute="Attribute" context="#stay" String="(?:%%|%[-+ 0]*(?:\*|\d*)?(?:\.(?:\d*|\*)?)?[aAbcdeEfFgGiosxX])" />
 
         <!-- Special chars, i.e. escape sequences -->
         <RegExpr      attribute="SpecialChar" context="#stay" String="\\[\\abefnrtv'&quot;]|\\x[A-Fa-f0-9]{1,2}|\\\d{1,3}" />

@@ -28,6 +28,7 @@ HFLAGS    += --to $(HTML_FMT)
 HFLAGS    += --mathjax
 HFLAGS    += --table-of-contents
 HFLAGS    += --toc-depth=3
+HFLAGS    += --metadata date=`date +"%Y/%m/%d"`
 
 TFLAGS     = --from $(INPUT_FMT)
 TFLAGS    += --to $(TEXT_FMT)

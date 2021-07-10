@@ -46,59 +46,55 @@ $header-includes$
 $endfor$
 </head>
 <body>
-    <div class="menu">
-        <div class="logo">
-            <a href="https://riff.cx">
-        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 440 415.281"><g transform="translate(-708 558.64)"><path d="M708-420.213v237.3h59.326l39.551-26.916H767.326V-405.382L787.1-420.213v59.326l59.326-39.551v-69.213H777.214Z"/><path d="M866.2-182.91h59.326V-449.876L866.2-410.326Z"/><path d="M866.2-430.1l59.326-39.551V-509.2L866.2-469.652Z"/><path d="M1083.73-514.146,1148-558.64h-59.326l-64.27,44.494v44.494h-19.775V-519.09l59.326-39.551h-59.326L945.3-519.09v375.73l59.326-39.551V-430.1H1024.4V-143.36l59.326-39.551V-430.1l59.326-39.551H1083.73Z"/></g></svg>
-            </a>
-        </div>
-        <div class="links">
-            <ul>
-                <li><a href="https://github.com/riff-lang/riff">GitHub</a></li>
-                <li><a href="https://riff.run">Playground</a></li>
-            </ul>
-        </div>
-        <nav id="$idprefix$TOC" role="doc-toc">
-            $table-of-contents$
-        </nav>
+  <div class="menu">
+    <div class="logo">
+      <a href="https://riff.cx">
+    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 440 415.281"><g transform="translate(-708 558.64)"><path d="M708-420.213v237.3h59.326l39.551-26.916H767.326V-405.382L787.1-420.213v59.326l59.326-39.551v-69.213H777.214Z"/><path d="M866.2-182.91h59.326V-449.876L866.2-410.326Z"/><path d="M866.2-430.1l59.326-39.551V-509.2L866.2-469.652Z"/><path d="M1083.73-514.146,1148-558.64h-59.326l-64.27,44.494v44.494h-19.775V-519.09l59.326-39.551h-59.326L945.3-519.09v375.73l59.326-39.551V-430.1H1024.4V-143.36l59.326-39.551V-430.1l59.326-39.551H1083.73Z"/></g></svg>
+      </a>
     </div>
-    <div class="main-wrapper">
-        <div class="main">
-$if(title)$
-            <h1 class="title">$title$</h1>
-$endif$
-$for(before)$
-            <p class=before-after>$before$</p>
-$endfor$
-            <article>
+    <div class="links">
+      <ul>
+        <li><a href="https://github.com/riff-lang/riff">GitHub</a></li>
+        <li><a href="https://riff.run">Playground</a></li>
+      </ul>
+    </div>
+    <nav id="$idprefix$TOC" role="doc-toc">
+      $table-of-contents$
+    </nav>
+  </div>
+  <div class="main-wrapper">
+    <div class="main">
+      <h1 class="title">The Riff Programming Language</h1>
+      <p class=before-after>Last updated $date$</p>
+      <article>
 $body$
-            </article>
+      </article>
 $for(after)$
-            <p class="before-after">$after$</p>
+      <p class="before-after">$after$</p>
 $endfor$
-        </div>
     </div>
-    <div class="playground">
-        <div class="playground-input">
-            <textarea id="input">
+  </div>
+  <div class="playground">
+    <div class="playground-input">
+      <textarea id="input">
 // Riff Playground
 // ***************
 // Experiment with Riff as you read
 // through the documentation!
 "Hello, World!"</textarea>
-        </div>
-        <div class="playground-output">
-        <div class="playground-controls">
-            <div>
-            <button onclick="riffExec(1);">Run</button>
-            <button onclick="riffExec(0);">Disassemble</button>
-            </div>
-            <div id="metrics"></div>
-        </div>
-            <textarea id="output"></textarea>
-        </div>
     </div>
-    <script async type='text/javascript' src='playground.js'></script>
-    <script async type='text/javascript' src='riff.js'></script>
+    <div class="playground-output">
+    <div class="playground-controls">
+      <div>
+      <button onclick="riffExec(1);">Run</button>
+      <button onclick="riffExec(0);">Disassemble</button>
+      </div>
+      <div id="metrics"></div>
+    </div>
+      <textarea id="output"></textarea>
+    </div>
+  </div>
+  <script async type='text/javascript' src='playground.js'></script>
+  <script async type='text/javascript' src='riff.js'></script>
 </body>
 </html>
