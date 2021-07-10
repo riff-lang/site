@@ -103,12 +103,6 @@ int(16.34)  // 16
 Returns $\log_b(x)$. If `b` is not provided, `log(x)` returns the
 natural log of `x` (i.e. $\ln(x)$ or $\log_e(x)$).
 
-## `pow(x,y[,z])` {#pow}
-
-Returns $x^y$, equivalent to `x ** y`. If a third argument `z` is
-provided, the function returns $x^y \mod z$, equivalent to `(x ** y) %
-z`.
-
 ## `sin(x)` {#sin}
 
 Returns $\sin(x)$ in radians.
