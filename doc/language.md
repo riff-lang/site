@@ -138,7 +138,7 @@ hexadecimal forms.
 
 | Sequence | Description |
 | -------- | ----------- |
-| `\nnn`   | Decimal escape sequence with up to three decimal digits |
+| `\nnn`   | Octal escape sequence with up to three octal digits |
 | `\xnn`   | Hexadecimal escape sequence with up to two hexadecimal digits |
 
 : Decimal/hexadecimal escape sequence formats
@@ -941,19 +941,19 @@ s = "string"
 a = { 1, 2, 3, 4 }
 fn f(x) { return x + 3 }
 
-#s  // 6
-#a  // 4
-#f  // 5 (may vary depending on future versions of riff)
+#s; // 6
+#a; // 4
+#f; // 5 (may vary depending on future versions of riff)
 ```
 
 The length operator can be used on numeric values as well; returning
 the length of the number in decimal form.
 
 ```riff
-#123    // 3
-#-230   // 4
-#0.6345 // 6
-#0x1f   // 2
+#123;       // 3
+#-230;      // 4
+#0.6345;    // 6
+#0x1f;      // 2
 ```
 
 ### Subscripting

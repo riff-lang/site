@@ -367,7 +367,7 @@ for word in sentence {
 words = split("foo1bar2baz", /\d/)
 words[0]        // "foo"
 words[1]        // "bar"
-words[3]        // "baz"
+words[2]        // "baz"
 
 // Split string into single-byte strings
 chars = split("Thiswillbesplitintochars","")
