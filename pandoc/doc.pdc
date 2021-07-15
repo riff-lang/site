@@ -14,6 +14,8 @@ $if(keywords)$
 <meta name="keywords" content="$for(keywords)$$keywords$$sep$, $endfor$" />
 $endif$
 <title>The Riff Programming Language</title>
+<meta property="og:title" content="The Riff Programming Language" />
+<meta property="og:description" content="Riff is a dynamically-typed general-purpose programming language designed primarily for prototyping and command-line usage. Riff offers a familiar syntax to many C-style languages as well as some extra conveniences, aiming to be a useful supplementary tool for programmers." />
 
 <!-- Social/Open Graph image -->
 <meta property="og:image" content="https://riff.cx/assets/social.png" />

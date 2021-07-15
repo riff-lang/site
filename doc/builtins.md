@@ -117,33 +117,38 @@ Returns $\tan(x)$ in radians.
 
 # Pseudo-Random Numbers {#prng}
 
-Riff currently utilizes the POSIX
-[rand48](https://pubs.opengroup.org/onlinepubs/9699919799/functions/drand48.html)
-family of functions to generate pseudo-random numbers. When the
-virtual machine registers the built-in functions, the PRNG is
-initialized once with `srand48(time(0))`. Riff also provides an
-`srand()` function documented below to allow control over the sequence
-of the randomly generated numbers.
+Riff implements the [`xoshiro256**`](https://prng.di.unimi.it)
+generator to produce pseudo-random numbers. When the virtual machine
+registers the built-in functions, the PRNG is initialized once with
+`time(0)`. Riff provides an `srand()` function documented below to
+allow control over the sequence of the generated pseudo-random numbers.
 
-## `rand([n])` {#rand}
+## `rand([m[,n]])` {#rand}
+
+| Syntax | Type | Range |
+| :----- | ---- | ----- |
+| `rand()` | Float | $[0..1)$ |
+| `rand(0)` | Integer | $[$`INT_MIN`$..$`INT_MAX`$]$ |
+| `rand(n)` | Integer | $[0..n]$ |
+| `rand(m,n)` | Integer | $[m..n]$ |
+| `rand(`*range*`)` | Integer | See [ranges](#ranges) |
 
 When called without arguments, `rand()` returns a pseudo-random
-floating-point number in the range $[0..1)$. When called with an
-integer `n`, `rand(n)` returns a pseudo-random Riff integer in the
-range $[0..n]$. `n` can be negative. When called with `0`, `rand(0)`
-returns a pseudo-random Riff integer (signed 64-bit).
-
-`rand()` uses exactly one call to `drand48()` to produce floating
-point numbers. `rand(0)` uses two calls to `mrand48()` to produce a
-pseudo-random signed 64-bit integer. `rand(n)` uses two calls to
-`lrand48()` to produce a pseudo-random unsigned integer and modifies
-the result if `n` is negative.
+floating-point number in the range $[0..1)$. When called with `0`,
+`rand(0)` returns a pseudo-random Riff integer (signed 64-bit). When
+called with an integer `n`, `rand(n)` returns a pseudo-random Riff
+integer in the range $[0..n]$. `n` can be negative. When called with 2
+arguments `m` and `n`, `rand(m,n)` returns a pseudo-random integer in
+the range $[m..n]$. `m` can be greater than `n`.
 
 ## `srand([x])` {#srand}
 
 Initializes the PRNG with seed `x`. If `x` is not given, `time(0)` is
 used. When the PRNG is initialized with a seed `x`, `rand()` will
 always produce the same sequence of numbers.
+
+*The following is only an example and may not accurately reflect the
+expected output for any particular version of Riff.*
 
 ```riff
 srand(3)    // Initialize PRNG with seed "3"
