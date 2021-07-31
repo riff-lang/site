@@ -117,6 +117,23 @@ integer constants.
 'π'     // 960
 ```
 
+Multicharacter literals are also supported. The multicharacter
+sequence creates an integer where successive bytes are right-aligned
+and zero-padded in big-endian form.
+
+```riff
+'abcd'      // 0x61626364
+'abcdefgh'  // 0x6162636465666768
+'\1\2\3\4'  // 0x01020304
+```
+
+In the event of overflow, only the lowest 64 bits will remain in the
+resulting integer.
+
+```riff
+'abcdefghi' // 0x6263646566676869 ('a' overflows)
+```
+
 Similar to [strings](#strings), Riff supports the use of the backslash
 character (`\`) to denote C-style escape sequences.
 
