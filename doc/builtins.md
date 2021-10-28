@@ -58,6 +58,17 @@ gsub("foo bar", /(\w+) (\w+)/, "$2 $1") // "bar foo"
 Currently, Riff does not purge the field table upon each regex
 operation. Old captures will be only ever be overwritten by new ones.
 
+# Standard I/O Streams
+
+Riff provides predefined variables corresponding to the [standard I/O
+file descriptors](https://en.wikipedia.org/wiki/Standard_streams).
+
+| Variable | I/O stream |
+| :------- | :--------- |
+| `stderr` | Standard error |
+| `stdin`  | Standard input |
+| `stdout` | Standard output |
+
 # Arithmetic Functions
 
 ## `abs(x)` {#abs}
@@ -114,6 +125,42 @@ Returns $\sqrt{x}$.
 ## `tan(x)` {#tan}
 
 Returns $\tan(x)$ in radians.
+
+# I/O Functions
+
+## `close(f)` {#close}
+
+Closes the file `f`.
+
+## `eof(f)` {#eof}
+
+Returns `1` if the file handle `f` points to the end of the file or if
+`f` is not a valid file handle. Returns `0` otherwise.
+
+## `eval(s)` {#eval}
+
+## `flush(f)` {#flush}
+
+Flushes or saves any written data to file `f`.
+
+## `get([n])` {#get}
+
+## `getc([f])` {#getc}
+
+## `open(s[,m])` {#open}
+
+## `printf(s, ...)` {#printf}
+
+## `putc(...)` {#putc}
+
+Takes zero or more integers and prints a string composed of the
+character codes of each respective argument in order.
+
+## `read(f[,n])` {#read}
+
+## `write(s[,f])` {#write}
+
+Writes the value `s` to file handle `f` (`stdout` by default).
 
 # Pseudo-Random Numbers {#prng}
 
@@ -265,6 +312,9 @@ The table below outlines the available conversion specifiers.
             (`f`/`F`) or exponent notation (`e`/`E`); whichever is
             shorter.
 
+`m`         A multi-character string (from an integer, similar to
+            `%c`).
+
 `o`         An *unsigned* octal integer.
 
 `s`         A character string.
@@ -405,3 +455,11 @@ type(sin)   // "function"
 Returns a copy of string `s` with all lowercase ASCII letters
 converted to uppercase ASCII. All other characters in string `s`
 (including non-ASCII characters) are copied over unchanged.
+
+# System Functions
+
+## `exit([s])` {#exit}
+
+Terminates the program by calling the ISO C function `exit()`
+returning status `s`. If `s` is not provided, the programs terminates
+with `0`.

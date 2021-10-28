@@ -283,10 +283,11 @@ The following keywords are reserved for syntactic constructs and not
 re-definable by the user.
 
 ```
-break       else        if          null
-continue    exit        in          print
-do          fn          loop        return
-elif        for         local       while
+break       fn      local
+continue    for     null
+do          if      print
+elif        in      return
+else        loop    while
 ```
 
 ## Variables
@@ -375,11 +376,6 @@ Syntactic sugar for `else if`. See [`if` statements](#if).
 ### `else`
 
 See [`if` statements](#if).
-
-### `exit`
-
-When program control reaches an `exit` statement, the program will
-terminate immediately with code `0`.
 
 ### `fn`
 

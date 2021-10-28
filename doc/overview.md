@@ -18,6 +18,7 @@ Internally, a Riff value can be any of the following types:
 - Regular expression
 - Sequence
 - Table
+- File handle
 - Riff function (user-defined)
 - C function (built-in functions)
 
