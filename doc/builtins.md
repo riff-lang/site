@@ -38,9 +38,9 @@ arg[1]:  "43"
 arg[2]:  "22"
 ```
 
-## Fields Table
+## Field Table
 
-The fields table is used to access substrings resulting from pattern
+The field table is used to access substrings resulting from pattern
 matches and captured subexpressions in regular expressions. When a
 match is found, it is stored as a string in `$0`. Each subsequent
 capture group is stored in `$n`, starting from `1`.
@@ -55,7 +55,7 @@ if "one fish two fish" ~ /(fish)/
 gsub("foo bar", /(\w+) (\w+)/, "$2 $1") // "bar foo"
 ```
 
-Currently, Riff does not purge the fields table upon each regex
+Currently, Riff does not purge the field table upon each regex
 operation. Old captures will be only ever be overwritten by new ones.
 
 # Arithmetic Functions

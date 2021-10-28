@@ -739,7 +739,7 @@ expression list, `null` will be printed in its place.
 | `()`              | Function call | Left | 16 |
 | `[]`              | Subscripting | Left | 16 |
 | `++` `--`         | Postfix increment, decrement | Left | 16 |
-| `$`               | Fields table subscripting | Right | 17 |
+| `$`               | Field table subscripting | Right | 17 |
 
 : Operators (increasing in precedence)
 
@@ -1026,11 +1026,11 @@ fn f(x,y) {
 f[2]    // 25 (may vary depending on future riff versions)
 ```
 
-### Fields Table Operator
+### Field Table Operator
 
-`$` is a special prefix operator used for accessing the [fields
-table](#fields-table). `$` has the highest precedence of all Riff
-operators and can be used to read from or write to fields table.
+`$` is a special prefix operator used for accessing the [field
+table](#field-table). `$` has the highest precedence of all Riff
+operators and can be used to read from or write to field table.
 
 ### Function Calls
 
