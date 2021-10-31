@@ -145,7 +145,13 @@ Flushes or saves any written data to file `f`.
 
 ## `get([n])` {#get}
 
+Reads at most `n` bytes from `stdin`, returning contents as a string.
+If `n` is not provided, `get()` will read up to one line.
+
 ## `getc([f])` {#getc}
+
+Returns a single character as an integer from file `f` (`stdin` by
+default).
 
 ## `open(s[,m])` {#open}
 
@@ -156,7 +162,11 @@ Flushes or saves any written data to file `f`.
 Takes zero or more integers and prints a string composed of the
 character codes of each respective argument in order.
 
-## `read(f[,n])` {#read}
+## `read([f[,n]])` {#read}
+
+Reads at most `n` bytes from file `f`, returning contents as a string.
+If `n` is not provided, a single line will be read from the file. `f`
+defaults to `stdin`.
 
 ## `write(s[,f])` {#write}
 
