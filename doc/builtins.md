@@ -139,6 +139,8 @@ Returns `1` if the file handle `f` points to the end of the file or if
 
 ## `eval(s)` {#eval}
 
+Compiles and executes the string `s` as Riff code.
+
 ## `flush(f)` {#flush}
 
 Flushes or saves any written data to file `f`.
@@ -155,7 +157,24 @@ default).
 
 ## `open(s[,m])` {#open}
 
+Opens the file indicated by the file name `s` in the mode specified
+by the string `m`, returning the resulting file handle.
+
+| Flag | Mode |
+| ---- | ---- |
+| `r`  | Read |
+| `w`  | Write |
+| `a`  | Append |
+| `r+` | TODO |
+| `w+` | TODO |
+| `a+` | TODO |
+
+The flag `b` can also be used to specify binary files on non-POSIX
+systems.
+
 ## `printf(s, ...)` {#printf}
+
+TODO
 
 ## `putc(...)` {#putc}
 
