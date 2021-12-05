@@ -434,7 +434,7 @@ num("abcxyz", 36)   // 623741435
 
 Returns a table with elements being string `s` split on delimiter `d`,
 treated as a regular expression. If no delimiter is provided, the
-regular expression /\s+/ (whitespace) is used. If the delimiter is the
+regular expression /\\s+/ (whitespace) is used. If the delimiter is the
 empty string (""), the string is split into a table of single-byte
 strings.
 
