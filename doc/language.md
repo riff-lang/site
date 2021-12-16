@@ -7,17 +7,6 @@ statement terminators. The lexical analysis phase does not perform
 implicit semicolon insertion. A statement ends when the next lexical
 token in the token stream is not applicable to the current statement.
 
-One of the conveniences Riff offers is the implicit printing of
-expression results in expression statements. Unless the leftmost
-expression in an expression statement is being altered in some way
-(e.g. a variable being assigned to), the result of the expression is
-printed. This allows for standard expression statements such as `x =
-1` or `y++` to *not* have their results printed, while otherwise
-invalid expression statements in many languages such as `x + y * z`
-now serve a purpose. The [expression
-statements](#expression-statements) section outlines the complete set
-of rules for whether an expression is printed or not printed.
-
 Variables are global by default. Riff allows local variable usage by
 explicitly declaring a variable with the [`local`](#local) keyword.
 Riff also allows the use/access of uninitialized variables. When an
@@ -285,9 +274,9 @@ re-definable by the user.
 ```
 break       fn      local
 continue    for     null
-do          if      print
-elif        in      return
-else        loop    while
+do          if      return
+elif        in      while
+else        loop
 ```
 
 ## Variables
@@ -311,9 +300,9 @@ statement outside of a loop.
 
 ```riff
 while 1 {
-  "This will print"
+  print("This will print")
   break
-  "This will not print"
+  print("This will not print")
 }
 // program control transfers here
 ```
@@ -554,9 +543,7 @@ local_stmt = 'local' expr { ',' expr }
 `local` declares a variable visible only to the current block and any
 descending code blocks. Multiple variables can be declared as `local`
 with a comma-delimited expression list, similar to expression lists in
-expression statements. Expression lists in `local` declaration do not
-have any results printed implicitly, unlike standard expression
-statement lists.
+expression statements.
 
 A local variable can reference a variable in an outer scope of the
 same name without altering the outer variable.
@@ -566,9 +553,9 @@ a = 25
 if 1 {
   local a = a     // Newly declared local `a` will be 25
   a += 5
-  a               // Prints 30
+  print(a)        // Prints 30
 }
-a                 // Prints 25
+print(a)          // Prints 25
 ```
 
 ### `loop`
@@ -583,16 +570,6 @@ statement(s) inside the body of the loop are executed repeatedly. This
 is in contrast to *conditional* loop structures in Riff, such as `do`,
 `for` or `while`, where some condition is evaluated before each
 iteration of the loop.
-
-### `print`
-
-```ebnf
-print_stmt = 'print' expr { ',' expr }
-```
-
-A `print` statement will print the result of one or more
-comma-delimited expressions, with each subsequent expression result being
-separated by a single space when printed.
 
 ### `return`
 
@@ -618,6 +595,7 @@ when Riff parses the stream of tokens above, it will consume the
 expression `x++` as part of the `return` statement. This type of
 pitfall can be avoided by appending a semicolon (`;`) to `return` or
 enclosing the statement(s) following the `if` conditional in braces.
+
 ```riff
 if x == 1
   return;
@@ -655,57 +633,8 @@ Any expression not part of another syntactic structure such as `if` or
 simply standalone expressions which will invoke some side-effect in
 the program.
 
-By default, the result of an expression statement is implicitly
-printed. However, if the expression is a typical assignment expression
-or something that simply increments or decrements a variable, the
-result will *not* be printed. This accommodates expected behavior with
-statements such as `a = b` or `i++`, while also providing some form of
-functionality for expression statements such as `1 << 4`, which would
-typically induce an error or have its result simply discarded in other
-languages.
-
-The rules for printing or discarding the result of an expression
-statement are defined by the status of the leftmost primary
-expression.  If the leftmost element is being mutated in any way
-(assignment, increment or decrement), the result is discarded.
-However, in the event of an expression statement where the leftmost
-expression is being incremented or decremented, if the expression is
-accompanied by another typical operation such as addition or
-subtraction, the result is *not* discarded and will be printed.
-
-These are some examples of expression statements that are *not*
-implicitly printed. The results of these expressions will be
-discarded.
-
-```riff
-a = b
-x = y + z
-c = f(x)
-++i
-j++
-table[i]++
---table[j]
-```
-
-Below are some examples of expression statements which *will* have
-their results implicitly printed.
-
-```riff
-1 + 2
-x++ - 1
-table[++i]
-f(x)        // Prints the result returned from function f
-```
-
-Note that function calls which return nothing (e.g.
-[`srand()`](#srandx)) will not have anything printed implicitly.
-
 Expression statements can also be a comma-delimited list of
-expressions. Riff assumes all expressions in an expression list are
-intended to be printed and will ignore any rules that otherwise signal
-the compiler to not print the results of the expressions. Even if a
-function call which returns nothing is included in a comma-delimited
-expression list, `null` will be printed in its place.
+expressions.
 
 ## Expressions
 
@@ -870,14 +799,14 @@ inverse.
 See the section on [regular expressions](#regex) for more information
 on regular expression syntax.
 
-### Ranges/Sequences {#ranges}
+### Ranges {#ranges}
 
-The `..` operator defines an integral range or sequence, which is a
-subtype in Riff. Sequences can contain an optional interval, denoted
+The `..` operator defines an integral range, which is a
+subtype in Riff. Ranges can contain an optional interval, denoted
 by an expression following a colon (`:`). Operands can be left blank
 to denote the absence of a bound, which will be interpreted
 differently based on the operation. There are 8 total permutations of
-valid sequences in Riff.
+valid ranges in Riff.
 
 | Syntax   | Range                              |
 | :----:   | -----                              |
@@ -890,17 +819,17 @@ valid sequences in Riff.
 | `..y:z`  | $[0..y]$ on interval $z$           |
 | `..:z`   | $[0..$`INT_MAX`$]$ on interval $z$ |
 
-All sequences are inclusive. For example, the sequence `1..7` will
+All ranges are inclusive. For example, the range `1..7` will
 include both `1` and `7`. Riff also infers the direction of the
-sequence if no `z` value is provided.
+range if no `z` value is provided.
 
-Sequences can be used in [`for` loops](#for) to iterate over a range of
+Ranges can be used in [`for` loops](#for) to iterate over a range of
 numbers.
 
-Sequences can also extract arbitrary substrings when used in a
+Ranges can also extract arbitrary substrings when used in a
 [subscript](#subscripting) expression with a string. When subscripting
-a string with a sequence such as `x..`, Riff will truncate the
-sequence to the end of the string to return the string's suffix
+a string with a range such as `x..`, Riff will truncate the
+range to the end of the string to return the string's suffix
 starting at index `x`.
 
 ```riff
@@ -918,15 +847,15 @@ abc = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 abc[..:2]               // "ACEGIKMOQSUWY"
 ```
 
-Reversed strings can be easily extracted with a downward sequence.
+Reversed strings can be easily extracted with a downward range.
 
 ```riff
 a = "forwardstring"
 a[#a-1..0]              // "gnirtsdrawrof"
 ```
 
-As mentioned in the [overview](#overview), a sequence is a type of
-Riff value. This means sequences can be stored in variables as well as
+As mentioned in the [overview](#overview), a range is a type of
+Riff value. This means ranges can be stored in variables as well as
 passed as function parameters and returned from function calls.
 
 ### Concatenation

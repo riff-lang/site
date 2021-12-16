@@ -9,13 +9,14 @@ program text or program filename. For example, when invoking `riff` on
 the command-line like this:
 
 ```bash
-$ riff 'arg[1] << arg[2]' 2 3
+$ riff -e 'arg[1] << arg[2]' 2 3
 ```
 
 The `arg` table will be populated as follows:
 
 ```
-arg[-1]: "riff"
+arg[-2]: "riff"
+arg[-1]: "-e"
 arg[0]:  "arg[1] << arg[2]"
 arg[1]:  "2"
 arg[2]:  "3"
@@ -25,14 +26,13 @@ Another example, this time with a Riff program stored in a file name
 `prog.rf`:
 
 ```bash
-$ riff -f prog.rf 43 22
+$ riff prog.rf 43 22
 ```
 
 The `arg` table would be populated:
 
 ```
-arg[-2]: "riff"
-arg[-1]: "-f"
+arg[-1]: "riff"
 arg[0]:  "prog.rf"
 arg[1]:  "43"
 arg[2]:  "22"
@@ -172,6 +172,10 @@ by the string `m`, returning the resulting file handle.
 The flag `b` can also be used to specify binary files on non-POSIX
 systems.
 
+## `print(...)` {#print}
+
+TODO
+
 ## `printf(s, ...)` {#printf}
 
 TODO
@@ -187,9 +191,9 @@ Reads at most `n` bytes from file `f`, returning contents as a string.
 If `n` is not provided, a single line will be read from the file. `f`
 defaults to `stdin`.
 
-## `write(s[,f])` {#write}
+## `write(v[,f])` {#write}
 
-Writes the value `s` to file handle `f` (`stdout` by default).
+Writes the value `v` to file handle `f` (`stdout` by default).
 
 # Pseudo-Random Numbers {#prng}
 
@@ -270,13 +274,6 @@ char(104, 101, 108, 108, 111)   // "hello"
 Returns a formatted string of the arguments following the format
 string `f`. This functions largely resembles the C function
 `sprintf()` without support for length modifiers such as `l` or `ll`.
-Due to Riff's implicit printing functionality, `fmt()` serves as the
-language's `printf()` function, as well as `sprintf()`.
-
-```riff
-fmt("%x", 123)      // Prints to the screen
-s = fmt("%x", 123)  // Stores the formatted string in `s`
-```
 
 Each conversion specification in the format string begins with a `%`
 character and ends with a character which determines the conversion of
@@ -444,7 +441,7 @@ sentence = split("A quick brown fox")
 
 // Print the words on separate lines in order
 for word in sentence {
-  word
+  print(word)
 }
 
 // Split string on regex delimiter

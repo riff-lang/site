@@ -16,7 +16,7 @@ Internally, a Riff value can be any of the following types:
 - Float
 - String
 - Regular expression
-- Sequence
+- Range
 - Table
 - File handle
 - Riff function (user-defined)
@@ -39,9 +39,9 @@ expressions](https://en.wikipedia.org/wiki/Regular_expression) in Riff
 define patterns which are used for performing various string-searching
 operations.
 
-Sequences are a special "subtype" in Riff that allow the user to
+Ranges are a special "subtype" in Riff that allow the user to
 define a range of integral values with an optional specified interval.
-Sequences can be used in [for loops](#for) to iterate through a
+Ranges can be used in [for loops](#for) to iterate through a
 sequence of numbers or in string subscripting to easily extract
 different types of substrings.
 

@@ -1,8 +1,7 @@
 ## Options
 
-- **`-f`** *`program-file`*<br>
-Interpret the Riff program contained in the file specified with the
-relative pathname *program-file*.
+- **`-e`** *`'program'`*<br>
+Interpret and execute the string `program` as a Riff program.
 
 - **`-h`**<br>
 Print usage information and exit.
