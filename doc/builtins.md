@@ -139,7 +139,8 @@ Returns `1` if the file handle `f` points to the end of the file or if
 
 ## `eval(s)` {#eval}
 
-Compiles and executes the string `s` as Riff code.
+Compiles and executes the string `s` as Riff code. Global state is
+inherited and can be altered by the code `s`.
 
 ## `flush(f)` {#flush}
 
@@ -165,20 +166,21 @@ by the string `m`, returning the resulting file handle.
 | `r`  | Read |
 | `w`  | Write |
 | `a`  | Append |
-| `r+` | TODO |
-| `w+` | TODO |
-| `a+` | TODO |
+| `r+` | Read/write |
+| `w+` | Read/write |
+| `a+` | Read/write |
 
 The flag `b` can also be used to specify binary files on non-POSIX
 systems.
 
 ## `print(...)` {#print}
 
-TODO
+Takes any number of arguments and prints the values separated by a
+space, followed by a newline.
 
 ## `printf(s, ...)` {#printf}
 
-TODO
+Builds a [format string](#fmt) and prints it directly to `stdout`.
 
 ## `putc(...)` {#putc}
 
