@@ -84,7 +84,7 @@ $endfor$
 // ***************
 // Experiment with Riff as you read
 // through the documentation!
-"Hello, World!"</textarea>
+print("Hello, World!")</textarea>
     </div>
     <div class="playground-output">
     <div class="playground-controls">
