@@ -473,7 +473,7 @@ type(0xF)   // "int"
 type(1.4)   // "float"
 type("str") // "string"
 type(/re/)  // "regex"
-type(0..1)  // "sequence"
+type(0..1)  // "range"
 type({1,2}) // "table"
 type(sin)   // "function"
 ```

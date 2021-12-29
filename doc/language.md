@@ -642,7 +642,7 @@ expressions.
 | ---               | ---         | ---           | ---        |
 | `=`               | Assignment | Right | 1 |
 | `?:`              | Ternary conditional | Right | 2 |
-| `..`              | Range/sequence constructor | Left | 3 |
+| `..`              | Range constructor | Left | 3 |
 | `||`              | Logical `OR` | Left | 4 |
 | `&&`              | Logical `AND`| Left | 5 |
 | `==` `!=`         | Relational equality, inequality | Left | 6 |
