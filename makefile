@@ -9,7 +9,6 @@ SRC_DIR   := src
 
 DOCS       = doc/intro.md
 DOCS      += doc/synopsis.md
-DOCS      += doc/options.md
 DOCS      += doc/overview.md
 DOCS      += doc/language.md
 DOCS      += doc/builtins.md

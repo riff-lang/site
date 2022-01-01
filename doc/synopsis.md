@@ -1,11 +1,22 @@
-## Synopsis
+## Synopsis/Options {#synopsis}
 
 ```
-riff [options] program-file [argument ...]
-riff [options] -e 'program' [argument ...]
+riff [options] program.rf [argument ...]
 ```
 
-When `riff` is invoked with the `-e` option, the text `program` is
-evaluated as a Riff program. Any arguments following `program-file` or
-`-e 'program'` are collected as string literals and made available
-to the user's program.
+By default, `riff` opens and runs the file `program.rf`.
+
+- **`-e`** *`'program'`*<br>
+Interpret and execute the string `program` as a Riff program.
+
+- **`-h`**<br>
+Print usage information and exit.
+
+- **`-l`**<br>
+Produce a listing of the compiled bytecode and associated mnemonics.
+
+- **`-v`**<br>
+Print version information and exit.
+
+- **`--`**<br>
+Stop processing command-line options.
