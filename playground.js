@@ -76,5 +76,5 @@ function riffExec(exec) {
     var execTime = Date.now() - start;
     console.log('Runtime: ' + (execTime / 1000));
     document.getElementById('metrics').innerHTML =
-        'riff 0.2.2 / ' + (execTime / 1000) + 's';
+        'riff 0.3 / ' + (execTime / 1000) + 's';
 }
