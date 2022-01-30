@@ -20,3 +20,6 @@ Print version information and exit.
 
 - **`--`**<br>
 Stop processing command-line options.
+
+- **`-`**<br>
+Stop processing command-line options and execute `stdin`.

@@ -176,7 +176,8 @@ systems.
 ## `print(...)` {#print}
 
 Takes any number of arguments and prints the values separated by a
-space, followed by a newline.
+space, followed by a newline. `print()` returns the number of
+arguments passed.
 
 ## `printf(s, ...)` {#printf}
 
@@ -185,7 +186,8 @@ Builds a [format string](#fmt) and prints it directly to `stdout`.
 ## `putc(...)` {#putc}
 
 Takes zero or more integers and prints a string composed of the
-character codes of each respective argument in order.
+character codes of each respective argument in order. `putc()` returns
+the number of argmuents passed.
 
 ## `read([f[,n]])` {#read}
 
@@ -237,6 +239,8 @@ srand(3)    // Initialize PRNG with seed "3"
 rand()      // 0.783235
 rand()      // 0.863673
 ```
+
+`srand()` returns the value used to seed the PRNG.
 
 # String Functions
 
