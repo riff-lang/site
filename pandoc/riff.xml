@@ -44,7 +44,7 @@
         <RegExpr      attribute="Builtin" String="(?:close|eof|eval|flush|get|getc|open|print|printf|putc|read|write)\b" />
         <RegExpr      attribute="Builtin" String="(?:rand|srand)\b" />
         <RegExpr      attribute="Builtin" String="(?:byte|char|fmt|gsub|hex|lower|num|split|sub|type|upper)\b" />
-        <RegExpr      attribute="Builtin" String="(?:exit)\b" />
+        <RegExpr      attribute="Builtin" String="(?:clock|exit)\b" />
 
         <!-- null -->
         <RegExpr      attribute="Constant" context="Infix Op" String="null\b" />
