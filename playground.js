@@ -1,6 +1,5 @@
 // Initialize the CodeMirror input textarea
-var cmInput =
-CodeMirror.fromTextArea(document.getElementById('input'), {
+var cmInput = CodeMirror.fromTextArea(document.getElementById('input'), {
     lineNumbers:    false,
     spellcheck:     false,
     autocorrect:    false,
@@ -13,8 +12,7 @@ CodeMirror.fromTextArea(document.getElementById('input'), {
 });
 
 // Output textarea (readonly)
-var cmOutput =
-CodeMirror.fromTextArea(document.getElementById('output'), {
+var cmOutput = CodeMirror.fromTextArea(document.getElementById('output'), {
     lineNumbers:    false,
     lineWrapping:   false,
     spellcheck:     false,
@@ -61,20 +59,20 @@ function riffExec(exec) {
 
     var start = Date.now();
 
-    // Invoke the Riff interpreter with the input program
-    // This calls a special wasm() function in riff.c
+    // Invoke the Riff interpreter with the input program. This calls a special
+    // wasm_main() function in riff.c
     try {
         Module.ccall('wasm_main', 'number', ['number', 'string'],
             [exec, inputProgram]);
     } catch (e) { }
 
-    // Set the output
-    // NOTE: This performs significantly better by setting the output
-    // the "vanilla" way during Module.print() and calling setValue() on
-    // the CodeMirror object once Module.ccall() returns.
-    cmOutput.setValue(document.getElementById('output').value);
     var execTime = Date.now() - start;
+    // Set the output
+    // NOTE: This performs significantly better by setting the output the
+    // "vanilla" way during Module.print() and calling setValue() on the
+    // CodeMirror object once Module.ccall() returns.
+    cmOutput.setValue(document.getElementById('output').value);
     console.log('Runtime: ' + (execTime / 1000));
     document.getElementById('metrics').innerHTML =
-        'riff 0.3 / ' + (execTime / 1000) + 's';
+        'riff 0.3.2 / ' + (execTime / 1000) + 's';
 }
