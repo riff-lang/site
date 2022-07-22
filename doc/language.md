@@ -355,7 +355,7 @@ See [`if` statements](#if).
 ### `fn`
 
 ```ebnf
-fn_stmt = 'fn' id ['(' [id {',' id} ')'] '{' stmt_list '}'
+fn_stmt = 'fn' id ['(' [id {',' id}] ')'] '{' stmt_list '}'
 ```
 
 A function statement declares the definition of a *named* function. This is in
