@@ -355,7 +355,7 @@ See [`if` statements](#if).
 ### `fn`
 
 ```ebnf
-fn_stmt = 'fn' id ['(' [ id {',' id } ')'] '{' stmt_list '}'
+fn_stmt = 'fn' id ['(' [id {',' id} ')'] '{' stmt_list '}'
 ```
 
 A function statement declares the definition of a *named* function. This is in
@@ -383,8 +383,8 @@ More information on user-defined functions in Riff can be found in the
 ### `for`
 
 ```ebnf
-for_stmt = 'for' id [ ',' id ] 'in' expr stmt
-         | 'for' id [ ',' id ] 'in' expr '{' stmt_list '}'
+for_stmt = 'for' id [',' id] 'in' expr stmt
+         | 'for' id [',' id] 'in' expr '{' stmt_list '}'
 ```
 
 A `for` statement declares a generic loop structure which iterates over the
@@ -466,8 +466,8 @@ for k,v in "Hello" {
 ### `if`
 
 ```ebnf
-if_stmt = 'if' expr stmt { `elif` expr ... } [ 'else' ... ]
-        | 'if' expr '{' stmt_list '}' { `elif` expr ... } [ 'else' ... ]
+if_stmt = 'if' expr stmt {'elif' expr ...} ['else' ...]
+        | 'if' expr '{' stmt_list '}' {'elif' expr ...} ['else' ...]
 ```
 
 An `if` statement conditionally executes code based on the result of `expr`. If
@@ -502,7 +502,7 @@ if x == 1 {
 ### `local`
 
 ```ebnf
-local_stmt = 'local' expr { ',' expr }
+local_stmt = 'local' expr {',' expr}
            | 'local' fn_stmt
 ```
 
