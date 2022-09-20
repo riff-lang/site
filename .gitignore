@@ -1,6 +1,7 @@
 build/
 dist/
 *.html
+*.wasm
 .sass-cache/
 style.css
 *.css.map
