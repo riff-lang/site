@@ -44,6 +44,7 @@ characters can be any mix of lowercase and uppercase digits `A` through `F`.
 23      // Decimal integer constant
 6.7     // Decimal floating-point constant
 .5      // Also a decimal floating-point constant (0.5)
+9.      // 9.0
 0xf     // Hexadecimal integer constant
 0XaB    // Valid hexadecimal integer (mixed lowercase and uppercase)
 0x.8    // Hexdecimal floating-point constant
@@ -178,6 +179,19 @@ forms.
 ```riff
 "\u3c0"     // "π"
 "\U1d11e"   // "𝄞"
+```
+
+Riff also supports interpolation of variables/expressions in string literals
+(aka [string interpolation](https://en.wikipedia.org/wiki/String_interpolation).
+Expressions can be delimited by either braces (`{}`) or parentheses (`()`). The
+full expression grammar is supported within an interpolated expression.
+
+```riff
+x = "world"
+str = "Hello #x!"   // "Hello, world!"
+
+sum = "#{1+2} == 3"
+mul = "square root of 4 is #(sqrt(4))"
 ```
 
 ### Regular Expressions {#regex}
