@@ -26,10 +26,17 @@ var cmOutput = CodeMirror.fromTextArea(document.getElementById('output'), {
 
 // Emscripten Module object
 var Module = {
-    preRun: [],
-    postRun: [],
     noInitialRun: true,
     noExitRuntime: true,
+    onRuntimeInitialized: function() {
+        try {
+            this.riffVersion = ccall('riff_version', 'string', null, null);
+            console.log('Riff interpreter version detected: ' + this.riffVersion);
+        } catch (e) {
+            console.error('Error detecting Riff interpreter version');
+            this.riffVersion = '';
+        }
+    },
     print: function(text) {
         console.log(text);
         document.getElementById('output').value += text + "\n";
@@ -38,10 +45,6 @@ var Module = {
         console.error(text);
         document.getElementById('output').value += text + "\n";
     },
-    totalDependencies: 0,
-    monitorRunDependencies: function(left) {
-        this.totalDependencies = Math.max(this.totalDependencies, left);
-    }
 };
 
 // Riff code execution
@@ -59,12 +62,10 @@ function riffExec(exec) {
 
     var start = Date.now();
 
-    // Invoke the Riff interpreter with the input program. This calls a special
-    // wasm_main() function in riff.c
+    // Invoke the Riff interpreter with the input program.
     try {
-        Module.ccall('wasm_main', 'number', ['number', 'string'],
-            [exec, inputProgram]);
-    } catch (e) { }
+        Module.ccall('riff_main', 'number', ['number', 'string'], [exec, inputProgram]);
+    } catch (e) {}
 
     var execTime = Date.now() - start;
     // Set the output
@@ -74,5 +75,5 @@ function riffExec(exec) {
     cmOutput.setValue(document.getElementById('output').value);
     console.log('Runtime: ' + (execTime / 1000));
     document.getElementById('metrics').innerHTML =
-        'riff 0.3.2 / ' + (execTime / 1000) + 's';
+        'riff ' + Module.riffVersion + ' / ' + (execTime / 1000) + 's';
 }
