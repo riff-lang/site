@@ -29,8 +29,10 @@
 
         <!-- Numbers -->
         <RegExpr      attribute="Bin Int"   context="Infix Op" String="0[bB][01_]*" />
+        <RegExpr      attribute="Hex Float" context="Infix Op" String="0[xX][A-Fa-f0-9_]+\.(?!\.)" />
         <RegExpr      attribute="Hex Float" context="Infix Op" String="0[xX][A-Fa-f0-9_]*(?:[pP][+-]?[A-Fa-f0-9][A-Fa-f0-9_]*)?" />
         <RegExpr      attribute="Hex Float" context="Infix Op" String="0[xX][A-Fa-f0-9_]*\.?[A-Fa-f0-9][A-Fa-f0-9_]*(?:[pP][+-]?[A-Fa-f0-9][A-Fa-f0-9_]*)?" />
+        <RegExpr      attribute="Dec Float" context="Infix Op" String="\d[\d_]*\.(?!\.)" />
         <RegExpr      attribute="Dec Float" context="Infix Op" String="(\d[\d_]*)?\.?\d[\d_]*(?:[eE][+-]?\d[\d_]*)?" />
         <RegExpr      attribute="Dec Float" context="Infix Op" String="\.\d[\d_]*(?:[eE][+-]?\d[\d_]*)?" />
         <RegExpr      attribute="Hex Int"   context="Infix Op" String="0[xX][0-9A-Fa-f_]*" />
@@ -55,6 +57,7 @@
         <!-- Other keywords -->
         <RegExpr      attribute="Keyword" String="(?:fn|local)\b" />
         <RegExpr      attribute="Keyword" String="(?:do|for|loop|while)\b" />
+        <RegExpr      attribute="Keyword" String="(?:and|not|or)\b" />
         <RegExpr      attribute="Keyword" String="in\b" />
         <!-- Identifiers -->
         <RegExpr      attribute="Normal Text" context="Infix Op" String="[A-Za-z_]\w*\b" />
@@ -84,6 +87,9 @@
 
         <!-- fmt() format modifiers/specifiers -->
         <RegExpr      attribute="Attribute" context="#stay" String="(?:%%|%[-+ 0]*(?:\*|\d*)?(?:\.(?:\d*|\*)?)?[aAbcdeEfFgGimosxX])" />
+        <RegExpr      attribute="Attribute" context="#stay" String="#[A-Za-z_]\w*" />
+        <RegExpr      attribute="Attribute" context="#stay" String="#\{.*\}" />
+        <RegExpr      attribute="Attribute" context="#stay" String="#\(.*\)" />
 
         <!-- Special chars, i.e. escape sequences -->
         <RegExpr      attribute="SpecialChar" context="#stay" String="\\[\\abefnrtv'&quot;]|\\x[A-Fa-f0-9]{1,2}|\\\d{1,3}" />
