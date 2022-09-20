@@ -69,7 +69,11 @@ usage:
 .SILENT: help html plaintext sass
 
 
-build: sass html
+build: sass plaintext html
+	mkdir -p $(DIST_DIR)
+	cp $(SRC_DIR)/playground.js $(DIST_DIR)
+	cp -r $(SRC_DIR)/lib $(DIST_DIR)
+	cp -r $(SRC_DIR)/assets $(DIST_DIR)
 
 clean:
 	rm -rf $(DIST_DIR)
@@ -78,11 +82,8 @@ deploy:
 	git push server # Assume "server" is set up in SSH config
 
 html: sass
-	# for i in $$(find $(SRC_DIR) -iname "*.md"); do \
-	# mkdir -p $(DIST_DIR)/$$(basename $$i ".md"); \
-	# pandoc $$i -o $(DIST_DIR)/$$(basename $$i ".md")/index.html $(HFLAGS); \
-	# done
-	pandoc $(DOCS) -o index.html $(HFLAGS)
+	mkdir -p $(DIST_DIR)
+	pandoc $(DOCS) -o $(DIST_DIR)/index.html $(HFLAGS)
 	echo "Compile Markdown to HTML"
 ifeq ($(UNAME), Darwin)
 	find . -type f -iname "index.html" | xargs sed -i '' 's/$(FN_GARB)/[return]/g'
@@ -92,25 +93,14 @@ endif
 	echo "Replace default Pandoc footnote character"
 
 plaintext:
-	mkdir -p $(DIST_DIR)/t
-	for i in $$(find $(SRC_DIR) -iname "*.md"); do \
-	pandoc $$i -o $(DIST_DIR)/t/$$(basename $$i ".md") $(TFLAGS); \
-	done
-	echo "Compile Markdown to plain text"
-	cp -r $(SRC_DIR)/t $(DIST_DIR)/
-	echo "Overwrite targeted plaintext files"
-ifeq ($(UNAME), Darwin)
-	find $(DIST_DIR)/t -type f | xargs sed -i "" "s/esc\[/$$(printf '\033[')/g"
-else ifeq ($(UNAME), Linux)
-	find $(DIST_DIR)/t -type f | xargs sed -i "s/esc\[/$$(printf '\033[')/g"
-endif
-	echo "Insert escape sequences into plaintext files"
-	for f in $(DIST_DIR)/t/*; do $(AWK) '/^\[[0-9]\]/{p=$$0}{if(p&&!$$0)next; else print}' $$f > $(DIST_DIR)/t/tmp && mv -f $(DIST_DIR)/t/tmp $$f; done
-	echo "Remove blank lines between footnote entries"
+	mkdir -p $(DIST_DIR)
+	pandoc $(DOCS) -o $(DIST_DIR)/index $(TFLAGS)
 
 sass:
-	sass style.sass style.css $(SFLAGS)
+	mkdir -p $(DIST_DIR)
+	sass $(SRC_DIR)/style.sass $(DIST_DIR)/style.css $(SFLAGS)
 	echo "Compile CSS from Sass"
 
 sass-live:
-	sass style.sass style.css $(SFLAGS) $(SWFLAGS)
+	mkdir -p $(DIST_DIR)
+	sass $(SRC_DIR)/style.sass $(DIST_DIR)/style.css $(SFLAGS) $(SWFLAGS)
