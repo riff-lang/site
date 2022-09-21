@@ -275,11 +275,12 @@ The following keywords are reserved for syntactic constructs and not
 re-definable by the user.
 
 ```
-break       fn      local
-continue    for     null
-do          if      return
-elif        in      while
-else        loop
+and         fn        not
+break       for       null
+continue    if        or
+do          in        return
+elif        loop      while
+else        local
 ```
 
 ## Variables
@@ -619,8 +620,8 @@ Expression statements can also be a comma-delimited list of expressions.
 | `=`               | Assignment | Right | 1 |
 | `?:`              | Ternary conditional | Right | 2 |
 | `..`              | Range constructor | Left | 3 |
-| `||`              | Logical `OR` | Left | 4 |
-| `&&`              | Logical `AND`| Left | 5 |
+| `||` `or`         | Logical `OR` | Left | 4 |
+| `&&` `and`        | Logical `AND`| Left | 5 |
 | `==` `!=`         | Relational equality, inequality | Left | 6 |
 | `~` `!~`          | Match, negated match | Left | 6 |
 | `<` `<=` `>` `>=` | Relational comparison $<$, $\leqslant$, $>$ and $\geqslant$ | Left | 7 |
@@ -631,7 +632,7 @@ Expression statements can also be a comma-delimited list of expressions.
 | `#`               | Concatenation | Left | 11 |
 | `+` `-`           | Addition, subtraction | Left | 12 |
 | `*` `/` `%`       | Multiplication, division, modulus | Left | 13 |
-| `!`               | Logical `NOT` | Right | 13 |
+| `!` `not`         | Logical `NOT` | Right | 13 |
 | `#`               | Length | Right | 13 |
 | `+` `-`           | Unary plus, minus | Right | 13 |
 | `~`               | Bitwise `NOT` | Right | 13 |
@@ -683,11 +684,11 @@ operators, with the same precedence and associativity as simple assignment (`=`)
 
 ### Logical Operators
 
-| Operator | Type   | Description   |
-| :------: | ----   | -----------   |
-| `!`      | Prefix | Logical `NOT` |
-| `&&`     | Infix  | Logical `AND` |
-| `||`     | Infix  | Logical `OR`  |
+| Operator   | Type   | Description   |
+| :------:   | ----   | -----------   |
+| `!` `not`  | Prefix | Logical `NOT` |
+| `&&` `and` | Infix  | Logical `AND` |
+| `||` `or`  | Infix  | Logical `OR`  |
 
 The operators `||` and `&&` are
 [short-circuiting](https://en.wikipedia.org/wiki/Short-circuit_evaluation). For
