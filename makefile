@@ -4,7 +4,6 @@ UNAME     := $(shell uname -s)
 
 DATA_DIR  := data
 DIST_DIR  := dist
-SASS_DIR  := sass
 SRC_DIR   := src
 
 DOCS       = doc/intro.md
@@ -69,7 +68,7 @@ usage:
 .SILENT: help html plaintext sass
 
 
-build: sass plaintext html
+build: sass html
 	mkdir -p $(DIST_DIR)
 	cp $(SRC_DIR)/playground.js $(DIST_DIR)
 	cp -r $(SRC_DIR)/lib $(DIST_DIR)
