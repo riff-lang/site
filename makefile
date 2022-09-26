@@ -20,9 +20,11 @@ INPUT_EXT  = +header_attributes+multiline_tables
 
 HFLAGS     = --standalone
 HFLAGS    += --template=pandoc/doc.pdc
+HFLAGS    += --syntax-definition=pandoc/ebnf.xml
 HFLAGS    += --syntax-definition=pandoc/riff.xml
 HFLAGS    += --from $(INPUT_FMT)$(INPUT_EXT)
 HFLAGS    += --to $(HTML_FMT)
+HFLAGS    += --columns=80
 HFLAGS    += --mathjax
 HFLAGS    += --table-of-contents
 HFLAGS    += --toc-depth=3

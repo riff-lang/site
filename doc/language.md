@@ -138,9 +138,9 @@ Similar to [strings](#strings), Riff supports the use of the backslash character
 
 Riff also supports arbitrary escape sequences in decimal and hexadecimal forms.
 
-| Sequence | Description |
-| -------- | ----------- |
-| `\nnn`   | Octal escape sequence with up to three octal digits |
+| Sequence | Description                                                   |
+| :-       | :---------                                                    |
+| `\nnn`   | Octal escape sequence with up to three octal digits           |
 | `\xnn`   | Hexadecimal escape sequence with up to two hexadecimal digits |
 
 : Decimal/hexadecimal escape sequence formats
@@ -169,8 +169,8 @@ section, Riff also supports escaped
 [Unicode](https://en.wikipedia.org/wiki/Unicode) literals in the following
 forms.
 
-| Sequence     | Description |
-| --------     | ----------- |
+| Sequence     | Description                                             |
+| :-------     | -----------                                             |
 | `\uXXXX`     | Unicode escape sequence with up to 4 hexadecimal digits |
 | `\UXXXXXXXX` | Unicode escape sequence with up to 8 hexadecimal digits |
 
@@ -543,7 +543,7 @@ print(a)          // Prints 25
 
 ```ebnf
 loop_stmt = 'loop' stmt
-          | 'loop '{' stmt_list '}'
+          | 'loop' '{' stmt_list '}'
 ```
 
 A `loop` statement declares an *unconditional* loop structure, where
@@ -615,34 +615,76 @@ Expression statements can also be a comma-delimited list of expressions.
 
 ## Expressions
 
-| Operator(s)       | Description | Associativity | Precedence |
-| ---               | ---         | ---           | ---        |
-| `=`               | Assignment | Right | 1 |
-| `?:`              | Ternary conditional | Right | 2 |
-| `..`              | Range constructor | Left | 3 |
-| `||` `or`         | Logical `OR` | Left | 4 |
-| `&&` `and`        | Logical `AND`| Left | 5 |
-| `==` `!=`         | Relational equality, inequality | Left | 6 |
-| `~` `!~`          | Match, negated match | Left | 6 |
-| `<` `<=` `>` `>=` | Relational comparison $<$, $\leqslant$, $>$ and $\geqslant$ | Left | 7 |
-| `|`               | Bitwise `OR` | Left | 8 |
-| `^`               | Bitwise `XOR` | Left | 9 |
-| `&`               | Bitwise `AND` | Left | 10 |
-| `<<` `>>`         | Bitwise left shift, right shift | Left | 11 |
-| `#`               | Concatenation | Left | 11 |
-| `+` `-`           | Addition, subtraction | Left | 12 |
-| `*` `/` `%`       | Multiplication, division, modulus | Left | 13 |
-| `!` `not`         | Logical `NOT` | Right | 13 |
-| `#`               | Length | Right | 13 |
-| `+` `-`           | Unary plus, minus | Right | 13 |
-| `~`               | Bitwise `NOT` | Right | 13 |
-| `**`              | Exponentiation | Right | 15 |
-| `++` `--`         | Prefix increment, decrement | Right | 15 |
-| `()`              | Function call | Left | 16 |
-| `[]`              | Subscripting | Left | 16 |
-| `.`               | Member access | Left | 16 |
-| `++` `--`         | Postfix increment, decrement | Left | 16 |
-| `$`               | Field table subscripting | Right | 17 |
+--------------------------------------------------------------------------------
+ Operator(s)  Description                             Associativity  Precedence
+------------- --------------------------------------- -------------- -----------
+`=`           Assignment                              Right          1
+
+`?:`          Ternary conditional                     Right          2
+
+`..`          Range constructor                       Left           3
+
+`||`          Logical `OR`                            Left           4
+<br>`or`
+
+`&&`          Logical `AND`                           Left           5
+<br>`and`
+
+`==`          Relational equality, inequality         Left           6
+<br>`!=`
+
+`~`           Match, negated match                    Left           6
+<br>`!~`
+
+`<`           Relational comparison 
+<br>`<=`      $<$, $\leqslant$, $>$ and $\geqslant$   Left           7
+<br>`>`
+<br>`>=`
+
+`|`           Bitwise `OR`                            Left           8
+
+`^`           Bitwise `XOR`                           Left           9
+
+`&`           Bitwise `AND`                           Left           10
+
+`<<`          Bitwise left shift, right shift         Left           11
+<br>`>>`
+
+`#`           Concatenation                           Left           11
+
+`+`           Addition, subtraction                   Left           12
+<br>`-`
+
+`*`           Multiplication, division, modulus       Left           13
+<br>`/`
+<br>`%`
+
+`!`           Logical `NOT`                           Right          13
+<br>`not`
+
+`#`           Length                                  Right          13
+
+`+`           Unary plus, minus                       Right          13
+<br>`-`
+
+`~`           Bitwise `NOT`                           Right          13
+
+`**`          Exponentiation                          Right          15
+
+`++`          Prefix increment, decrement             Right          15
+<br>`--`
+
+`()`          Function call                           Left           16
+
+`[]`          Subscripting                            Left           16
+
+`.`           Member access                           Left           16
+
+`++`          Postfix increment, decrement            Left           16
+<br>`--`
+
+`$`           Field table subscripting                Right          17
+--------------------------------------------------------------------------------
 
 : Operators (increasing in precedence)
 

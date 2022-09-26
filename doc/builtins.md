@@ -203,13 +203,13 @@ generated pseudo-random numbers.
 
 ## `rand([m[,n]])` {#rand}
 
-| Syntax | Type | Range |
-| :----- | ---- | ----- |
-| `rand()` | Float | $[0..1)$ |
-| `rand(0)` | Integer | $[$`INT_MIN`$..$`INT_MAX`$]$ |
-| `rand(n)` | Integer | $[0..n]$ |
-| `rand(m,n)` | Integer | $[m..n]$ |
-| `rand(`*range*`)` | Integer | See [ranges](#ranges) |
+| Syntax            | Type    | Range                        |
+| :-----            | ----    | -----                        |
+| `rand()`          | Float   | $[0..1)$                     |
+| `rand(0)`         | Integer | $[$`INT_MIN`$..$`INT_MAX`$]$ |
+| `rand(n)`         | Integer | $[0..n]$                     |
+| `rand(m,n)`       | Integer | $[m..n]$                     |
+| `rand(`*range*`)` | Integer | See [ranges](#ranges)        |
 
 When called without arguments, `rand()` returns a pseudo-random floating-point
 number in the range $[0..1)$. When called with `0`, `rand(0)` returns a
@@ -346,14 +346,15 @@ If `r` is a string, dollar signs (`$`) are parsed as escape characters which can
 specify the insertion of substrings from capture groups in `p`.
 
 --------------------------------------------------------------------------------
- Format               Description
---------------------- ----------------------------------------------------------
-`$$`                  Insert a literal dollar sign character (`$`)
+ Format        Description
+-------------- -----------------------------------------------------------------
+`$$`           Insert a literal dollar sign character (`$`)
 
-`$x` / `${x}`         Insert a substring from capture group `x` (Either name or
-                      number)
+`$x`           Insert a substring from capture group `x` (Either name or number)
+<br>`${x}`
 
-`$*MARK` / `${*MARK}` Insert a control verb name
+`$*MARK`       Insert a control verb name
+<br>`${*MARK}`
 --------------------------------------------------------------------------------
 
 ```riff
