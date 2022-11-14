@@ -326,6 +326,8 @@ h1.title
 @for $i from 1 through 5
   h#{$i}
     font-size: $size-header-base * (1 - math.div($i, 10))
+    code
+      font-weight: 400
 
 .before-after
   +monospace
