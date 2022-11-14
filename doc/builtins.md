@@ -47,7 +47,7 @@ starting from `1`.
 ```riff
 // $1 = "fish"
 if "one fish two fish" ~ /(fish)/
-  "red", $1, "blue", $1
+  print("red", $1, "blue", $1)
 
 // $1 = "foo"
 // $2 = "bar"
@@ -67,6 +67,67 @@ descriptors](https://en.wikipedia.org/wiki/Standard_streams).
 | `stderr` | Standard error |
 | `stdin`  | Standard input |
 | `stdout` | Standard output |
+
+# Basic Functions
+
+## `assert(e[,s])` {#assert}
+
+Raises an error if the expression `e` evaluates as false, with the error message
+`s` if provided. This function does not return when the assertion fails.
+
+## `error([s])` {#error}
+
+Unconditionally raises an error with the message `s` if provided. This function
+does not return.
+
+## `eval(s)` {#eval}
+
+Compiles and executes the string `s` as Riff code. Global state is inherited and
+can be altered by the code `s`.
+
+## `num(s[,b])` {#num}
+
+Returns a number interpreted from the string `s` on base (or radix) `b`. If no
+base is provided, the default is `0`. When the base is `0`, `num()` will convert
+to string to a number using the same lexical conventions of the language itself.
+`num()` can return an integer or float depending on the string's structure (see
+lexical conventions) or if the number is too large to be stored as a signed
+64-bit integer.
+
+Valid values for `b` are `0` or integers `2` through `36`. Bases outside this
+range will default back to `0`. Providing bases other than `0`, `10` or `16`
+will force `s` to only be interpreted as an integer value (current
+implementation limitation).
+
+```riff
+num("76")           // 76
+num("0x54")         // 84
+num("54", 16)       // 84
+num("0b0110")       // 6
+num("0110", 2)      // 6
+num("abcxyz", 36)   // 623741435
+```
+
+## `print(...)` {#print}
+
+Takes any number of arguments and prints the values separated by a space,
+followed by a newline. `print()` returns the number of arguments passed.
+
+## `type(x)` {#type}
+
+Returns the type of value `x` in the form of a string.
+
+```riff
+type(null)  // "null"
+type(0xF)   // "int"
+type(1.4)   // "float"
+type("str") // "string"
+type(/re/)  // "regex"
+type(0..1)  // "range"
+type({1,2}) // "table"
+type(stdin) // "file"
+type(sin)   // "function"
+```
 
 # Arithmetic Functions
 
@@ -129,24 +190,9 @@ Returns $\tan(x)$ in radians.
 
 Closes the file `f`.
 
-## `eof(f)` {#eof}
-
-Returns `1` if the file handle `f` points to the end of the file or if `f` is
-not a valid file handle. Returns `0` otherwise.
-
-## `eval(s)` {#eval}
-
-Compiles and executes the string `s` as Riff code. Global state is inherited and
-can be altered by the code `s`.
-
 ## `flush(f)` {#flush}
 
 Flushes or saves any written data to file `f`.
-
-## `get([n])` {#get}
-
-Reads at most `n` bytes from `stdin`, returning contents as a string. If `n` is
-not provided, `get()` will read up to one line.
 
 ## `getc([f])` {#getc}
 
@@ -168,11 +214,6 @@ string `m`, returning the resulting file handle.
 
 The flag `b` can also be used to specify binary files on non-POSIX systems.
 
-## `print(...)` {#print}
-
-Takes any number of arguments and prints the values separated by a space,
-followed by a newline. `print()` returns the number of arguments passed.
-
 ## `printf(s, ...)` {#printf}
 
 Builds a [format string](#fmt) and prints it directly to `stdout`.
@@ -183,11 +224,36 @@ Takes zero or more integers and prints a string composed of the character codes
 of each respective argument in order. `putc()` returns the number of argmuents
 passed.
 
-## `read([f[,n]])` {#read}
+## `read([a[,b]])` {#read}
 
-Reads at most `n` bytes from file `f`, returning contents as a string.  If `n`
-is not provided, a single line will be read from the file. `f` defaults to
-`stdin`.
+Reads data from a file stream, returning the data as a string if successful.
+
+--------------------------------------------------------------------------------
+Syntax        Description
+------------- ------------------------------------------------------------------
+`read([f])`   Read a line from file `f`
+
+`read([f,]m)` Read input from file `f` according to the mode specified by `m`
+
+`read([f,]n)` Read at most `n` bytes from file `f`
+
+`read([f,]0)` Returns `0` if
+              [end-of-file](https://en.wikipedia.org/wiki/End-of-file) has been
+              reached in file `f`; `1` otherwise
+--------------------------------------------------------------------------------
+
+When a file `f` is not provided, `read()` will operate on `stdin`. The default
+behavior is to read a single line from `stdin`. Providing a mode string allows
+control over the read operation. Providing an numeric value `n` specifies that
+`read()` should read up to `n` bytes from the file. `read([f,]0)` is a special
+case to check if the file still has data left to be read.
+
+| Mode      | Description               |
+| ----      | -----------               |
+| `a` / `A` | Read until EOF is reached |
+| `l` / `L` | Read a line               |
+
+: read() modes
 
 ## `write(v[,f])` {#write}
 
@@ -205,18 +271,18 @@ generated pseudo-random numbers.
 
 | Syntax            | Type    | Range                        |
 | :-----            | ----    | -----                        |
-| `rand()`          | Float   | $[0..1)$                     |
+| `rand()`          | Float   | $[0,1)$                      |
 | `rand(0)`         | Integer | $[$`INT_MIN`$..$`INT_MAX`$]$ |
-| `rand(n)`         | Integer | $[0..n]$                     |
-| `rand(m,n)`       | Integer | $[m..n]$                     |
+| `rand(n)`         | Integer | $[0 .. n]$                   |
+| `rand(m,n)`       | Integer | $[m .. n]$                   |
 | `rand(`*range*`)` | Integer | See [ranges](#ranges)        |
 
 When called without arguments, `rand()` returns a pseudo-random floating-point
-number in the range $[0..1)$. When called with `0`, `rand(0)` returns a
+number in the range $[0,1)$. When called with `0`, `rand(0)` returns a
 pseudo-random Riff integer (signed 64-bit). When called with an integer `n`,
-`rand(n)` returns a pseudo-random Riff integer in the range $[0..n]$. `n` can be
+`rand(n)` returns a pseudo-random Riff integer in the range $[0 .. n]$. `n` can be
 negative. When called with 2 arguments `m` and `n`, `rand(m,n)` returns a
-pseudo-random integer in the range $[m..n]$. `m` can be greater than `n`.
+pseudo-random integer in the range $[m .. n]$. `m` can be greater than `n`.
 
 ## `srand([x])` {#srand}
 
@@ -386,29 +452,6 @@ Returns a copy of string `s` with all uppercase ASCII letters converted to
 lowercase ASCII. All other characters in string `s` (including non-ASCII
 characters) are copied over unchanged.
 
-## `num(s[,b])` {#num}
-
-Returns a number interpreted from the string `s` on base (or radix) `b`. If no
-base is provided, the default is `0`. When the base is `0`, `num()` will convert
-to string to a number using the same lexical conventions of the language itself.
-`num()` can return an integer or float depending on the string's structure (see
-lexical conventions) or if the number is too large to be stored as a signed
-64-bit integer.
-
-Valid values for `b` are `0` or integers `2` through `36`. Bases outside this
-range will default back to `0`. Providing bases other than `0`, `10` or `16`
-will force `s` to only be interpreted as an integer value (current
-implementation limitation).
-
-```riff
-num("76")           // 76
-num("0x54")         // 84
-num("54", 16)       // 84
-num("0b0110")       // 6
-num("0110", 2)      // 6
-num("abcxyz", 36)   // 623741435
-```
-
 ## `split(s[,d])` {#split}
 
 Returns a table with elements being string `s` split on delimiter `d`, treated
@@ -441,21 +484,6 @@ chars[23]       // "s"
 
 Exactly like [`gsub()`](#gsub), except only the first occurrence of `p` is
 replaced in `s`.
-
-## `type(x)` {#type}
-
-Returns the type of value `x` in the form of a string.
-
-```riff
-type(null)  // "null"
-type(0xF)   // "int"
-type(1.4)   // "float"
-type("str") // "string"
-type(/re/)  // "regex"
-type(0..1)  // "range"
-type({1,2}) // "table"
-type(sin)   // "function"
-```
 
 ## `upper(s)` {#upper}
 

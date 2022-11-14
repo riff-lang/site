@@ -42,10 +42,11 @@
         <RegExpr      attribute="Operator" String="\.\." />
 
         <!-- Builtin functions -->
+        <RegExpr      attribute="Builtin" String="(?:assert|error|eval|print|num|type)\b" />
         <RegExpr      attribute="Builtin" String="(?:abs|atan|ceil|cos|exp|int|log|sin|sqrt|tan)\b" />
-        <RegExpr      attribute="Builtin" String="(?:close|eof|eval|flush|get|getc|open|print|printf|putc|read|write)\b" />
+        <RegExpr      attribute="Builtin" String="(?:close|flush|getc|open|printf|putc|read|write)\b" />
         <RegExpr      attribute="Builtin" String="(?:rand|srand)\b" />
-        <RegExpr      attribute="Builtin" String="(?:byte|char|fmt|gsub|hex|lower|num|split|sub|type|upper)\b" />
+        <RegExpr      attribute="Builtin" String="(?:byte|char|fmt|gsub|hex|lower|split|sub|upper)\b" />
         <RegExpr      attribute="Builtin" String="(?:clock|exit)\b" />
 
         <!-- null -->

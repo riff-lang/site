@@ -47,10 +47,11 @@ CodeMirror.defineSimpleMode("riff", {
         { regex: /\.{2}/, token: 'operator' },
 
         // Builtin functions
+        { regex: /(assert|error|eval|num|print|type)\b/, token: 'builtin', next: 'infix' },
         { regex: /(abs|atan|ceil|cos|exp|int|log|sin|sqrt|tan)\b/, token: 'builtin', next: 'infix' },
-        { regex: /(close|eof|eval|flush|get|getc|open|print|printf|putc|read|write)\b/, token: 'builtin', next: 'infix' },
+        { regex: /(close|flush|getc|open|printf|putc|read|write)\b/, token: 'builtin', next: 'infix' },
         { regex: /(rand|srand)\b/, token: 'builtin', next: 'infix'},
-        { regex: /(byte|char|fmt|gsub|hex|lower|num|split|sub|type|upper)\b/, token: 'builtin', next: 'infix' },
+        { regex: /(byte|char|fmt|gsub|hex|lower|split|sub|upper)\b/, token: 'builtin', next: 'infix' },
         { regex: /(clock|exit)\b/, token: 'builtin', next: 'infix'},
 
         // Keywords
